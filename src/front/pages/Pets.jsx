@@ -206,7 +206,7 @@ export const Pets = () => {
                 <form onSubmit={handleCreate}>
                     <div className="row g-3 mt-1">
                         <div className="col-md-4">
-                            <label className="form-label">Name *</label>
+                            <label className="form-label">Name</label>
                             <input type="text" name="name" className="form-control" value={formData.name} onChange={handleChange} required />
                         </div>
 
