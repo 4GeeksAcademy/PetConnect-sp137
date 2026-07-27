@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Breed = () => {
+    const navigate = useNavigate();
+
     const [breeds, setBreeds] = useState([]);
-    const [breedName, setBreedName] = useState("");
-    const [editingId, setEditingId] = useState(null);
 
-
-    const API = import.meta.env.VITE_BACKEND_URL + "/api/breed";
+    const API = "/api/breed";
 
     //GET
 
@@ -20,64 +20,6 @@ const Breed = () => {
         }
     };
 
-    //POST
-
-    const createBreed = async () => {
-        if (!breedName.trim()) {
-            alert("Escribe un nombre");
-            return;
-        }
-
-        console.log("API:", API);
-        console.log("Enviando:", breedName);
-
-        try {
-            const response = await fetch(API, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    breedName: breedName
-                })
-            });
-
-            console.log("Status:", response.status);
-
-            const data = await response.json();
-            console.log("Respuesta:", data);
-
-            if (response.ok) {
-                setBreedName("");
-                getBreeds();
-            }
-
-        } catch (error) {
-            console.log("Error:", error);
-        }
-    };
-    //PUT
-
-    const updateBreed = async (id, newBreedName) => {
-        try {
-            await fetch(`${API}/${id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    breedName: newBreedName
-                })
-            });
-
-            setBreedName("");
-            setEditingId(null);
-            getBreeds();
-
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
     // DELETE
 
@@ -103,36 +45,16 @@ const Breed = () => {
 
     return (
         <div className="container mt-5">
-            <h2 className="mb-4">CRUD de Razas</h2>
 
-            <div className="input-group mb-4">
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Nombre de la raza"
-                    value={breedName}
-                    onChange={(e) => setBreedName(e.target.value)}
-                />
+            <div className="d-flex justify-content-between align-items-center mb-4">
+                <h2>CRUD de Razas</h2>
 
-                {editingId ? (
-                    <button
-                        className="btn btn-warning"
-                        onClick={() => {
-                            updateBreed(editingId, breedName);
-                            setEditingId(null);
-                            setBreedName("");
-                        }}
-                    >
-                        Actualizar
-                    </button>
-                ) : (
-                    <button
-                        className="btn btn-success"
-                        onClick={createBreed}
-                    >
-                        Agregar
-                    </button>
-                )}
+                <button
+                    className="btn btn-success"
+                    onClick={() => navigate("/breed/new")}
+                >
+                    Nueva raza
+                </button>
             </div>
 
             <table className="table table-striped">
@@ -150,12 +72,10 @@ const Breed = () => {
                             <td>{breed.id}</td>
                             <td>{breed.breedName}</td>
                             <td>
+
                                 <button
                                     className="btn btn-primary btn-sm me-2"
-                                    onClick={() => {
-                                        setEditingId(breed.id);
-                                        setBreedName(breed.breedName);
-                                    }}
+                                    onClick={() => navigate(`/breed/edit/${breed.id}`)}
                                 >
                                     Editar
                                 </button>
@@ -166,12 +86,16 @@ const Breed = () => {
                                 >
                                     Eliminar
                                 </button>
+
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+
         </div>
     );
 };
+
 export default Breed;
+

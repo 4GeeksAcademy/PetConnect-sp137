@@ -7,6 +7,8 @@ import {
 } from "react-router-dom";
 import { Layout } from "./pages/Layout";
 import Breed from "./pages/Breed";
+import CreateBreed from "./pages/CreateBreed";
+import EditBreed from "./pages/EditBreed";
 import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
 
@@ -23,7 +25,15 @@ export const router = createBrowserRouter(
 
       {/* Nested Routes: Defines sub-routes within the BaseHome component. */}
       <Route path="/" element={<Breed />} />
-      <Route path="/single/:theId" element={<Single />} />  {/* Dynamic route for single items */}
+
+      <Route path="/breed" element={<Breed />} />
+
+      <Route path="/breed/new" element={<CreateBreed />} />
+
+      <Route path="/breed/edit/:id" element={<EditBreed />} />
+
+      <Route path="/single/:theId" element={<Single />} />
+
       <Route path="/demo" element={<Demo />} />
     </Route>
   )
