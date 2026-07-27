@@ -13,10 +13,18 @@ CORS(api)
 
 @api.route('/pets', methods=['GET'])
 def get_pets():
-    pets = Pet.query.all()
+    pets = Pet.query.order_by(Pet.id.asc()).all()
     results = [pet.serialize() for pet in pets]
     return jsonify(results), 200
 
+@api.route('/pets/<int:pet_id>', methods=['GET'])
+def get_single_pet(pet_id):
+    pet = db.session.get(Pet, pet_id)
+
+    if pet is None:
+        raise APIException("Pet not found", status_code=404)
+
+    return jsonify(pet.serialize()), 200
 
 @api.route('/pets', methods=['POST'])
 def create_pet():

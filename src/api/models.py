@@ -58,7 +58,7 @@ class Pet(db.Model):
             "idBreed": self.breed_id,
             "name": self.name,
             "genre": self.genre,
-            "birthDate": self.birth_date,
+            "birthDate": self.birth_date.strftime('%Y-%m-%d') if self.birth_date else None,
             "castrated": self.castrated,
             "chipNumber": self.chip_number,
             "color": self.color,
