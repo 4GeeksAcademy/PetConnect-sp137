@@ -1,4 +1,4 @@
-export const initialStore=()=>{
+/* export const initialStore=()=>{
   return{
     message: null,
     todos: [
@@ -14,7 +14,16 @@ export const initialStore=()=>{
       }
     ]
   }
-}
+} */
+
+
+export const initialStore = () => {
+  return {
+    shelters: [],
+
+  };
+};
+
 
 export default function storeReducer(store, action = {}) {
   switch(action.type){
@@ -32,6 +41,14 @@ export default function storeReducer(store, action = {}) {
         ...store,
         todos: store.todos.map((todo) => (todo.id === id ? { ...todo, background: color } : todo))
       };
+
+    case "load_data": {
+      const { nuevosShelters } = action.payload; //es la informacion que tu das para que se haga lo que haya en el case, por ejemplo un ID, que te permitirá hacer "algo"
+      return {
+        ...store,
+        shelters: nuevosShelters
+      };
+    }
     default:
       throw Error('Unknown action.');
   }    
