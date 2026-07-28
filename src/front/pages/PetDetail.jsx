@@ -82,7 +82,7 @@ export const PetDetail = () => {
 
     return (
         <div className="container mt-4">
-            <Link to="/pets" className="btn btn-outline-secondary mb-3">
+            <Link to="/pets" className="btn btn-primary mb-3">
                 ← Back to Pets List
             </Link>
 

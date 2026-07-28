@@ -23,7 +23,10 @@ export const PetCard = ({ pet, onDelete }) => {
                     <p className="card-text mb-1"><strong>Castrated:</strong> {pet.castrated ? "Yes" : "No"}</p>
                 </div>
                 <div className="card-footer d-flex justify-content-between bg-white border-top-0 pb-3">
-                    <Link to={`/pets/${pet.id}`} className="btn btn-warning btn-sm">
+                    <Link to={`/pet-view/${pet.id}`} className="btn btn-primary btn-sm">
+                        View
+                    </Link>
+                    <Link to={`/pet-detail/${pet.id}`} className="btn btn-warning btn-sm">
                         Edit
                     </Link>
                     {onDelete && (

@@ -59,7 +59,7 @@ def create_pet():
     return jsonify({"message": "Pet created successfully", "pet": new_pet.serialize()}), 201
 
 
-@api.route('/pets/<int:pet_id>', methods=['PUT'])
+@api.route('/pet-detail/<int:pet_id>', methods=['PUT'])
 def update_pet(pet_id):
     body = request.get_json()
     pet = db.session.get(Pet, pet_id)
