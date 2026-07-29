@@ -6,7 +6,9 @@ import {
   Route,
 } from "react-router-dom";
 import { Layout } from "./pages/Layout";
-import { Home } from "./pages/Home";
+import Breed from "./pages/Breed";
+import CreateBreed from "./pages/CreateBreed";
+import EditBreed from "./pages/EditBreed";
 import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
 import { PetsList } from "./pages/PetsList";
@@ -33,6 +35,17 @@ export const router = createBrowserRouter(
       <Route path="/pet-view/:id" element={<PetView />} />
       <Route path="/pets" element={<PetsList />} />
       <Route path="/pet-detail/:id" element={<PetDetail />} />
+      <Route path="/" element={<Breed />} />
+
+      <Route path="/breed" element={<Breed />} />
+
+      <Route path="/breed/new" element={<CreateBreed />} />
+
+      <Route path="/breed/edit/:id" element={<EditBreed />} />
+
+      <Route path="/single/:theId" element={<Single />} />
+
+      <Route path="/demo" element={<Demo />} />
     </Route>
   )
 );
