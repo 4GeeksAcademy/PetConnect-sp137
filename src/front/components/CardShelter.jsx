@@ -12,10 +12,12 @@ export const CardShelter = (props) => {
 
 //const AnimalCard = ({ animal, onEdit, onDelete }) => {
   // Se asume que "animal" es un objeto con la información pasada por props
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 const handleDelete = async () => {
   try {
     const response = await fetch(
-      `https://special-space-garbanzo-6666w7r6jp399g-3001.app.github.dev/admin/shelter/${props.id}`,
+      
+      `${backendUrl}/${props.id}`,
       { method: "DELETE" }
     );
 
