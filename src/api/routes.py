@@ -207,7 +207,7 @@ def create_medical_appointment():
     new_appointment = MedicalAppointment(
         user_id=int(body['user_id']),
         pet_id=int(body['pet_id']),
-        shelter_id=int(body['shelter_id']),
+        veterinarian_id=int(body['shelter_id']),
         appointment_date=body.get('date'),
         hour=body.get('hour'),
         comments=body.get('comments')
@@ -245,7 +245,7 @@ def update_medical_appointment(appointment_id):
 
     appointment.user_id = int(body['user_id'])
     appointment.pet_id = int(body['pet_id'])
-    appointment.shelter_id = int(body['shelter_id'])
+    appointment.veterinarian_id = int(body['veterinarian_id'])
     appointment.appointment_date = body['date']
     appointment.hour = body['hour']
     appointment.comments = body['comments']
