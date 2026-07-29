@@ -12,6 +12,12 @@ import { Demo } from "./pages/Demo";
 import { PetsList } from "./pages/PetsList";
 import { CreatePet } from "./pages/CreatePet";
 import { PetDetail } from "./pages/PetDetail";
+import { AdoptionsList } from "./pages/AdoptionsList";
+import { CreateAdoption } from "./pages/CreateAdoption";
+import { AdoptionDetail } from "./pages/AdoptionDetail";
+import { MedicalAppointmentsList } from "./pages/MedicalAppointmentsList";
+import { CreateMedicalAppointment } from "./pages/CreateMedicalAppointment";
+import { MedicalAppointmentDetail } from "./pages/MedicalAppointmentDetail";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,9 +34,18 @@ export const router = createBrowserRouter(
       <Route path="/" element={<Home />} />
       <Route path="/single/:theId" element={<Single />} />  {/* Dynamic route for single items */}
       <Route path="/demo" element={<Demo />} />
+
       <Route path="/create-pet" element={<CreatePet />} />
       <Route path="/pets" element={<PetsList />} />
       <Route path="/pets/:id" element={<PetDetail />} />
+
+      <Route path="/create-adoption" element={<CreateAdoption />} />
+      <Route path="/adoptions" element={<AdoptionsList />} />
+      <Route path="/adoptions/:id" element={<AdoptionDetail />} />
+
+      <Route path="/create-medical-appointment" element={<CreateMedicalAppointment />} />
+      <Route path="/medapps" element={<MedicalAppointmentsList />} />
+      <Route path="/medapps/:id" element={<MedicalAppointmentDetail />} />
     </Route>
   )
 );
