@@ -49,6 +49,11 @@ const [shelter, setShelter] = useState([]);
         }
     };
 
+const handleDeleteShelter = (id) => {
+  setShelter(prev => prev.filter(item => item.id !== id));
+};
+
+
     useEffect(() => {
         fetchShelter();
     }, []);
@@ -59,17 +64,27 @@ const [shelter, setShelter] = useState([]);
     <>
       <div>
         <div className="text-center bg-secondary-subtle text-dark w-100">
-          <div className="container-fluid px-4 py-2">
+          <div className="container-fluid px-5 py-5">
             <h1 className="text-body-emphasis">Refugios</h1>
-            <div className="col-lg-12 mx-auto lead">
-              <div className="text-center mt-5">
-                <div className="row flex-row flex-nowrap overflow-scroll">
+                <div className="row g-5 justify-content-center">
                   {shelter.map((shelter, index) => (
-                    <CardShelter uid={shelter.uid} key={index} name={shelter.name} />
+                    <div className="col-auto" key={index}>
+                    <CardShelter 
+                      id={shelter.id} 
+                      //key={index}
+                      key={shelter.id}
+                      name={shelter.name} 
+                      city={shelter.city} 
+                      CIF={shelter.CIF} 
+                      adress={shelter.adress} 
+                      email={shelter.email} 
+                      pc={shelter.pc} 
+                      iconUrl={shelter.iconUrl}
+                      onDelete={handleDeleteShelter} />
+                    
+                      </div>
                   ))}
                 </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>

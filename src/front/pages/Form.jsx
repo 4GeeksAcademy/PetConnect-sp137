@@ -38,10 +38,10 @@ export const Form = () => {
 
             if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file")
 
-            console.log("Enviando datos a:", backendUrl + "/api/shelters")
+            console.log("Enviando datos a:", backendUrl + "/api/shelter")
             console.log("Datos del formulario:", formData)
 
-            const response = await fetch(backendUrl + "/api/shelters", {
+            const response = await fetch(backendUrl + "/api/shelter", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

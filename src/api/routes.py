@@ -119,10 +119,10 @@ def update_shelter(shelter_id):
 ###############################################################################################################
 
 # Eliminar un refugio
-@api.route('/shelter/<int:shelter_id>', methods=['DELETE'])
-def delete_shelter(shelter_id):
+@api.route('admin/shelter/<int:id>', methods=['DELETE'])
+def delete_shelter(id):
     try:
-        shelter = Shelter.query.get(shelter_id)
+        shelter = Shelter.query.get(id)
         if not shelter:
             return jsonify({"error": "Refugio no encontrado"}), 404
 
