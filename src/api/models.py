@@ -35,7 +35,6 @@ class User(db.Model):
             "birthDate": self.birth_date.strftime('%Y-%m-%d') if self.birth_date else None,
             "pc": self.pc,
             "city": self.city,
-            # No se serializa la contraseña por motivos de seguridad
         }
 
 
