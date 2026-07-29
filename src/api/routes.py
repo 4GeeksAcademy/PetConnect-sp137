@@ -100,10 +100,6 @@ def delete_pet(pet_id):
     return jsonify({"message": "Pet successfully deleted"}), 200
 
 
-
-
-
-
 ################# Adoptions #################
 
 @api.route('/adoptions', methods=['GET'])
@@ -131,9 +127,9 @@ def create_adoption():
         raise APIException("You must send a request body", status_code=400)
 
     new_adoption = Adoption(
-        user_id=int(body['idUser']),
-        pet_id=int(body['idPet']),
-        shelter_id=int(body['idShelter']),
+        user_id=int(body['user_id']),
+        pet_id=int(body['pet_id']),
+        shelter_id=int(body['shelter_id']),
         date=body.get('date'),
         state=body.get('state'),
         comment=body.get('comment')
@@ -143,6 +139,19 @@ def create_adoption():
     db.session.commit()
 
     return jsonify({"message": "Adoption request created successfully", "adoption": new_adoption.serialize()}), 201
+
+
+@api.route('/adoptions/<int:adoption_id>', methods=['DELETE'])
+def delete_adoption(adoption_id):
+    adoption = db.session.get(Adoption, adoption_id)
+
+    if adoption is None:
+        raise APIException("Adoption not found", status_code=404)
+
+    db.session.delete(adoption)
+    db.session.commit()
+
+    return jsonify({"message": "Adoption successfully deleted"}), 200
 
 
 @api.route('/adoptions/<int:adoption_id>', methods=['PUT'])
@@ -156,9 +165,9 @@ def update_adoption(adoption_id):
     if not body:
         raise APIException("You must send a request body", status_code=400)
 
-    adoption.user_id = int(body['idUser'])
-    adoption.pet_id = int(body['idPet'])
-    adoption.shelter_id = int(body['idShelter'])
+    adoption.user_id = int(body['user_id'])
+    adoption.pet_id = int(body['pet_id'])
+    adoption.shelter_id = int(body['shelter_id'])
     adoption.date = body['date']
     adoption.state = body['state']
     adoption.comment = body['comment']
@@ -168,14 +177,12 @@ def update_adoption(adoption_id):
     return jsonify({"message": "Adoption successfully updated", "adoption": adoption.serialize()}), 200
 
 
-
-
-
 ################# Medical Appointments #################
 
 @api.route('/medical-appointments', methods=['GET'])
 def get_medical_appointments():
-    appointments = MedicalAppointment.query.order_by(MedicalAppointment.id.asc()).all()
+    appointments = MedicalAppointment.query.order_by(
+        MedicalAppointment.id.asc()).all()
     results = [appointment.serialize() for appointment in appointments]
     return jsonify(results), 200
 
@@ -198,19 +205,31 @@ def create_medical_appointment():
         raise APIException("You must send a request body", status_code=400)
 
     new_appointment = MedicalAppointment(
-        user_id=int(body['idUser']),
-        pet_id=int(body['idPet']),
-        shelter_id=int(body['idShelter']),
-        appointment_date=body.get('appointmentDate'),
-        reason=body.get('reason'),
-        diagnosis=body.get('diagnosis'),
-        treatment=body.get('treatment')
+        user_id=int(body['user_id']),
+        pet_id=int(body['pet_id']),
+        shelter_id=int(body['shelter_id']),
+        appointment_date=body.get('date'),
+        hour=body.get('hour'),
+        comments=body.get('comments')
     )
 
     db.session.add(new_appointment)
     db.session.commit()
 
     return jsonify({"message": "Medical appointment created successfully", "appointment": new_appointment.serialize()}), 201
+
+
+@api.route('/medical-appointments/<int:medapp_id>', methods=['DELETE'])
+def delete_medapp(medapp_id):
+    medapp = db.session.get(Adoption, medapp_id)
+
+    if medapp is None:
+        raise APIException("Medical Appointment not found", status_code=404)
+
+    db.session.delete(medapp)
+    db.session.commit()
+
+    return jsonify({"message": "Medical Appointment successfully deleted"}), 200
 
 
 @api.route('/medical-appointments/<int:appointment_id>', methods=['PUT'])
@@ -224,13 +243,12 @@ def update_medical_appointment(appointment_id):
     if not body:
         raise APIException("You must send a request body", status_code=400)
 
-    appointment.user_id = int(body['idUser'])
-    appointment.pet_id = int(body['idPet'])
-    appointment.shelter_id = int(body['idShelter'])
-    appointment.appointment_date = body['appointmentDate']
-    appointment.reason = body['reason']
-    appointment.diagnosis = body['diagnosis']
-    appointment.treatment = body['treatment']
+    appointment.user_id = int(body['user_id'])
+    appointment.pet_id = int(body['pet_id'])
+    appointment.shelter_id = int(body['shelter_id'])
+    appointment.appointment_date = body['date']
+    appointment.hour = body['hour']
+    appointment.comments = body['comments']
 
     db.session.commit()
 
