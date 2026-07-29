@@ -26,7 +26,7 @@ export const Navbar = () => {
 					<span className="navbar-brand mb-0 h1">HOME</span>
 				</Link>
 				<div className="ms-auto d-flex gap-4">
-
+						<button className="btn btn-primary" onClick={() => navigate("/user")}>Ver usuarios</button>
 						<button className="btn btn-primary" onClick={() => navigate("/form")}> Crear Refugio </button>
 						<button className="btn btn-primary" onClick={() => navigate("/shelter")}>Ver Refugios</button>	
 				</div>

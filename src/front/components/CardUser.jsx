@@ -6,7 +6,7 @@ import React from "react";
 
 
 
-export const CardShelter = (props) => {
+export const CardUser = (props) => {
   //const { store, dispatch } = useGlobalReducer();
   //const [imageSrc, setImageSrc] = useState(`https://github.com/breatheco-de/swapi-images/blob/master/public/images/starships/${props.uid}.jpg?raw=true`);
 
@@ -17,12 +17,12 @@ const handleDelete = async () => {
   try {
     const response = await fetch(
       
-      `${backendUrl}/api/shelter/${props.id}`,
+      `${backendUrl}/api/user/${props.id}`,
       { method: "DELETE" }
     );
 
     if (!response.ok) {
-      console.error("Error al eliminar el refugio");
+      console.error("Error al eliminar el usuario");
       return;
     }
     // Avisamos al padre
@@ -38,18 +38,17 @@ const handleDelete = async () => {
 
 
  <div className="card" style={{ width: "18rem" }}>
-  <img src="https://www.mdzol.com/u/fotografias/m/2022/10/26/f768x1-1305623_1305750_79.jpg" className="card-img-top" alt="..."/>
+  <img src="https://media.istockphoto.com/id/1017008332/ko/%EC%82%AC%EC%A7%84/%EA%B7%B8%EC%9D%98-%ED%8C%80%EA%B3%BC-%ED%95%A8%EA%BB%98-%EB%B9%A8%EA%B0%84-%EC%A7%80%EB%8F%84%EC%9E%90%EC%9E%85%EB%8B%88%EB%8B%A4-%ED%8C%80%EC%9B%8C%ED%81%AC-%EA%B0%9C%EB%85%90%EC%9E%85%EB%8B%88%EB%8B%A4.jpg?s=170667a&w=0&k=20&c=31RdxrvUxtqghKuH7rJy8e9a0eHBnhCMYPHh5ZfGJXI=" className="card-img-top" alt="..."/>
   <div className="card-body">
     <h5 className="card-title">{props.name}</h5> 
   </div>
   <ul className="list-group list-group-flush">
     
-    <li className="list-group-item">City: {props.city}</li>
-    <li className="list-group-item">Adress: {props.adress}</li>
+    <li className="list-group-item">Ciudad: {props.city}</li>
+    <li className="list-group-item">Dirección: {props.adress}</li>
     <li className="list-group-item">Código Postal: {props.pc}</li>
-    <li className="list-group-item">CIF: {props.CIF}</li>
+    <li className="list-group-item">Nacimiento: {props.birthDate}</li>
     <li className="list-group-item">Email: {props.email}</li>
-    <li className="list-group-item">Icon URL: {props.iconUrl}</li>
 
   </ul>
   <div className="card-body d-flex gap-4 justify-content-center">
@@ -67,39 +66,3 @@ const handleDelete = async () => {
 
   ); 
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      {/*<img src={rigoImageUrl} className="card-img-top" alt="..." style={{ width: "224px", height: "126px", objectFit: "cover" }} />*/}
-      
-{/*       <img
-        src={imageSrc} 
-        onError={() => setImageSrc('https://cdn1.vectorstock.com/i/1000x1000/32/45/no-image-symbol-missing-available-icon-gallery-vector-45703245.jpg')}
-        className="card-img-top mt-3"
-        alt="..."
-        style={{ width: "224px", height: "200px", objectFit: "cover" }}/> */}
-
