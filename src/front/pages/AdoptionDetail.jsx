@@ -7,6 +7,11 @@ export const AdoptionDetail = () => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     const [loading, setLoading] = useState(true);
+
+    const [users, setUsers] = useState([]);
+    const [pets, setPets] = useState([]);
+    const [shelters, setShelters] = useState([]);
+
     const [adoption, setAdoption] = useState({
         user_id: "",
         pet_id: "",
@@ -17,28 +22,39 @@ export const AdoptionDetail = () => {
     });
 
     useEffect(() => {
-        const fetchAdoptionDetail = async () => {
+        const fetchData = async () => {
             try {
-                const response = await fetch(`${backendUrl}/api/adoptions/${id}`);
-                if (response.ok) {
-                    const data = await response.json();
+                const [resAdoption, resUsers, resPets, resShelters] = await Promise.all([
+                    fetch(`${backendUrl}/api/adoptions/${id}`),
+                    fetch(`${backendUrl}/api/users`),
+                    fetch(`${backendUrl}/api/pets`),
+                    fetch(`${backendUrl}/api/shelters`)
+                ]);
+
+                if (resAdoption.ok) {
+                    const data = await resAdoption.json();
                     setAdoption({
-                        user_id: data.user_id,
-                        pet_id: data.pet_id,
-                        shelter_id: data.shelter_id,
-                        date: data.date,
-                        state: data.state,
-                        comment: data.comment
+                        user_id: data.user_id || "",
+                        pet_id: data.pet_id || "",
+                        shelter_id: data.shelter_id || "",
+                        date: data.date || "",
+                        state: data.state || "Sent",
+                        comment: data.comment || ""
                     });
                 }
+
+                if (resUsers.ok) setUsers(await resUsers.json());
+                if (resPets.ok) setPets(await resPets.json());
+                if (resShelters.ok) setShelters(await resShelters.json());
+
             } catch (error) {
-                console.error("Error fetching adoption details:", error);
+                console.error("Error fetching data:", error);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchAdoptionDetail();
+        fetchData();
     }, [id, backendUrl]);
 
     const handleChange = (e) => {
@@ -88,36 +104,64 @@ export const AdoptionDetail = () => {
 
                 <form onSubmit={handleSave}>
                     <div className="row g-3">
+                        {/* SELECT USER */}
                         <div className="col-md-4">
                             <label className="form-label">User</label>
-                            <input
-                                name="user"
-                                className="form-control"
+                            <select
+                                name="user_id"
+                                className="form-select"
                                 value={adoption.user_id}
                                 onChange={handleChange}
                                 required
-                            />
+                            >
+                                <option value="">Select User...</option>
+                                {users.map((item) => (
+                                    <option key={item.id} value={item.id}>
+                                        {item.name || item.email || `User #${item.id}`}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
+
+                        {/* SELECT PET */}
                         <div className="col-md-4">
                             <label className="form-label">Pet</label>
-                            <input
-                                name="pet"
-                                className="form-control"
+                            <select
+                                name="pet_id"
+                                className="form-select"
                                 value={adoption.pet_id}
                                 onChange={handleChange}
                                 required
-                            />
+                            >
+                                <option value="">Select Pet...</option>
+                                {pets.map((item) => (
+                                    <option key={item.id} value={item.id}>
+                                        {item.name || `Pet #${item.id}`}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
+
+                        {/* SELECT SHELTER */}
                         <div className="col-md-4">
                             <label className="form-label">Shelter</label>
-                            <input
-                                name="shelter"
-                                className="form-control"
+                            <select
+                                name="shelter_id"
+                                className="form-select"
                                 value={adoption.shelter_id}
                                 onChange={handleChange}
                                 required
-                            />
+                            >
+                                <option value="">Select Shelter...</option>
+                                {shelters.map((item) => (
+                                    <option key={item.id} value={item.id}>
+                                        {item.name || `Shelter #${item.id}`}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
+
+                        {/* DATE */}
                         <div className="col-md-6">
                             <label className="form-label">Date</label>
                             <input
@@ -129,6 +173,8 @@ export const AdoptionDetail = () => {
                                 required
                             />
                         </div>
+
+                        {/* STATE */}
                         <div className="col-md-6">
                             <label className="form-label">State</label>
                             <select
@@ -143,6 +189,8 @@ export const AdoptionDetail = () => {
                                 <option value="Rejected">Rejected</option>
                             </select>
                         </div>
+
+                        {/* COMMENT */}
                         <div className="col-md-12">
                             <label className="form-label">Comment</label>
                             <textarea
