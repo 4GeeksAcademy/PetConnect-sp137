@@ -11,6 +11,9 @@ import CreateBreed from "./pages/CreateBreed";
 import EditBreed from "./pages/EditBreed";
 import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
+import { Form } from "./pages/Form";
+import { Shelter } from "./pages/Shelter";
+import { User } from "./pages/User";
 import { PetsList } from "./pages/PetsList";
 import { CreatePet } from "./pages/CreatePet";
 import { PetDetail } from "./pages/PetDetail";
@@ -26,9 +29,10 @@ export const router = createBrowserRouter(
 
     // Root Route: All navigation will start from here.
     <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>} >
-
-      {/* Nested Routes: Defines sub-routes within the BaseHome component. */}
       <Route path="/" element={<Home />} />
+      <Route path="/form" element={<Form />} />
+      <Route path="/shelter" element={<Shelter />} />
+      <Route path="/user" element={<User />} />
       <Route path="/single/:theId" element={<Single />} />  {/* Dynamic route for single items */}
       <Route path="/demo" element={<Demo />} />
       <Route path="/create-pet" element={<CreatePet />} />
@@ -36,15 +40,10 @@ export const router = createBrowserRouter(
       <Route path="/pets" element={<PetsList />} />
       <Route path="/pet-detail/:id" element={<PetDetail />} />
       <Route path="/" element={<Breed />} />
-
       <Route path="/breed" element={<Breed />} />
-
       <Route path="/breed/new" element={<CreateBreed />} />
-
       <Route path="/breed/edit/:id" element={<EditBreed />} />
-
       <Route path="/single/:theId" element={<Single />} />
-
       <Route path="/demo" element={<Demo />} />
     </Route>
   )
