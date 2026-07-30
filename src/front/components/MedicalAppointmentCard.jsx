@@ -29,7 +29,7 @@ export const MedicalAppointmentCard = ({ appointment, onDelete }) => {
                     </p>
                 </div>
                 <div className="card-footer d-flex justify-content-between bg-white border-top-0 pb-3">
-                    <Link to={`/medical-appointments/${appointment.id}`} className="btn btn-warning btn-sm">
+                    <Link to={`/medapps/${appointment.id}`} className="btn btn-warning btn-sm">
                         Edit
                     </Link>
                     {onDelete && (
