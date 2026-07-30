@@ -18,6 +18,7 @@ import { PetsList } from "./pages/PetsList";
 import { CreatePet } from "./pages/CreatePet";
 import { PetDetail } from "./pages/PetDetail";
 import { PetView } from "./pages/PetView";
+import { Home } from "./pages/Home";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
