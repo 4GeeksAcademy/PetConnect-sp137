@@ -24,28 +24,28 @@ export const AdoptionDetail = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [resAdoption, resUsers, resPets, resShelters] = await Promise.all([
-                    fetch(`${backendUrl}/api/adoptions/${id}`),
-                    fetch(`${backendUrl}/api/users`),
+                const [resUsers, resPets, resShelters, resAdoption] = await Promise.all([
+                    fetch(`${backendUrl}/api/user`),
                     fetch(`${backendUrl}/api/pets`),
-                    fetch(`${backendUrl}/api/shelters`)
+                    fetch(`${backendUrl}/api/shelter`),
+                    fetch(`${backendUrl}/api/adoptions/${id}`)
                 ]);
+
+                if (resUsers.ok) setUsers(await resUsers.json());
+                if (resPets.ok) setPets(await resPets.json());
+                if (resShelters.ok) setShelters(await resShelters.json());
 
                 if (resAdoption.ok) {
                     const data = await resAdoption.json();
                     setAdoption({
-                        user_id: data.user_id || "",
-                        pet_id: data.pet_id || "",
-                        shelter_id: data.shelter_id || "",
+                        user_id: data.user_id ? String(data.user_id) : "",
+                        pet_id: data.pet_id ? String(data.pet_id) : "",
+                        shelter_id: data.shelter_id ? String(data.shelter_id) : "",
                         date: data.date || "",
                         state: data.state || "Sent",
                         comment: data.comment || ""
                     });
                 }
-
-                if (resUsers.ok) setUsers(await resUsers.json());
-                if (resPets.ok) setPets(await resPets.json());
-                if (resShelters.ok) setShelters(await resShelters.json());
 
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -104,64 +104,57 @@ export const AdoptionDetail = () => {
 
                 <form onSubmit={handleSave}>
                     <div className="row g-3">
-                        {/* SELECT USER */}
                         <div className="col-md-4">
                             <label className="form-label">User</label>
                             <select
                                 name="user_id"
                                 className="form-select"
-                                value={adoption.user_id}
+                                value={String(adoption.user_id)}
                                 onChange={handleChange}
                                 required
                             >
-                                <option value="">Select User...</option>
                                 {users.map((item) => (
-                                    <option key={item.id} value={item.id}>
+                                    <option key={item.id} value={String(item.id)}>
                                         {item.name || item.email || `User #${item.id}`}
                                     </option>
                                 ))}
                             </select>
                         </div>
 
-                        {/* SELECT PET */}
                         <div className="col-md-4">
                             <label className="form-label">Pet</label>
                             <select
                                 name="pet_id"
                                 className="form-select"
-                                value={adoption.pet_id}
+                                value={String(adoption.pet_id)}
                                 onChange={handleChange}
                                 required
                             >
-                                <option value="">Select Pet...</option>
                                 {pets.map((item) => (
-                                    <option key={item.id} value={item.id}>
+                                    <option key={item.id} value={String(item.id)}>
                                         {item.name || `Pet #${item.id}`}
                                     </option>
                                 ))}
                             </select>
                         </div>
 
-                        {/* SELECT SHELTER */}
                         <div className="col-md-4">
                             <label className="form-label">Shelter</label>
                             <select
                                 name="shelter_id"
                                 className="form-select"
-                                value={adoption.shelter_id}
+                                value={String(adoption.shelter_id)}
                                 onChange={handleChange}
                                 required
                             >
-                                <option value="">Select Shelter...</option>
                                 {shelters.map((item) => (
-                                    <option key={item.id} value={item.id}>
+                                    <option key={item.id} value={String(item.id)}>
                                         {item.name || `Shelter #${item.id}`}
                                     </option>
                                 ))}
                             </select>
                         </div>
 
-                        {/* DATE */}
                         <div className="col-md-6">
                             <label className="form-label">Date</label>
                             <input
@@ -174,7 +167,6 @@ export const AdoptionDetail = () => {
                             />
                         </div>
 
-                        {/* STATE */}
                         <div className="col-md-6">
                             <label className="form-label">State</label>
                             <select
@@ -190,7 +182,6 @@ export const AdoptionDetail = () => {
                             </select>
                         </div>
 
-                        {/* COMMENT */}
                         <div className="col-md-12">
                             <label className="form-label">Comment</label>
                             <textarea

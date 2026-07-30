@@ -4,6 +4,10 @@ import { AdoptionCard } from "../components/AdoptionCard";
 
 export const AdoptionsList = () => {
     const [adoptions, setAdoptions] = useState([]);
+    const [users, setUsers] = useState([]);
+    const [pets, setPets] = useState([]);
+    const [shelters, setShelters] = useState([]);
+    
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     const fetchAdoptions = async () => {
@@ -18,8 +22,25 @@ export const AdoptionsList = () => {
         }
     };
 
+    const fetchRelatedData = async () => {
+        try {
+            const [resUsers, resPets, resShelters] = await Promise.all([
+                fetch(`${backendUrl}/api/user`),
+                fetch(`${backendUrl}/api/pets`),
+                fetch(`${backendUrl}/api/shelter`)
+            ]);
+
+            if (resUsers.ok) setUsers(await resUsers.json());
+            if (resPets.ok) setPets(await resPets.json());
+            if (resShelters.ok) setShelters(await resShelters.json());
+        } catch (error) {
+            console.error("Error fetching related data:", error);
+        }
+    };
+
     useEffect(() => {
         fetchAdoptions();
+        fetchRelatedData();
     }, []);
 
     const handleDelete = async (id) => {
@@ -55,6 +76,9 @@ export const AdoptionsList = () => {
                         <AdoptionCard 
                             key={adoption.id} 
                             adoption={adoption} 
+                            users={users} 
+                            pets={pets}
+                            shelters={shelters}
                             onDelete={handleDelete} 
                         />
                     ))}

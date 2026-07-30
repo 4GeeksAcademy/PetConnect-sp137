@@ -26,6 +26,8 @@ import { AdoptionDetail } from "./pages/AdoptionDetail";
 import { MedicalAppointmentsList } from "./pages/MedicalAppointmentsList";
 import { CreateMedicalAppointment } from "./pages/CreateMedicalAppointment";
 import { MedicalAppointmentDetail } from "./pages/MedicalAppointmentDetail";
+import { MedicalAppointmentView } from "./pages/MedicalAppointmentView";
+import { AdoptionView } from "./pages/AdoptionView";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -58,6 +60,8 @@ export const router = createBrowserRouter(
       <Route path="/create-medical-appointment" element={<CreateMedicalAppointment />} />
       <Route path="/medapps" element={<MedicalAppointmentsList />} />
       <Route path="/medapps/:id" element={<MedicalAppointmentDetail />} />
+      <Route path="/medapps-view/:id" element={<MedicalAppointmentView />} />
+      <Route path="/adoption-view/:id" element={<AdoptionView />} />
     </Route>
   )
 );

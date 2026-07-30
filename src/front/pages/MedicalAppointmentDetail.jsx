@@ -7,38 +7,52 @@ export const MedicalAppointmentDetail = () => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     const [loading, setLoading] = useState(true);
+    const [users, setUsers] = useState([]);
+    const [pets, setPets] = useState([]);
+    const [veterinarians, setVeterinarians] = useState([]);
+
     const [appointment, setAppointment] = useState({
         user_id: "",
         pet_id: "",
-        shelter_id: "",
+        veterinarian_id: "",
         date: "",
         hour: "",
         comments: ""
     });
 
     useEffect(() => {
-        const fetchAppointmentDetail = async () => {
+        const fetchData = async () => {
             try {
-                const response = await fetch(`${backendUrl}/api/medical-appointments/${id}`);
-                if (response.ok) {
-                    const data = await response.json();
+                const [resAppt, resUsers, resPets, resVets] = await Promise.all([
+                    fetch(`${backendUrl}/api/medical-appointments/${id}`),
+                    fetch(`${backendUrl}/api/user`),
+                    fetch(`${backendUrl}/api/pets`),
+                    fetch(`${backendUrl}/api/veterinarians`)
+                ]);
+
+                if (resUsers.ok) setUsers(await resUsers.json());
+                if (resPets.ok) setPets(await resPets.json());
+                if (resVets.ok) setVeterinarians(await resVets.json());
+
+                if (resAppt.ok) {
+                    const data = await resAppt.json();
                     setAppointment({
-                        user_id: data.user_id,
-                        pet_id: data.pet_id,
-                        shelter_id: data.shelter_id,
-                        date: data.date,
-                        hour: data.hour,
-                        comments: data.comments
+                        user_id: data.user_id || data.idUser || "",
+                        pet_id: data.pet_id || data.idPet || "",
+                        veterinarian_id: data.veterinarian_id || data.idVeterinarian || "",
+                        date: data.date || "",
+                        hour: data.hour || "",
+                        comments: data.comments || ""
                     });
                 }
             } catch (error) {
-                console.error("Error fetching medical appointment details:", error);
+                console.error("Error fetching data:", error);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchAppointmentDetail();
+        fetchData();
     }, [id, backendUrl]);
 
     const handleChange = (e) => {
@@ -51,17 +65,32 @@ export const MedicalAppointmentDetail = () => {
 
     const handleSave = async (e) => {
         e.preventDefault();
+        
+        const payload = {
+            user_id: appointment.user_id ? Number(appointment.user_id) : null,
+            idUser: appointment.user_id ? Number(appointment.user_id) : null,
+            pet_id: appointment.pet_id ? Number(appointment.pet_id) : null,
+            idPet: appointment.pet_id ? Number(appointment.pet_id) : null,
+            veterinarian_id: appointment.veterinarian_id ? Number(appointment.veterinarian_id) : null,
+            idVeterinarian: appointment.veterinarian_id ? Number(appointment.veterinarian_id) : null,
+            date: appointment.date,
+            hour: appointment.hour,
+            comments: appointment.comments
+        };
+
         try {
             const response = await fetch(`${backendUrl}/api/medical-appointments/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(appointment)
+                body: JSON.stringify(payload)
             });
 
             if (response.ok) {
                 alert("Medical appointment updated successfully!");
                 navigate("/medapps");
             } else {
+                const errorData = await response.json();
+                console.error("Error del servidor:", errorData);
                 alert("Failed to update medical appointment");
             }
         } catch (error) {
@@ -90,34 +119,52 @@ export const MedicalAppointmentDetail = () => {
                     <div className="row g-3">
                         <div className="col-md-4">
                             <label className="form-label">User</label>
-                            <input
-                                name="idUser"
-                                className="form-control"
+                            <select
+                                name="user_id"
+                                className="form-select"
                                 value={appointment.user_id}
                                 onChange={handleChange}
                                 required
-                            />
+                            >
+                                <option value="">Select a user</option>
+                                {users.map(u => (
+                                    <option key={u.id} value={u.id}>{u.name}</option>
+                                ))}
+                            </select>
                         </div>
+
                         <div className="col-md-4">
                             <label className="form-label">Pet</label>
-                            <input
-                                name="idPet"
-                                className="form-control"
+                            <select
+                                name="pet_id"
+                                className="form-select"
                                 value={appointment.pet_id}
                                 onChange={handleChange}
                                 required
-                            />
+                            >
+                                <option value="">Select a pet</option>
+                                {pets.map(p => (
+                                    <option key={p.id} value={p.id}>{p.name}</option>
+                                ))}
+                            </select>
                         </div>
+
                         <div className="col-md-4">
-                            <label className="form-label">Shelter</label>
-                            <input
-                                name="idShelter"
-                                className="form-control"
-                                value={appointment.shelter_id}
+                            <label className="form-label">Veterinarian</label>
+                            <select
+                                name="veterinarian_id"
+                                className="form-select"
+                                value={appointment.veterinarian_id}
                                 onChange={handleChange}
                                 required
-                            />
+                            >
+                                <option value="">Select a veterinarian</option>
+                                {veterinarians.map(v => (
+                                    <option key={v.id} value={v.id}>{v.name}</option>
+                                ))}
+                            </select>
                         </div>
+
                         <div className="col-md-12">
                             <label className="form-label">Date</label>
                             <input
@@ -129,6 +176,7 @@ export const MedicalAppointmentDetail = () => {
                                 required
                             />
                         </div>
+
                         <div className="col-md-12">
                             <label className="form-label">Hour</label>
                             <input
@@ -138,12 +186,13 @@ export const MedicalAppointmentDetail = () => {
                                 value={appointment.hour}
                                 onChange={handleChange}
                                 required
-                            ></input>
+                            />
                         </div>
+
                         <div className="col-md-12">
                             <label className="form-label">Comments</label>
                             <textarea
-                                name="diagnosis"
+                                name="comments"
                                 className="form-control"
                                 rows="2"
                                 value={appointment.comments}

@@ -3,11 +3,8 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Breed, Pet, Shelter
+from api.models import db, User, Breed, Pet, Shelter, Adoption, MedicalAppointment, Veterinarian
 from api.utils import generate_sitemap, APIException
-from flask import Flask, request, jsonify, Blueprint
-from api.models import db, Pet, Adoption, MedicalAppointment
-from api.utils import APIException
 from flask_cors import CORS
 
 api = Blueprint('api', __name__)
@@ -43,9 +40,9 @@ def create_pet():
     if not body.get('name'):
         raise APIException("Pet name is required", status_code=400)
 
-    user_id = int(body['idUser']) if body.get('idUser') else None
-    shelter_id = int(body['idShelter']) if body.get('idShelter') else None
-    breed_id = int(body['idBreed']) if body.get('idBreed') else None
+    user_id = int(body['user_id']) if body.get('user_id') else None
+    shelter_id = int(body['shelter_id']) if body.get('shelter_id') else None
+    breed_id = int(body['breed_id']) if body.get('breed_id') else None
 
     new_pet = Pet(
         user_id=user_id,
@@ -569,3 +566,13 @@ def update_medical_appointment(appointment_id):
     db.session.commit()
 
     return jsonify({"message": "Medical appointment successfully updated", "appointment": appointment.serialize()}), 200
+
+
+################# Veterinarian #################
+
+@api.route('/veterinarians', methods=['GET'])
+def get_veterinarians():
+    veterinarians = Veterinarian.query.order_by(
+        Veterinarian.id.asc()).all()
+    results = [veterinarian.serialize() for veterinarian in veterinarians]
+    return jsonify(results), 200

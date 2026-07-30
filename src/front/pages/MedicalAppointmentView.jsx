@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
-export const CreateMedicalAppointment = () => {
-    const navigate = useNavigate();
+export const MedicalAppointmentView = () => {
+    const { id } = useParams();
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
+    const [loading, setLoading] = useState(true);
     const [users, setUsers] = useState([]);
     const [pets, setPets] = useState([]);
     const [veterinarians, setVeterinarians] = useState([]);
@@ -19,9 +20,10 @@ export const CreateMedicalAppointment = () => {
     });
 
     useEffect(() => {
-        const fetchDropdownData = async () => {
+        const fetchData = async () => {
             try {
-                const [resUsers, resPets, resVets] = await Promise.all([
+                const [resAppt, resUsers, resPets, resVets] = await Promise.all([
+                    fetch(`${backendUrl}/api/medical-appointments/${id}`),
                     fetch(`${backendUrl}/api/user`),
                     fetch(`${backendUrl}/api/pets`),
                     fetch(`${backendUrl}/api/veterinarians`)
@@ -30,87 +32,54 @@ export const CreateMedicalAppointment = () => {
                 if (resUsers.ok) setUsers(await resUsers.json());
                 if (resPets.ok) setPets(await resPets.json());
                 if (resVets.ok) setVeterinarians(await resVets.json());
+
+                if (resAppt.ok) {
+                    const data = await resAppt.json();
+                    setAppointment({
+                        user_id: data.user_id || data.idUser || "",
+                        pet_id: data.pet_id || data.idPet || "",
+                        veterinarian_id: data.veterinarian_id || data.idVeterinarian || "",
+                        date: data.date || "",
+                        hour: data.hour || "",
+                        comments: data.comments || ""
+                    });
+                }
             } catch (error) {
-                console.error("Error fetching dropdown data:", error);
+                console.error("Error fetching data:", error);
+            } finally {
+                setLoading(false);
             }
         };
 
-        fetchDropdownData();
-    }, [backendUrl]);
+        fetchData();
+    }, [id, backendUrl]);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setAppointment({
-            ...appointment,
-            [name]: value
-        });
-    };
-
-    const resetForm = () => {
-        setAppointment({
-            user_id: "",
-            pet_id: "",
-            veterinarian_id: "",
-            date: "",
-            hour: "",
-            comments: ""
-        });
-    };
-
-    const handleCreate = async (e) => {
-        e.preventDefault();
-
-        const payload = {
-            user_id: appointment.user_id ? Number(appointment.user_id) : null,
-            idUser: appointment.user_id ? Number(appointment.user_id) : null,
-            pet_id: appointment.pet_id ? Number(appointment.pet_id) : null,
-            idPet: appointment.pet_id ? Number(appointment.pet_id) : null,
-            veterinarian_id: appointment.veterinarian_id ? Number(appointment.veterinarian_id) : null,
-            idVeterinarian: appointment.veterinarian_id ? Number(appointment.veterinarian_id) : null,
-            date: appointment.date,
-            hour: appointment.hour,
-            comments: appointment.comments
-        };
-
-        try {
-            const response = await fetch(`${backendUrl}/api/medical-appointments`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            });
-
-            if (response.ok) {
-                alert("Medical appointment created successfully!");
-                resetForm();
-                navigate("/medapps");
-            } else {
-                const errorData = await response.json();
-                console.error("Error del servidor:", errorData);
-                alert("Failed to create medical appointment");
-            }
-        } catch (error) {
-            console.error("Error creating medical appointment:", error);
-        }
-    };
+    if (loading) {
+        return (
+            <div className="container mt-4">
+                <p>Loading medical appointment details...</p>
+            </div>
+        );
+    }
 
     return (
-        <div className="container mt-4 d-flex flex-column gap-3 align-items-start">
-            <Link to="/medapps" className="btn btn-primary">
+        <div className="container mt-4">
+            <Link to="/medapps" className="btn btn-outline-secondary mb-3">
                 ← Back to Medical Appointments List
             </Link>
 
-            <div className="card p-4 mb-5 shadow-sm w-100">
-                <h3>Create New Medical Appointment</h3>
-                <form onSubmit={handleCreate}>
-                    <div className="row g-3 mt-1">
+            <div className="card shadow-sm p-4">
+                <h2 className="mb-4">View Medical Appointment</h2>
+
+                <form onSubmit={(e) => e.preventDefault()}>
+                    <div className="row g-3">
                         <div className="col-md-4">
                             <label className="form-label">User</label>
                             <select
                                 name="user_id"
                                 className="form-select"
                                 value={appointment.user_id}
-                                onChange={handleChange}
-                                required
+                                disabled
                             >
                                 <option value="">Select a user</option>
                                 {users.map(u => (
@@ -118,14 +87,14 @@ export const CreateMedicalAppointment = () => {
                                 ))}
                             </select>
                         </div>
+
                         <div className="col-md-4">
                             <label className="form-label">Pet</label>
                             <select
                                 name="pet_id"
                                 className="form-select"
                                 value={appointment.pet_id}
-                                onChange={handleChange}
-                                required
+                                disabled
                             >
                                 <option value="">Select a pet</option>
                                 {pets.map(p => (
@@ -133,14 +102,14 @@ export const CreateMedicalAppointment = () => {
                                 ))}
                             </select>
                         </div>
+
                         <div className="col-md-4">
                             <label className="form-label">Veterinarian</label>
                             <select
                                 name="veterinarian_id"
                                 className="form-select"
                                 value={appointment.veterinarian_id}
-                                onChange={handleChange}
-                                required
+                                disabled
                             >
                                 <option value="">Select a veterinarian</option>
                                 {veterinarians.map(v => (
@@ -148,6 +117,7 @@ export const CreateMedicalAppointment = () => {
                                 ))}
                             </select>
                         </div>
+
                         <div className="col-md-12">
                             <label className="form-label">Date</label>
                             <input
@@ -155,10 +125,10 @@ export const CreateMedicalAppointment = () => {
                                 name="date"
                                 className="form-control"
                                 value={appointment.date}
-                                onChange={handleChange}
-                                required
+                                disabled
                             />
                         </div>
+
                         <div className="col-md-12">
                             <label className="form-label">Hour</label>
                             <input
@@ -166,10 +136,10 @@ export const CreateMedicalAppointment = () => {
                                 name="hour"
                                 className="form-control"
                                 value={appointment.hour}
-                                onChange={handleChange}
-                                required
+                                disabled
                             />
                         </div>
+
                         <div className="col-md-12">
                             <label className="form-label">Comments</label>
                             <textarea
@@ -177,14 +147,10 @@ export const CreateMedicalAppointment = () => {
                                 className="form-control"
                                 rows="2"
                                 value={appointment.comments}
-                                onChange={handleChange}
-                                placeholder="Appointment comments"
+                                disabled
                             ></textarea>
                         </div>
                     </div>
-                    <button type="submit" className="btn btn-primary mt-4">
-                        Create Appointment
-                    </button>
                 </form>
             </div>
         </div>

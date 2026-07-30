@@ -129,9 +129,9 @@ class Pet(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "idUser": self.user_id,
-            "idShelter": self.shelter_id,
-            "idBreed": self.breed_id,
+            "user_id": self.user_id,
+            "shelter_id": self.shelter_id,
+            "breed_id": self.breed_id,
             "name": self.name,
             "genre": self.genre,
             "birthDate": self.birth_date.strftime('%Y-%m-%d') if self.birth_date else None,
@@ -192,9 +192,9 @@ class Adoption(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "idUser": self.user_id,
-            "idPet": self.pet_id,
-            "idShelter": self.shelter_id,
+            "user_id": self.user_id,
+            "pet_id": self.pet_id,
+            "shelter_id": self.shelter_id,
             "date": self.date.strftime('%Y-%m-%d') if self.date else None,
             "state": self.state,
             "comment": self.comment
@@ -221,9 +221,9 @@ class MedicalAppointment(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "idUser": self.user_id,
-            "idPet": self.pet_id,
-            "idVeterinarian": self.veterinarian_id,
+            "user_id": self.user_id,
+            "pet_id": self.pet_id,
+            "veterinarian_id": self.veterinarian_id,
             "date": self.date.strftime('%Y-%m-%d') if self.date else None,
             "hour": self.hour,
             "comments": self.comments

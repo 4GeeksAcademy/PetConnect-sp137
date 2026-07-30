@@ -4,6 +4,10 @@ import { MedicalAppointmentCard } from "../components/MedicalAppointmentCard";
 
 export const MedicalAppointmentsList = () => {
     const [appointments, setAppointments] = useState([]);
+    const [users, setUsers] = useState([]);
+    const [pets, setPets] = useState([]);
+    const [veterinarians, setVeterinarians] = useState([]);
+
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     const fetchAppointments = async () => {
@@ -18,8 +22,25 @@ export const MedicalAppointmentsList = () => {
         }
     };
 
+    const fetchRelatedData = async () => {
+        try {
+            const [resUsers, resPets, resVeterinarians] = await Promise.all([
+                fetch(`${backendUrl}/api/user`),
+                fetch(`${backendUrl}/api/pets`),
+                fetch(`${backendUrl}/api/veterinarians`)
+            ]);
+
+            if (resUsers.ok) setUsers(await resUsers.json());
+            if (resPets.ok) setPets(await resPets.json());
+            if (resVeterinarians.ok) setVeterinarians(await resVeterinarians.json());
+        } catch (error) {
+            console.error("Error fetching related data:", error);
+        }
+    };
+
     useEffect(() => {
         fetchAppointments();
+        fetchRelatedData();
     }, []);
 
     const handleDelete = async (id) => {
@@ -43,7 +64,7 @@ export const MedicalAppointmentsList = () => {
             <div className="d-flex justify-content-between align-items-center mb-4">
                 <h1>Medical Appointments List</h1>
                 <Link to="/create-medical-appointment" className="btn btn-primary">
-                    + Create Appointment
+                    + Create Medical Appointment
                 </Link>
             </div>
 
@@ -55,6 +76,9 @@ export const MedicalAppointmentsList = () => {
                         <MedicalAppointmentCard
                             key={appointment.id}
                             appointment={appointment}
+                            users={users}
+                            pets={pets}
+                            veterinarians={veterinarians}
                             onDelete={handleDelete}
                         />
                     ))}
