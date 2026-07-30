@@ -5,6 +5,7 @@ import {
   createRoutesFromElements,
   Route,
 } from "react-router-dom";
+
 import { Layout } from "./pages/Layout";
 import Breed from "./pages/Breed";
 import CreateBreed from "./pages/CreateBreed";
@@ -19,6 +20,12 @@ import { CreatePet } from "./pages/CreatePet";
 import { PetDetail } from "./pages/PetDetail";
 import { PetView } from "./pages/PetView";
 import { Home } from "./pages/Home";
+import { AdoptionsList } from "./pages/AdoptionsList";
+import { CreateAdoption } from "./pages/CreateAdoption";
+import { AdoptionDetail } from "./pages/AdoptionDetail";
+import { MedicalAppointmentsList } from "./pages/MedicalAppointmentsList";
+import { CreateMedicalAppointment } from "./pages/CreateMedicalAppointment";
+import { MedicalAppointmentDetail } from "./pages/MedicalAppointmentDetail";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -34,18 +41,23 @@ export const router = createBrowserRouter(
       <Route path="/form" element={<Form />} />
       <Route path="/shelter" element={<Shelter />} />
       <Route path="/user" element={<User />} />
-      <Route path="/single/:theId" element={<Single />} />  {/* Dynamic route for single items */}
+      <Route path="/single/:theId" element={<Single />} />
       <Route path="/demo" element={<Demo />} />
       <Route path="/create-pet" element={<CreatePet />} />
       <Route path="/pet-view/:id" element={<PetView />} />
       <Route path="/pets" element={<PetsList />} />
       <Route path="/pet-detail/:id" element={<PetDetail />} />
-      <Route path="/" element={<Breed />} />
       <Route path="/breed" element={<Breed />} />
       <Route path="/breed/new" element={<CreateBreed />} />
       <Route path="/breed/edit/:id" element={<EditBreed />} />
       <Route path="/single/:theId" element={<Single />} />
-      <Route path="/demo" element={<Demo />} />
+      <Route path="/pets/:id" element={<PetDetail />} />
+      <Route path="/create-adoption" element={<CreateAdoption />} />
+      <Route path="/adoptions" element={<AdoptionsList />} />
+      <Route path="/adoptions/:id" element={<AdoptionDetail />} />
+      <Route path="/create-medical-appointment" element={<CreateMedicalAppointment />} />
+      <Route path="/medapps" element={<MedicalAppointmentsList />} />
+      <Route path="/medapps/:id" element={<MedicalAppointmentDetail />} />
     </Route>
   )
 );

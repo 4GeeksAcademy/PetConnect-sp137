@@ -17,6 +17,12 @@ export const Navbar = () => {
 					<Link to="/pets">
 						<button className="btn btn-primary">Pets</button>
 					</Link>
+					<Link to="/adoptions">
+						<button className="btn btn-primary">Adoptions</button>
+					</Link>
+					<Link to="/medapps">
+						<button className="btn btn-primary">Medical Appointments</button>
+					</Link>
 					<Link to="/breed">
 						<button className="btn btn-primary">Breed</button>
 					</Link>

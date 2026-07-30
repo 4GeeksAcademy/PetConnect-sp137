@@ -2,6 +2,9 @@ from flask_sqlalchemy import SQLAlchemy
 from typing import Optional, List
 from sqlalchemy import String, Boolean, Date, Integer, ForeignKey, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from typing import Optional, List
+from sqlalchemy import String, Boolean, Date, Integer, ForeignKey, Text
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 db = SQLAlchemy()
 
@@ -36,8 +39,7 @@ class User(db.Model):
             "email": self.email,
             "birthDate": self.birth_date.strftime('%Y-%m-%d') if self.birth_date else None,
             "pc": self.pc,
-            "city": self.city,
-            # No se serializa la contraseña por motivos de seguridad
+            "city": self.city
         }
 
 
@@ -89,6 +91,12 @@ class Shelter(db.Model):
 
 class Pet(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[Optional[int]] = mapped_column(
+        Integer, ForeignKey('user.id'), nullable=True)
+    shelter_id: Mapped[Optional[int]] = mapped_column(
+        Integer, ForeignKey('shelter.id'), nullable=True)
+    breed_id: Mapped[Optional[int]] = mapped_column(
+        Integer, ForeignKey('breed.id'), nullable=True)
     user_id: Mapped[Optional[int]] = mapped_column(
         Integer, ForeignKey('user.id'), nullable=True)
     shelter_id: Mapped[Optional[int]] = mapped_column(
