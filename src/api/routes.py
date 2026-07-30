@@ -221,7 +221,7 @@ def create_medical_appointment():
 
 @api.route('/medical-appointments/<int:medapp_id>', methods=['DELETE'])
 def delete_medapp(medapp_id):
-    medapp = db.session.get(Adoption, medapp_id)
+    medapp = db.session.get(MedicalAppointment, medapp_id)
 
     if medapp is None:
         raise APIException("Medical Appointment not found", status_code=404)
