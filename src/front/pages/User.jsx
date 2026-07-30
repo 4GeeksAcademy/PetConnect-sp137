@@ -47,13 +47,13 @@ const handleDeleteUser = (id) => {
                       id={user.id} 
                       //key={index}
                       key={user.id}
-                      name={user.name} 
+                      name={user.name}
+                      legalDocument={user.legalDocument}
+                      birthDate={user.birthDate} 
                       city={user.city} 
-                      CIF={user.CIF} 
                       adress={user.adress} 
                       email={user.email} 
                       pc={user.pc} 
-                      iconUrl={user.iconUrl}
                       onDelete={handleDeleteUser} />
                     
                       </div>

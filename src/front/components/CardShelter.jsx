@@ -4,15 +4,9 @@ import rigoImageUrl from "../assets/img/rigo-baby.jpg";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import React from "react";
 
-
-
 export const CardShelter = (props) => {
-  //const { store, dispatch } = useGlobalReducer();
-  //const [imageSrc, setImageSrc] = useState(`https://github.com/breatheco-de/swapi-images/blob/master/public/images/starships/${props.uid}.jpg?raw=true`);
-
-//const AnimalCard = ({ animal, onEdit, onDelete }) => {
-  // Se asume que "animal" es un objeto con la información pasada por props
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
 const handleDelete = async () => {
   try {
     const response = await fetch(
@@ -35,8 +29,6 @@ const handleDelete = async () => {
 
 
   return (
-
-
  <div className="card" style={{ width: "18rem" }}>
   <img src="https://www.mdzol.com/u/fotografias/m/2022/10/26/f768x1-1305623_1305750_79.jpg" className="card-img-top" alt="..."/>
   <div className="card-body">
@@ -45,9 +37,9 @@ const handleDelete = async () => {
   <ul className="list-group list-group-flush">
     
     <li className="list-group-item">City: {props.city}</li>
-    <li className="list-group-item">Adress: {props.adress}</li>
+    <li className="list-group-item">Address: {props.address}</li>
     <li className="list-group-item">Código Postal: {props.pc}</li>
-    <li className="list-group-item">CIF: {props.CIF}</li>
+    <li className="list-group-item">cif: {props.cif}</li>
     <li className="list-group-item">Email: {props.email}</li>
     <li className="list-group-item">Icon URL: {props.iconUrl}</li>
 

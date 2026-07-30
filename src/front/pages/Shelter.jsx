@@ -2,37 +2,10 @@ import { Link, useActionData } from "react-router-dom";
 import { useEffect, useState } from "react";
 import rigoImageUrl from "../assets/img/rigo-baby.jpg";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
-//import { Link } from "react-router-dom";
 import { CardShelter } from "../components/CardShelter.jsx";
 
 
-
-
-
 export const Shelter = () => {
-  //const { store, dispatch } = useGlobalReducer();
-
-  /* useEffect(() => {
-  async function getData() {
-    const [resShelter] = await Promise.all([
-      fetch("https://special-space-garbanzo-6666w7r6jp399g-3001.app.github.dev/admin/shelter/"),
-
-    ]);
-
-    const [shelter] = await Promise.all([
-      resShelter.json(),
-    ]);
-
-    dispatch({
-      type: "load_data",
-      payload: {
-        nuevoShelter: shelter.results,
-      },
-    });
-  }
-
-  getData();
-}, []); */
 
 const [shelter, setShelter] = useState([]);
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -75,8 +48,8 @@ const handleDeleteShelter = (id) => {
                       key={shelter.id}
                       name={shelter.name} 
                       city={shelter.city} 
-                      CIF={shelter.CIF} 
-                      adress={shelter.adress} 
+                      cif={shelter.cif} 
+                      address={shelter.address} 
                       email={shelter.email} 
                       pc={shelter.pc} 
                       iconUrl={shelter.iconUrl}
