@@ -7,6 +7,10 @@ export const PetDetail = () => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     const [loading, setLoading] = useState(true);
+    const [users, setUsers] = useState([]);
+    const [shelters, setShelters] = useState([]);
+    const [breeds, setBreeds] = useState([]);
+
     const [pet, setPet] = useState({
         name: "",
         genre: "male",
@@ -16,22 +20,39 @@ export const PetDetail = () => {
         color: "",
         photoUrl: "",
         size: "medium",
-        idUser: "",
-        idShelter: "",
-        idBreed: ""
+        user_id: "",
+        shelter_id: "",
+        breed_id: ""
     });
 
     useEffect(() => {
-        const fetchPetDetail = async () => {
+        const fetchPetData = async () => {
             try {
-                const response = await fetch(`${backendUrl}/api/pets/${id}`);
-                if (response.ok) {
-                    const data = await response.json();
+                const [resUsers, resShelters, resBreeds, resPet] = await Promise.all([
+                    fetch(`${backendUrl}/api/user`),
+                    fetch(`${backendUrl}/api/shelter`),
+                    fetch(`${backendUrl}/api/breed`),
+                    fetch(`${backendUrl}/api/pets/${id}`)
+                ]);
+
+                if (resUsers.ok) setUsers(await resUsers.json());
+                if (resShelters.ok) setShelters(await resShelters.json());
+                if (resBreeds.ok) setBreeds(await resBreeds.json());
+
+                if (resPet.ok) {
+                    const data = await resPet.json();
+                    const uId = data.user_id || data.idUser || "";
+                    const sId = data.shelter_id || data.idShelter || "";
+                    const bId = data.breed_id || data.idBreed || "";
+
                     setPet({
                         ...data,
                         birthDate: data.birthDate || "",
                         chipNumber: data.chipNumber || "",
-                        photoUrl: data.photoUrl || ""
+                        photoUrl: data.photoUrl || "",
+                        user_id: uId ? String(uId) : "",
+                        shelter_id: sId ? String(sId) : "",
+                        breed_id: bId ? String(bId) : ""
                     });
                 }
             } catch (error) {
@@ -41,7 +62,7 @@ export const PetDetail = () => {
             }
         };
 
-        fetchPetDetail();
+        fetchPetData();
     }, [id, backendUrl]);
 
     const handleChange = (e) => {
@@ -54,17 +75,34 @@ export const PetDetail = () => {
 
     const handleSave = async (e) => {
         e.preventDefault();
+
+        const payload = {
+            name: pet.name,
+            genre: pet.genre,
+            size: pet.size,
+            birthDate: pet.birthDate,
+            color: pet.color,
+            chipNumber: pet.chipNumber,
+            photoUrl: pet.photoUrl,
+            castrated: pet.castrated,
+            user_id: pet.user_id ? Number(pet.user_id) : null,
+            shelter_id: pet.shelter_id ? Number(pet.shelter_id) : null,
+            breed_id: pet.breed_id ? Number(pet.breed_id) : null
+        };
+
         try {
-            const response = await fetch(`${backendUrl}/api/pets/${id}`, {
+            const response = await fetch(`${backendUrl}/api/pet-detail/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(pet)
+                body: JSON.stringify(payload)
             });
 
             if (response.ok) {
                 alert("Pet updated successfully!");
                 navigate("/pets");
             } else {
+                const errorData = await response.json();
+                console.error("Error del servidor:", errorData);
                 alert("Failed to update pet");
             }
         } catch (error) {
@@ -125,6 +163,55 @@ export const PetDetail = () => {
                                 <option value="small">Small</option>
                                 <option value="medium">Medium</option>
                                 <option value="large">Large</option>
+                            </select>
+                        </div>
+                        <div className="col-md-4">
+                            <label className="form-label">Breed</label>
+                            <select
+                                name="breed_id"
+                                className="form-select"
+                                value={pet.breed_id}
+                                onChange={handleChange}
+                                required
+                            >
+                                <option value="">Select a breed</option>
+                                {breeds.map((b) => (
+                                    <option key={b.id} value={b.id}>
+                                        {b.breedName || b.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="col-md-4">
+                            <label className="form-label">User</label>
+                            <select
+                                name="user_id"
+                                className="form-select"
+                                value={pet.user_id}
+                                onChange={handleChange}
+                            >
+                                <option value="">Select a user</option>
+                                {users.map((u) => (
+                                    <option key={u.id} value={u.id}>
+                                        {u.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="col-md-4">
+                            <label className="form-label">Shelter</label>
+                            <select
+                                name="shelter_id"
+                                className="form-select"
+                                value={pet.shelter_id}
+                                onChange={handleChange}
+                            >
+                                <option value="">Select a shelter</option>
+                                {shelters.map((s) => (
+                                    <option key={s.id} value={s.id}>
+                                        {s.name}
+                                    </option>
+                                ))}
                             </select>
                         </div>
                         <div className="col-md-4">

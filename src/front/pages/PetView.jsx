@@ -7,13 +7,26 @@ export const PetView = () => {
 
     const [loading, setLoading] = useState(true);
     const [pet, setPet] = useState(null);
+    const [users, setUsers] = useState([]);
+    const [shelters, setShelters] = useState([]);
+    const [breeds, setBreeds] = useState([]);
 
     useEffect(() => {
-        const fetchPetDetail = async () => {
+        const fetchPetData = async () => {
             try {
-                const response = await fetch(`${backendUrl}/api/pets/${id}`);
-                if (response.ok) {
-                    const data = await response.json();
+                const [resUsers, resShelters, resBreeds, resPet] = await Promise.all([
+                    fetch(`${backendUrl}/api/user`),
+                    fetch(`${backendUrl}/api/shelter`),
+                    fetch(`${backendUrl}/api/breed`),
+                    fetch(`${backendUrl}/api/pets/${id}`)
+                ]);
+
+                if (resUsers.ok) setUsers(await resUsers.json());
+                if (resShelters.ok) setShelters(await resShelters.json());
+                if (resBreeds.ok) setBreeds(await resBreeds.json());
+
+                if (resPet.ok) {
+                    const data = await resPet.json();
                     setPet(data);
                 }
             } catch (error) {
@@ -23,7 +36,7 @@ export const PetView = () => {
             }
         };
 
-        fetchPetDetail();
+        fetchPetData();
     }, [id, backendUrl]);
 
     if (loading) {
@@ -44,6 +57,10 @@ export const PetView = () => {
             </div>
         );
     }
+
+    const breedName = breeds.find(b => b.id === pet.breed_id)?.breedName || "Not specified";
+    const userName = users.find(u => u.id === pet.user_id)?.name || "Not assigned";
+    const shelterName = shelters.find(s => s.id === pet.shelter_id)?.name || "Not assigned";
 
     return (
         <div className="container mt-4">
@@ -67,6 +84,9 @@ export const PetView = () => {
                         <div className="card-body">
                             <h2 className="card-title">{pet.name}</h2>
                             <hr />
+                            <p className="card-text"><strong>Breed:</strong> {breedName}</p>
+                            <p className="card-text"><strong>User:</strong> {userName}</p>
+                            <p className="card-text"><strong>Shelter:</strong> {shelterName}</p>
                             <p className="card-text"><strong>Gender:</strong> {pet.genre}</p>
                             <p className="card-text"><strong>Size:</strong> {pet.size}</p>
                             <p className="card-text"><strong>Color:</strong> {pet.color}</p>

@@ -1,7 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export const PetCard = ({ pet, onDelete }) => {
+export const PetCard = ({ pet, breeds = [], users = [], shelters = [], onDelete }) => {
+    const foundBreed = breeds.find(b => b.id === pet.breed_id);
+    const breedName = foundBreed ? foundBreed.breedName : "Not specified";
+
+    const foundUser = users.find(u => u.id === pet.user_id);
+    const userName = foundUser ? foundUser.name : "Not assigned";
+
+    const foundShelter = shelters.find(s => s.id === pet.shelter_id);
+    const shelterName = foundShelter ? foundShelter.name : "Not assigned";
+
     return (
         <div className="col-md-4">
             <div className="card h-100 shadow-sm">
@@ -15,6 +24,9 @@ export const PetCard = ({ pet, onDelete }) => {
                 )}
                 <div className="card-body">
                     <h5 className="card-title">{pet.name}</h5>
+                    <p className="card-text mb-1"><strong>Breed:</strong> {breedName}</p>
+                    <p className="card-text mb-1"><strong>User:</strong> {userName}</p>
+                    <p className="card-text mb-1"><strong>Shelter:</strong> {shelterName}</p>
                     <p className="card-text mb-1"><strong>Gender:</strong> {pet.genre}</p>
                     <p className="card-text mb-1"><strong>Size:</strong> {pet.size}</p>
                     <p className="card-text mb-1"><strong>Color:</strong> {pet.color}</p>

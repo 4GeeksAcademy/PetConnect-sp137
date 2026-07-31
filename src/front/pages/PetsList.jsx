@@ -4,22 +4,31 @@ import { PetCard } from "../components/PetCard";
 
 export const PetsList = () => {
     const [pets, setPets] = useState([]);
+    const [breeds, setBreeds] = useState([]);
+    const [shelters, setShelters] = useState([]);
+    const [users, setUsers] = useState([]);
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-    const fetchPets = async () => {
+    const fetchData = async () => {
         try {
-            const response = await fetch(`${backendUrl}/api/pets`);
-            if (response.ok) {
-                const data = await response.json();
-                setPets(data);
-            }
+            const [resPets, resBreeds, resShelters, resUsers] = await Promise.all([
+                fetch(`${backendUrl}/api/pets`),
+                fetch(`${backendUrl}/api/breed`),
+                fetch(`${backendUrl}/api/shelter`),
+                fetch(`${backendUrl}/api/user`)
+            ]);
+
+            if (resPets.ok) setPets(await resPets.json());
+            if (resBreeds.ok) setBreeds(await resBreeds.json());
+            if (resShelters.ok) setShelters(await resShelters.json());
+            if (resUsers.ok) setUsers(await resUsers.json());
         } catch (error) {
-            console.error("Error fetching pets:", error);
+            console.error("Error fetching data:", error);
         }
     };
 
     useEffect(() => {
-        fetchPets();
+        fetchData();
     }, []);
 
     const handleDelete = async (id) => {
@@ -31,7 +40,7 @@ export const PetsList = () => {
             });
 
             if (response.ok) {
-                fetchPets();
+                fetchData();
             }
         } catch (error) {
             console.error("Error deleting pet:", error);
@@ -52,7 +61,14 @@ export const PetsList = () => {
             ) : (
                 <div className="row g-3">
                     {pets.map((pet) => (
-                        <PetCard key={pet.id} pet={pet} onDelete={handleDelete} />
+                        <PetCard
+                            key={pet.id}
+                            pet={pet}
+                            breeds={breeds}
+                            shelters={shelters}
+                            users={users}
+                            onDelete={handleDelete}
+                        />
                     ))}
                 </div>
             )}

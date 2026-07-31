@@ -79,9 +79,9 @@ def update_pet(pet_id):
     pet.castrated = body['castrated']
     pet.chip_number = body['chipNumber']
     pet.photo_url = body['photoUrl']
-    pet.user_id = body['idUser']
-    pet.shelter_id = body['idShelter']
-    pet.breed_id = body['idBreed']
+    pet.user_id = body['user_id']
+    pet.shelter_id = body['shelter_id']
+    pet.breed_id = body['breed_id']
     pet.birth_date = body['birthDate']
 
     db.session.commit()

@@ -1,7 +1,14 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 export const CreatePet = () => {
+    const navigate = useNavigate();
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+    const [users, setUsers] = useState([]);
+    const [shelters, setShelters] = useState([]);
+    const [breeds, setBreeds] = useState([]);
+
     const [formData, setFormData] = useState({
         name: "",
         genre: "male",
@@ -16,7 +23,25 @@ export const CreatePet = () => {
         idBreed: ""
     });
 
-    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    useEffect(() => {
+        const fetchDropdownData = async () => {
+            try {
+                const [resUsers, resShelters, resBreeds] = await Promise.all([
+                    fetch(`${backendUrl}/api/user`),
+                    fetch(`${backendUrl}/api/shelter`),
+                    fetch(`${backendUrl}/api/breed`)
+                ]);
+
+                if (resUsers.ok) setUsers(await resUsers.json());
+                if (resShelters.ok) setShelters(await resShelters.json());
+                if (resBreeds.ok) setBreeds(await resBreeds.json());
+            } catch (error) {
+                console.error("Error fetching dropdown data:", error);
+            }
+        };
+
+        fetchDropdownData();
+    }, [backendUrl]);
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -44,16 +69,29 @@ export const CreatePet = () => {
 
     const handleCreate = async (e) => {
         e.preventDefault();
+
+        const payload = {
+            ...formData,
+            idUser: formData.idUser ? Number(formData.idUser) : null,
+            idShelter: formData.idShelter ? Number(formData.idShelter) : null,
+            idBreed: formData.idBreed ? Number(formData.idBreed) : null
+        };
+
         try {
             const response = await fetch(`${backendUrl}/api/pets`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(payload)
             });
 
             if (response.ok) {
                 alert("Pet registered successfully!");
                 resetForm();
+                navigate("/pets");
+            } else {
+                const errorData = await response.json();
+                console.error("Error del servidor:", errorData);
+                alert("Failed to register pet");
             }
         } catch (error) {
             console.error("Error creating pet:", error);
@@ -87,6 +125,33 @@ export const CreatePet = () => {
                                 <option value="small">Small</option>
                                 <option value="medium">Medium</option>
                                 <option value="large">Large</option>
+                            </select>
+                        </div>
+                        <div className="col-md-4">
+                            <label className="form-label">Breed</label>
+                            <select name="idBreed" className="form-select" value={formData.idBreed} onChange={handleChange} required>
+                                <option value="">Select a breed</option>
+                                {breeds.map(b => (
+                                    <option key={b.id} value={b.id}>{b.name}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="col-md-4">
+                            <label className="form-label">User</label>
+                            <select name="idUser" className="form-select" value={formData.idUser} onChange={handleChange}>
+                                <option value="">Select a user</option>
+                                {users.map(u => (
+                                    <option key={u.id} value={u.id}>{u.name}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="col-md-4">
+                            <label className="form-label">Shelter</label>
+                            <select name="idShelter" className="form-select" value={formData.idShelter} onChange={handleChange}>
+                                <option value="">Select a shelter</option>
+                                {shelters.map(s => (
+                                    <option key={s.id} value={s.id}>{s.name}</option>
+                                ))}
                             </select>
                         </div>
                         <div className="col-md-4">
