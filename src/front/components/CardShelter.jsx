@@ -29,7 +29,7 @@ const handleDelete = async () => {
 
 
   return (
- <div className="card" style={{ width: "18rem" }}>
+  <div className="card" style={{ width: "18rem" }}>
   <img src="https://www.mdzol.com/u/fotografias/m/2022/10/26/f768x1-1305623_1305750_79.jpg" className="card-img-top" alt="..."/>
   <div className="card-body">
     <h5 className="card-title">{props.name}</h5> 
@@ -56,7 +56,6 @@ const handleDelete = async () => {
     </Link>
   </div>
 </div>
-
   ); 
 };
 

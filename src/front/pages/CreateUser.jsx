@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-export const Form = () => {
+export const CreateShelter = () => {
 
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
@@ -10,13 +10,12 @@ export const Form = () => {
 
     const [formData, setFormData] = useState({
         name: "",
+        legalDocument: "",
+        birthDate: "",
         email: "",
         city: "",
-        CIF: "",
         adress: "",
-        pc: "",
-        iconUrl: "",
-        IBAN: ""
+        pc: ""
     })
 
     const handleChange = (e) => {
@@ -38,10 +37,10 @@ export const Form = () => {
 
             if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file")
 
-            console.log("Enviando datos a:", backendUrl + "/api/shelter")
+            console.log("Enviando datos a:", backendUrl + "/api/user")
             console.log("Datos del formulario:", formData)
 
-            const response = await fetch(backendUrl + "/api/shelter", {
+            const response = await fetch(backendUrl + "/api/user", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -52,19 +51,18 @@ export const Form = () => {
             const data = await response.json()
 
             if (!response.ok) {
-                throw new Error(data.error || "Error al crear el refugio")
+                throw new Error(data.error || "Error al crear el usuario")
             }
 
             setSuccess(true)
             setFormData({
                 name: "",
+                legalDocument: "",
+                birthDate: "",
                 email: "",
                 city: "",
-                CIF: "",
                 adress: "",
-                pc: "",
-                iconUrl: "",
-                IBAN: ""
+                pc: ""
             })
 
             // Redirigir a home después de 2 segundos
@@ -77,7 +75,7 @@ export const Form = () => {
         <div className="container mt-5">
             <div className="row">
                 <div className="col-md-8 offset-md-2">
-                    <h2 className="mb-4">Formulario de Crear Refugio</h2>
+                    <h2 className="mb-4">Crear Usuario</h2>
 
                     {error && (
                         <div className="alert alert-danger" role="alert">
@@ -87,7 +85,7 @@ export const Form = () => {
 
                     {success && (
                         <div className="alert alert-success" role="alert">
-                            ¡Refugio creado exitosamente!
+                            ¡Usuario creado exitosamente!
                         </div>
                     )}
 
@@ -103,7 +101,21 @@ export const Form = () => {
                                 value={formData.name}
                                 onChange={handleChange}
                                 required
-                                placeholder="Nombre del refugio"
+                                placeholder="Nombre"
+                            />
+                        </div>
+
+                        {/* Legal Document */}
+                        <div className="mb-3">
+                            <label htmlFor="CIF" className="form-label">DNI/NIE</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="legalDocument"
+                                name="legalDocument"
+                                value={formData.legalDocument}
+                                onChange={handleChange}
+                                placeholder="Documento legal"
                             />
                         </div>
 
@@ -133,20 +145,6 @@ export const Form = () => {
                                 value={formData.city}
                                 onChange={handleChange}
                                 placeholder="Ciudad"
-                            />
-                        </div>
-
-                        {/* CIF */}
-                        <div className="mb-3">
-                            <label htmlFor="CIF" className="form-label">CIF</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="CIF"
-                                name="CIF"
-                                value={formData.CIF}
-                                onChange={handleChange}
-                                placeholder="CIF del refugio"
                             />
                         </div>
 
@@ -192,20 +190,6 @@ export const Form = () => {
                             />
                         </div>
 
-                        {/* IBAN */}
-                        <div className="mb-3">
-                            <label htmlFor="IBAN" className="form-label">IBAN</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="IBAN"
-                                name="IBAN"
-                                value={formData.IBAN}
-                                onChange={handleChange}
-                                placeholder="IBAN para donaciones"
-                            />
-                        </div>
-
                         {/* Botones */}
                         <div className="d-flex gap-2">
                             <button
@@ -213,12 +197,12 @@ export const Form = () => {
                                 className="btn btn-primary"
                                 disabled={loading}
                             >
-                                {loading ? "Guardando..." : "Guardar Refugio"}
+                                {loading ? "Guardando..." : "Guardar Usuario"}
                             </button>
                             <button
                                 type="button"
                                 className="btn btn-secondary"
-                                onClick={() => navigate("/")}
+                                onClick={() => navigate("/user")}
                                 disabled={loading}
                             >
                                 Cancelar
