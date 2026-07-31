@@ -60,6 +60,7 @@ class Breed(db.Model):
 class Shelter(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(100), nullable=False)
+    password: Mapped[str] = mapped_column(nullable=False)
     city: Mapped[str] = mapped_column(String(100), nullable=False)
     cif: Mapped[str] = mapped_column(String(50), unique=True, nullable=False)
     address: Mapped[str] = mapped_column(String(200), nullable=False)
@@ -146,6 +147,7 @@ class Pet(db.Model):
 class Veterinarian(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(100), nullable=False)
+    password: Mapped[str] = mapped_column(nullable=False)
     city: Mapped[str] = mapped_column(String(100), nullable=False)
     address: Mapped[str] = mapped_column(String(200), nullable=False)
     email: Mapped[str] = mapped_column(
