@@ -576,3 +576,79 @@ def get_veterinarians():
         Veterinarian.id.asc()).all()
     results = [veterinarian.serialize() for veterinarian in veterinarians]
     return jsonify(results), 200
+
+
+@api.route('/veterinarians/<int:veterinarian_id>', methods=['GET'])
+def get_veterinarian(veterinarian_id):
+    veterinarian = Veterinarian.query.get(veterinarian_id)
+
+    if veterinarian is None:
+        return jsonify({"message": "Veterinarian not found"}), 404
+
+    return jsonify(veterinarian.serialize()), 200
+
+
+@api.route('/veterinarians', methods=['POST'])
+def create_veterinarian():
+    body = request.get_json()
+
+    if not body:
+        return jsonify({"message": "Request body is required"}), 400
+
+    required_fields = ["name", "city", "address", "email"]
+
+    for field in required_fields:
+        if not body.get(field):
+            return jsonify({"message": f"{field} is required"}), 400
+
+    new_veterinarian = Veterinarian(
+        name=body["name"],
+        city=body["city"],
+        address=body["address"],
+        email=body["email"],
+        pc=body.get("pc"),
+        icon_url=body.get("iconUrl"),
+        iban=body.get("iban"),
+        schedule=body.get("schedule")
+    )
+
+    db.session.add(new_veterinarian)
+    db.session.commit()
+
+    return jsonify(new_veterinarian.serialize()), 201
+
+
+@api.route('/veterinarians/<int:veterinarian_id>', methods=['PUT'])
+def update_veterinarian(veterinarian_id):
+    veterinarian = Veterinarian.query.get(veterinarian_id)
+
+    if veterinarian is None:
+        return jsonify({"message": "Veterinarian not found"}), 404
+
+    body = request.get_json()
+
+    veterinarian.name = body.get("name", veterinarian.name)
+    veterinarian.city = body.get("city", veterinarian.city)
+    veterinarian.address = body.get("address", veterinarian.address)
+    veterinarian.email = body.get("email", veterinarian.email)
+    veterinarian.pc = body.get("pc", veterinarian.pc)
+    veterinarian.icon_url = body.get("iconUrl", veterinarian.icon_url)
+    veterinarian.iban = body.get("iban", veterinarian.iban)
+    veterinarian.schedule = body.get("schedule", veterinarian.schedule)
+
+    db.session.commit()
+
+    return jsonify(veterinarian.serialize()), 200
+
+
+@api.route('/veterinarians/<int:veterinarian_id>', methods=['DELETE'])
+def delete_veterinarian(veterinarian_id):
+    veterinarian = Veterinarian.query.get(veterinarian_id)
+
+    if veterinarian is None:
+        return jsonify({"message": "Veterinarian not found"}), 404
+
+    db.session.delete(veterinarian)
+    db.session.commit()
+
+    return jsonify({"message": "Veterinarian deleted successfully"}), 200
