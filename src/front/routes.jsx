@@ -10,6 +10,9 @@ import { Layout } from "./pages/Layout";
 import Breed from "./pages/Breed";
 import CreateBreed from "./pages/CreateBreed";
 import EditBreed from "./pages/EditBreed";
+import Veterinarian from "./pages/Veterinarian";
+import CreateVeterinarian from "./pages/CreateVeterinarian";
+import EditVeterinarian from "./pages/EditVeterinarian";
 import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
 import { CreateShelter } from "./pages/CreateShelter";
@@ -52,6 +55,9 @@ export const router = createBrowserRouter(
       <Route path="/breed" element={<Breed />} />
       <Route path="/breed/new" element={<CreateBreed />} />
       <Route path="/breed/edit/:id" element={<EditBreed />} />
+      <Route path="/veterinarian" element={<Veterinarian />} />
+      <Route path="/veterinarian/new" element={<CreateVeterinarian />} />
+      <Route path="/veterinarian/edit/:id" element={<EditVeterinarian />} />
       <Route path="/single/:theId" element={<Single />} />
       <Route path="/pets/:id" element={<PetDetail />} />
       <Route path="/create-adoption" element={<CreateAdoption />} />
