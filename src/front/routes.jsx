@@ -12,7 +12,7 @@ import CreateBreed from "./pages/CreateBreed";
 import EditBreed from "./pages/EditBreed";
 import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
-import { Form } from "./pages/Form";
+import { CreateShelter } from "./pages/CreateShelter";
 import { Shelter } from "./pages/Shelter";
 import { User } from "./pages/User";
 import { PetsList } from "./pages/PetsList";
@@ -40,7 +40,7 @@ export const router = createBrowserRouter(
     // Root Route: All navigation will start from here.
     <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>} >
       <Route path="/" element={<Home />} />
-      <Route path="/form" element={<Form />} />
+      <Route path="/createShelter" element={<CreateShelter />} />
       <Route path="/shelter" element={<Shelter />} />
       <Route path="/user" element={<User />} />
       <Route path="/single/:theId" element={<Single />} />
