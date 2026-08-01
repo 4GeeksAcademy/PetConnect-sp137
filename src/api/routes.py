@@ -258,8 +258,8 @@ def create_shelter():
         body = request.get_json()
 
         # Validar campos requeridos
-        if not body or not body.get('name') or not body.get('email'):
-            return jsonify({"error": "name y email son requeridos"}), 400
+        if not body or not body.get('name') or not body.get('email') or not body.get('password') or not body.get('address'):
+            return jsonify({"error": "name, email, password y address son requeridos"}), 400
 
         # Verificar si el email ya existe
         existing_shelter = Shelter.query.filter_by(
@@ -270,13 +270,14 @@ def create_shelter():
         # Crear nuevo refugio
         new_shelter = Shelter(
             name=body.get('name'),
+            password=body.get('password'),
             email=body.get('email'),
             city=body.get('city'),
-            CIF=body.get('CIF'),
-            adress=body.get('adress'),
+            cif=body.get('cif'),
+            address=body.get('address'),
             pc=body.get('pc'),
-            iconUrl=body.get('iconUrl'),
-            IBAN=body.get('IBAN')
+            icon_url=body.get('iconUrl'),
+            iban=body.get('iban')
         )
 
         db.session.add(new_shelter)
@@ -305,12 +306,13 @@ def update_shelter(shelter_id):
         # Actualizar campos del refugio
         shelter.name = body.get('name', shelter.name)
         shelter.email = body.get('email', shelter.email)
+        shelter.password = body.get('password', shelter.password)
         shelter.city = body.get('city', shelter.city)
-        shelter.CIF = body.get('CIF', shelter.CIF)
-        shelter.adress = body.get('adress', shelter.adress)
+        shelter.cif = body.get('cif', shelter.cif)
+        shelter.address = body.get('address', shelter.address)
         shelter.pc = body.get('pc', shelter.pc)
-        shelter.iconUrl = body.get('iconUrl', shelter.iconUrl)
-        shelter.IBAN = body.get('IBAN', shelter.IBAN)
+        shelter.icon_url = body.get('iconUrl', shelter.icon_url)
+        shelter.iban = body.get('iban', shelter.iban)
 
         db.session.commit()
 

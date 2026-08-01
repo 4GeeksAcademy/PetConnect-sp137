@@ -10,6 +10,7 @@ import { Layout } from "./pages/Layout";
 import Breed from "./pages/Breed";
 import CreateBreed from "./pages/CreateBreed";
 import EditBreed from "./pages/EditBreed";
+import EditShelter from "./pages/EditShelter";
 import Veterinarian from "./pages/Veterinarian";
 import CreateVeterinarian from "./pages/CreateVeterinarian";
 import EditVeterinarian from "./pages/EditVeterinarian";
@@ -17,6 +18,7 @@ import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
 import { CreateShelter } from "./pages/CreateShelter";
 import { Shelter } from "./pages/Shelter";
+import { ShelterView } from "./pages/ShelterView";
 import { User } from "./pages/User";
 import { PetsList } from "./pages/PetsList";
 import { CreatePet } from "./pages/CreatePet";
@@ -44,6 +46,8 @@ export const router = createBrowserRouter(
     <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>} >
       <Route path="/" element={<Home />} />
       <Route path="/createShelter" element={<CreateShelter />} />
+      <Route path="/editShelter/:id" element={<EditShelter />} />
+      <Route path="/shelter-view/:id" element={<ShelterView />} />
       <Route path="/shelter" element={<Shelter />} />
       <Route path="/user" element={<User />} />
       <Route path="/single/:theId" element={<Single />} />

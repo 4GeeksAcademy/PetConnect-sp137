@@ -60,7 +60,8 @@ const handleDeleteShelter = (id) => {
                       city={shelter.city} 
                       cif={shelter.cif} 
                       address={shelter.address} 
-                      email={shelter.email} 
+                      email={shelter.email}
+                      password={shelter.password}
                       pc={shelter.pc} 
                       iconUrl={shelter.iconUrl}
                       onDelete={handleDeleteShelter} />

@@ -46,12 +46,11 @@ const handleDelete = async () => {
   </ul>
   <div className="card-body d-flex gap-4 justify-content-center">
 
-    <Link to="/">
+    <Link to={`/shelter-view/${props.id}`}>
       <span className="card-link btn btn-primary btn-sm" href="#" role="button">VER</span>
     </Link>
     <button className="btn btn-danger btn-sm" onClick={handleDelete}>ELIMINAR</button>
-
-    <Link to="/">
+    <Link to={`/editShelter/${props.id}`}>
       <span className="card-link btn btn-warning btn-sm" href="#" role="button">EDITAR</span>
     </Link>
   </div>
