@@ -2,15 +2,14 @@ import { Link, useActionData } from "react-router-dom";
 import { useEffect, useState } from "react";
 import rigoImageUrl from "../assets/img/rigo-baby.jpg";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
-//import { Link } from "react-router-dom";
-import { CardUser } from "../components/CardUser.jsx";
-
+import { UserCard } from "../components/UserCard.jsx";
+import { useNavigate } from "react-router-dom"
 
 export const User = () => {
 
 const [user, setUser] = useState([]);
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
+  const navigate = useNavigate()
     const fetchUser = async () => {
         try {
             const response = await fetch(`${backendUrl}/api/user`);
@@ -27,23 +26,23 @@ const handleDeleteUser = (id) => {
   setUser(prev => prev.filter(item => item.id !== id));
 };
 
-
     useEffect(() => {
         fetchUser();
     }, []);
-
-
 
   return (
     <>
       <div>
         <div className="text-center bg-secondary-subtle text-dark w-100">
           <div className="container-fluid px-5 py-5">
-            <h1 className="text-body-emphasis">Usuarios</h1>
+            <div className="d-flex justify-content-between align-items-center mb-4">
+              <h1 className="m-0">Usuarios</h1>
+              <button className="btn btn-primary" onClick={() => navigate("/userCreate")}> + Crear user</button>
+            </div>
                 <div className="row g-5 justify-content-center">
                   {user.map((user, index) => (
                     <div className="col-auto" key={index}>
-                    <CardUser 
+                    <UserCard 
                       id={user.id} 
                       //key={index}
                       key={user.id}
@@ -55,7 +54,6 @@ const handleDeleteUser = (id) => {
                       email={user.email} 
                       pc={user.pc} 
                       onDelete={handleDeleteUser} />
-                    
                       </div>
                   ))}
                 </div>

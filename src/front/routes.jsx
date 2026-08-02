@@ -10,16 +10,19 @@ import { Layout } from "./pages/Layout";
 import Breed from "./pages/Breed";
 import CreateBreed from "./pages/CreateBreed";
 import EditBreed from "./pages/EditBreed";
-import EditShelter from "./pages/EditShelter";
 import Veterinarian from "./pages/Veterinarian";
 import CreateVeterinarian from "./pages/CreateVeterinarian";
 import EditVeterinarian from "./pages/EditVeterinarian";
 import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
-import { CreateShelter } from "./pages/CreateShelter";
 import { Shelter } from "./pages/Shelter";
+import { ShelterCreate } from "./pages/ShelterCreate";
 import { ShelterView } from "./pages/ShelterView";
+import ShelterEdit from "./pages/ShelterEdit";
 import { User } from "./pages/User";
+import { UserCreate } from "./pages/UserCreate";
+import UserEdit from "./pages/UserEdit";
+import { UserView } from "./pages/UserView";
 import { PetsList } from "./pages/PetsList";
 import { CreatePet } from "./pages/CreatePet";
 import { PetDetail } from "./pages/PetDetail";
@@ -47,11 +50,14 @@ export const router = createBrowserRouter(
     // Root Route: All navigation will start from here.
     <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>} >
       <Route path="/" element={<Home />} />
-      <Route path="/createShelter" element={<CreateShelter />} />
-      <Route path="/editShelter/:id" element={<EditShelter />} />
-      <Route path="/shelter-view/:id" element={<ShelterView />} />
       <Route path="/shelter" element={<Shelter />} />
+      <Route path="/ShelterCreate" element={<ShelterCreate />} />
+      <Route path="/ShelterEdit/:id" element={<ShelterEdit />} />
+      <Route path="/shelterview/:id" element={<ShelterView />} />
       <Route path="/user" element={<User />} />
+      <Route path="/userCreate" element={<UserCreate />} />
+      <Route path="/userEdit/:id" element={<UserEdit />} />
+      <Route path="/user-view/:id" element={<UserView />} />
       <Route path="/single/:theId" element={<Single />} />
       <Route path="/demo" element={<Demo />} />
       <Route path="/create-pet" element={<CreatePet />} />

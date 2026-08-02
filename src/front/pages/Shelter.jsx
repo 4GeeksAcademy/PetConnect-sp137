@@ -2,7 +2,7 @@ import { Link, useActionData } from "react-router-dom";
 import { useEffect, useState } from "react";
 import rigoImageUrl from "../assets/img/rigo-baby.jpg";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
-import { CardShelter } from "../components/CardShelter.jsx";
+import { ShelterCard } from "../components/ShelterCard.jsx";
 import { useNavigate } from "react-router-dom"
 
 
@@ -28,12 +28,9 @@ const handleDeleteShelter = (id) => {
   setShelter(prev => prev.filter(item => item.id !== id));
 };
 
-
     useEffect(() => {
         fetchShelter();
     }, []);
-
-
 
   return (
     <>
@@ -41,18 +38,14 @@ const handleDeleteShelter = (id) => {
       <div>
         <div className="text-center bg-secondary-subtle text-dark w-100">
           <div className="container-fluid px-5 py-5 ">
-{/*             <div className=" justify-content-between">
-            <h1 className="text-body-emphasis">Refugios</h1>
-            <button className="btn btn-primary mb-3" onClick={() => navigate("/form")}>+ Crear user</button>
-            </div>   */}  
             <div className="d-flex justify-content-between align-items-center mb-4">
               <h1 className="m-0">Refugios</h1>
-              <button className="btn btn-primary" onClick={() => navigate("/createShelter")}> + Crear shelter</button>
+              <button className="btn btn-primary" onClick={() => navigate("/ShelterCreate")}> + Crear shelter</button>
             </div>
                 <div className="row g-5 justify-content-center">
                   {shelter.map((shelter, index) => (
                     <div className="col-auto" key={index}>
-                    <CardShelter 
+                    <ShelterCard 
                       id={shelter.id} 
                       //key={index}
                       key={shelter.id}
@@ -65,7 +58,6 @@ const handleDeleteShelter = (id) => {
                       pc={shelter.pc} 
                       iconUrl={shelter.iconUrl}
                       onDelete={handleDeleteShelter} />
-                    
                       </div>
                   ))}
                 </div>

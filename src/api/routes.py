@@ -163,13 +163,14 @@ def create_user():
         # Crear nuevo user
         new_user = User(
             name=body.get('name'),
-            birthDate=body.get('birthDate'),
+            birth_date=body.get('birthDate') if body.get(
+                'birthDate') else None,
             email=body.get('email'),
-            password=body.get('password'),
-            legalDocument=body.get('legalDocument'),
-            city=body.get('city'),
+            password=body.get('password') or "",
+            legal_document=body.get('legalDocument'),
+            city=body.get('city') or "",
             pc=body.get('pc'),
-            adress=body.get('adress')
+            address=body.get('adress') or ""
 
         )
 
@@ -198,13 +199,13 @@ def update_user(user_id):
 
         # Actualizar campos del user
         user.name = body.get('name', user.name)
-        user.birthDate = body.get('birthDate', user.birthDate)
+        user.birth_date = body.get('birthDate', user.birth_date)
         user.email = body.get('email', user.email)
         user.password = body.get('password', user.password)
-        user.legalDocument = body.get('legalDocument', user.legalDocument)
+        user.legal_document = body.get('legalDocument', user.legal_document)
         user.city = body.get('city', user.city)
         user.pc = body.get('pc', user.pc)
-        user.adress = body.get('adress', user.adress)
+        user.address = body.get('adress', user.address)
 
         db.session.commit()
 
