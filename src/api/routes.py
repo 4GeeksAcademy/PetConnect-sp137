@@ -6,11 +6,23 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Breed, Pet, Shelter, Adoption, MedicalAppointment, Veterinarian
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
+from flask_jwt_extended import create_access_token
 
 api = Blueprint('api', __name__)
 # Allow CORS requests to this API
 CORS(api)
 
+@api.route('/loginUser', methods=['POST'])
+def login_user():
+    body = request.get_json()
+    
+    user = User.query.filter_by(email=body.get('email')).first()
+
+    if not user or user.password != body.get('password'):
+        return jsonify({"Incorrect user or password."}), 401
+
+    access_token = create_access_token(identity=str(user.id))
+    return jsonify({"access_token": access_token, "user": user.serialize()}), 200
 
 ################# Pets #################
 
