@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-export const CreateShelter = () => {
+export const ShelterCreate = () => {
 
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
@@ -10,12 +10,14 @@ export const CreateShelter = () => {
 
     const [formData, setFormData] = useState({
         name: "",
-        legalDocument: "",
-        birthDate: "",
         email: "",
+        password: "",
         city: "",
-        adress: "",
-        pc: ""
+        cif: "",
+        address: "",
+        pc: "",
+        iconUrl: "",
+        iban: ""
     })
 
     const handleChange = (e) => {
@@ -32,50 +34,52 @@ export const CreateShelter = () => {
         setError(null)
         setSuccess(false)
 
-   
-            const backendUrl = import.meta.env.VITE_BACKEND_URL
 
-            if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file")
+        const backendUrl = import.meta.env.VITE_BACKEND_URL
 
-            console.log("Enviando datos a:", backendUrl + "/api/user")
-            console.log("Datos del formulario:", formData)
+        if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file")
 
-            const response = await fetch(backendUrl + "/api/user", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(formData)
-            })
+        console.log("Enviando datos a:", backendUrl + "/api/shelter")
+        console.log("Datos del formulario:", formData)
 
-            const data = await response.json()
+        const response = await fetch(backendUrl + "/api/shelter", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData)
+        })
 
-            if (!response.ok) {
-                throw new Error(data.error || "Error al crear el usuario")
-            }
+        const data = await response.json()
 
-            setSuccess(true)
-            setFormData({
-                name: "",
-                legalDocument: "",
-                birthDate: "",
-                email: "",
-                city: "",
-                adress: "",
-                pc: ""
-            })
+        if (!response.ok) {
+            throw new Error(data.error || "Error al crear el refugio")
+        }
 
-            // Redirigir a home después de 2 segundos
-            setTimeout(() => {
-                navigate("/")
-            }, 2000)
+        setSuccess(true)
+        setFormData({
+            name: "",
+            email: "",
+            password: "",
+            city: "",
+            cif: "",
+            address: "",
+            pc: "",
+            iconUrl: "",
+            iban: ""
+        })
+
+        // Redirigir a home después de 2 segundos
+        setTimeout(() => {
+            navigate("/")
+        }, 2000)
     }
 
     return (
         <div className="container mt-5">
             <div className="row">
                 <div className="col-md-8 offset-md-2">
-                    <h2 className="mb-4">Crear Usuario</h2>
+                    <h2 className="mb-4">Crear Refugio</h2>
 
                     {error && (
                         <div className="alert alert-danger" role="alert">
@@ -85,7 +89,7 @@ export const CreateShelter = () => {
 
                     {success && (
                         <div className="alert alert-success" role="alert">
-                            ¡Usuario creado exitosamente!
+                            ¡Refugio creado exitosamente!
                         </div>
                     )}
 
@@ -101,21 +105,7 @@ export const CreateShelter = () => {
                                 value={formData.name}
                                 onChange={handleChange}
                                 required
-                                placeholder="Nombre"
-                            />
-                        </div>
-
-                        {/* Legal Document */}
-                        <div className="mb-3">
-                            <label htmlFor="CIF" className="form-label">DNI/NIE</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="legalDocument"
-                                name="legalDocument"
-                                value={formData.legalDocument}
-                                onChange={handleChange}
-                                placeholder="Documento legal"
+                                placeholder="Nombre del refugio"
                             />
                         </div>
 
@@ -134,6 +124,21 @@ export const CreateShelter = () => {
                             />
                         </div>
 
+                        {/* Password */}
+                        <div className="mb-3">
+                            <label htmlFor="password" className="form-label">Password *</label>
+                            <input
+                                type="password"
+                                className="form-control"
+                                id="password"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                required
+                                placeholder="contraseña"
+                            />
+                        </div>
+
                         {/* Ciudad */}
                         <div className="mb-3">
                             <label htmlFor="city" className="form-label">Ciudad</label>
@@ -148,15 +153,29 @@ export const CreateShelter = () => {
                             />
                         </div>
 
-                        {/* Dirección */}
+                        {/* CIF */}
                         <div className="mb-3">
-                            <label htmlFor="adress" className="form-label">Dirección</label>
+                            <label htmlFor="cif" className="form-label">CIF</label>
                             <input
                                 type="text"
                                 className="form-control"
-                                id="adress"
-                                name="adress"
-                                value={formData.adress}
+                                id="cif"
+                                name="cif"
+                                value={formData.cif}
+                                onChange={handleChange}
+                                placeholder="CIF del refugio"
+                            />
+                        </div>
+
+                        {/* Dirección */}
+                        <div className="mb-3">
+                            <label htmlFor="address" className="form-label">Dirección</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="address"
+                                name="address"
+                                value={formData.address}
                                 onChange={handleChange}
                                 placeholder="Dirección completa"
                             />
@@ -190,6 +209,20 @@ export const CreateShelter = () => {
                             />
                         </div>
 
+                        {/* IBAN */}
+                        <div className="mb-3">
+                            <label htmlFor="iban" className="form-label">IBAN</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="iban"
+                                name="iban"
+                                value={formData.iban}
+                                onChange={handleChange}
+                                placeholder="IBAN para donaciones"
+                            />
+                        </div>
+
                         {/* Botones */}
                         <div className="d-flex gap-2">
                             <button
@@ -197,12 +230,12 @@ export const CreateShelter = () => {
                                 className="btn btn-primary"
                                 disabled={loading}
                             >
-                                {loading ? "Guardando..." : "Guardar Usuario"}
+                                {loading ? "Guardando..." : "Guardar Refugio"}
                             </button>
                             <button
                                 type="button"
                                 className="btn btn-secondary"
-                                onClick={() => navigate("/user")}
+                                onClick={() => navigate("/shelter")}
                                 disabled={loading}
                             >
                                 Cancelar

@@ -1,13 +1,10 @@
-import React, { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-export const CreateShelter = () => {
+const ShelterEdit = () => {
 
-    const navigate = useNavigate()
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(null)
-    const [success, setSuccess] = useState(false)
-
+    const { id } = useParams();
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -18,62 +15,87 @@ export const CreateShelter = () => {
         pc: "",
         iconUrl: "",
         iban: ""
-    })
+    });
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(false);
+    const API = import.meta.env.VITE_BACKEND_URL + "/api/shelter";
 
     const handleChange = (e) => {
-        const { name, value } = e.target
-        setFormData(prev => ({
+        const { name, value } = e.target;
+        setFormData((prev) => ({
             ...prev,
             [name]: value
-        }))
-    }
+        }));
+    };
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
-        setLoading(true)
-        setError(null)
-        setSuccess(false)
+        e.preventDefault();
+        await updateShelter();
+    };
 
+    // búsqueda por id
+    const getShelter = async () => {
+        try {
+            const response = await fetch(`${API}/${id}`);
+            const data = await response.json();
 
-        const backendUrl = import.meta.env.VITE_BACKEND_URL
+            setFormData({
+                name: data.name || "",
+                email: data.email || "",
+                password: data.password || "",
+                city: data.city || "",
+                cif: data.cif || "",
+                address: data.address || "",
+                pc: data.pc || "",
+                iconUrl: data.iconUrl || "",
+                iban: data.iban || ""
+            });
 
-        if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file")
-
-        console.log("Enviando datos a:", backendUrl + "/api/shelter")
-        console.log("Datos del formulario:", formData)
-
-        const response = await fetch(backendUrl + "/api/shelter", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(formData)
-        })
-
-        const data = await response.json()
-
-        if (!response.ok) {
-            throw new Error(data.error || "Error al crear el refugio")
+        } catch (error) {
+            console.log(error);
         }
+    };
 
-        setSuccess(true)
-        setFormData({
-            name: "",
-            email: "",
-            password: "",
-            city: "",
-            cif: "",
-            address: "",
-            pc: "",
-            iconUrl: "",
-            iban: ""
-        })
+    // Actualizar
+    const updateShelter = async () => {
+        if (!formData.name.trim() || !formData.email.trim()) return;
 
-        // Redirigir a home después de 2 segundos
-        setTimeout(() => {
-            navigate("/")
-        }, 2000)
-    }
+        setLoading(true);
+        setError(null);
+        setSuccess(false);
+
+        try {
+            const response = await fetch(`${API}/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                setError(data.error || "Error al actualizar el refugio");
+                setLoading(false);
+                return;
+            }
+
+            setSuccess(true);
+            navigate("/shelter");
+
+        } catch (error) {
+            console.log(error);
+            setError(error.message || "Error al actualizar el refugio");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        getShelter();
+    }, []);
 
     return (
         <div className="container mt-5">
@@ -226,11 +248,10 @@ export const CreateShelter = () => {
                         {/* Botones */}
                         <div className="d-flex gap-2">
                             <button
-                                type="submit"
-                                className="btn btn-primary"
-                                disabled={loading}
-                            >
-                                {loading ? "Guardando..." : "Guardar Refugio"}
+                                type="button"
+                                className="btn btn-warning me-2"
+                                onClick={updateShelter}>
+                                Guardar cambios
                             </button>
                             <button
                                 type="button"
@@ -247,3 +268,6 @@ export const CreateShelter = () => {
         </div>
     )
 }
+
+export default ShelterEdit;
+

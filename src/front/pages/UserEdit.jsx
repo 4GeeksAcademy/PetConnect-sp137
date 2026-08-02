@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-const EditShelter = () => {
+const UserEdit = () => {
 
     const { id } = useParams();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: "",
+        legalDocument: "",
+        birthDate: "",
         email: "",
-        password: "",
         city: "",
-        cif: "",
-        address: "",
-        pc: "",
-        iconUrl: "",
-        iban: ""
+        adress: "",
+        pc: ""
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
-    const API = import.meta.env.VITE_BACKEND_URL + "/api/shelter";
+    const API = import.meta.env.VITE_BACKEND_URL + "/api/user";
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -31,34 +29,32 @@ const EditShelter = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await updateShelter();
+        await updateUser();
     };
 
     // búsqueda por id
-    const getShelter = async () => {
+    const getUser = async () => {
         try {
             const response = await fetch(`${API}/${id}`);
             const data = await response.json();
 
             setFormData({
                 name: data.name || "",
+                legalDocument: data.legalDocument || "",
+                birthDate: data.birthDate || "",
                 email: data.email || "",
                 password: data.password || "",
                 city: data.city || "",
-                cif: data.cif || "",
                 address: data.address || "",
-                pc: data.pc || "",
-                iconUrl: data.iconUrl || "",
-                iban: data.iban || ""
+                pc: data.pc || ""
             });
 
         } catch (error) {
-            console.log(error);
-        }
+            console.log(error);}
     };
 
     // Actualizar
-    const updateShelter = async () => {
+    const updateUser = async () => {
         if (!formData.name.trim() || !formData.email.trim()) return;
 
         setLoading(true);
@@ -77,24 +73,24 @@ const EditShelter = () => {
             const data = await response.json();
 
             if (!response.ok) {
-                setError(data.error || "Error al actualizar el refugio");
+                setError(data.error || "Error al actualizar el usuario");
                 setLoading(false);
                 return;
             }
 
             setSuccess(true);
-            navigate("/shelter");
+            navigate("/user");
 
         } catch (error) {
             console.log(error);
-            setError(error.message || "Error al actualizar el refugio");
+            setError(error.message || "Error al actualizar el usuario");
         } finally {
             setLoading(false);
         }
     };
 
     useEffect(() => {
-        getShelter();
+        getUser();
     }, []);
 
     return (
@@ -106,16 +102,15 @@ const EditShelter = () => {
                     {error && (
                         <div className="alert alert-danger" role="alert">
                             {error}
-                        </div>
-                    )}
+                        </div>)}
 
                     {success && (
                         <div className="alert alert-success" role="alert">
                             ¡Refugio creado exitosamente!
-                        </div>
-                    )}
+                        </div>)}
 
                     <form onSubmit={handleSubmit}>
+
                         {/* Nombre */}
                         <div className="mb-3">
                             <label htmlFor="name" className="form-label">Nombre *</label>
@@ -127,10 +122,31 @@ const EditShelter = () => {
                                 value={formData.name}
                                 onChange={handleChange}
                                 required
-                                placeholder="Nombre del refugio"
-                            />
+                                placeholder="Nombre del refugio"/>
                         </div>
-
+                        <div className="mb-3">
+                            <label htmlFor="CIF" className="form-label">DNI/NIE</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="legalDocument"
+                                name="legalDocument"
+                                value={formData.legalDocument}
+                                onChange={handleChange}
+                                placeholder="Documento legal"/>
+                        </div>
+                        
+                        {/* Fecha de Nacimiento */}
+                        <div className="mb-3">
+                            <label htmlFor="CIF" className="form-label">Fecha de Nacimiento</label>
+                            <input
+                                type="date"
+                                className="form-control"
+                                id="birthDate"
+                                name="birthDate"
+                                value={formData.birthDate}
+                                onChange={handleChange}/>
+                        </div>
                         {/* Email */}
                         <div className="mb-3">
                             <label htmlFor="email" className="form-label">Email *</label>
@@ -142,8 +158,7 @@ const EditShelter = () => {
                                 value={formData.email}
                                 onChange={handleChange}
                                 required
-                                placeholder="correo@ejemplo.com"
-                            />
+                                placeholder="correo@ejemplo.com"/>
                         </div>
 
                         {/* Password */}
@@ -157,8 +172,7 @@ const EditShelter = () => {
                                 value={formData.password}
                                 onChange={handleChange}
                                 required
-                                placeholder="contraseña"
-                            />
+                                placeholder="contraseña"/>
                         </div>
 
                         {/* Ciudad */}
@@ -171,22 +185,7 @@ const EditShelter = () => {
                                 name="city"
                                 value={formData.city}
                                 onChange={handleChange}
-                                placeholder="Ciudad"
-                            />
-                        </div>
-
-                        {/* CIF */}
-                        <div className="mb-3">
-                            <label htmlFor="cif" className="form-label">CIF</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="cif"
-                                name="cif"
-                                value={formData.cif}
-                                onChange={handleChange}
-                                placeholder="CIF del refugio"
-                            />
+                                placeholder="Ciudad"/>
                         </div>
 
                         {/* Dirección */}
@@ -199,8 +198,7 @@ const EditShelter = () => {
                                 name="address"
                                 value={formData.address}
                                 onChange={handleChange}
-                                placeholder="Dirección completa"
-                            />
+                                placeholder="Dirección completa"/>
                         </div>
 
                         {/* Código Postal */}
@@ -213,36 +211,7 @@ const EditShelter = () => {
                                 name="pc"
                                 value={formData.pc}
                                 onChange={handleChange}
-                                placeholder="Código postal"
-                            />
-                        </div>
-
-                        {/* URL de Icono */}
-                        <div className="mb-3">
-                            <label htmlFor="iconUrl" className="form-label">URL del Icono</label>
-                            <input
-                                type="url"
-                                className="form-control"
-                                id="iconUrl"
-                                name="iconUrl"
-                                value={formData.iconUrl}
-                                onChange={handleChange}
-                                placeholder="https://ejemplo.com/icono.png"
-                            />
-                        </div>
-
-                        {/* IBAN */}
-                        <div className="mb-3">
-                            <label htmlFor="iban" className="form-label">IBAN</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="iban"
-                                name="iban"
-                                value={formData.iban}
-                                onChange={handleChange}
-                                placeholder="IBAN para donaciones"
-                            />
+                                placeholder="Código postal"/>
                         </div>
 
                         {/* Botones */}
@@ -250,15 +219,14 @@ const EditShelter = () => {
                             <button
                                 type="button"
                                 className="btn btn-warning me-2"
-                                onClick={updateShelter}>
+                                onClick={updateUser}>
                                 Guardar cambios
                             </button>
                             <button
                                 type="button"
                                 className="btn btn-secondary"
-                                onClick={() => navigate("/shelter")}
-                                disabled={loading}
-                            >
+                                onClick={() => navigate("/user")}
+                                disabled={loading}>
                                 Cancelar
                             </button>
                         </div>
@@ -269,5 +237,5 @@ const EditShelter = () => {
     )
 }
 
-export default EditShelter;
+export default UserEdit;
 
