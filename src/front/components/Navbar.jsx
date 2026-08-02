@@ -5,7 +5,12 @@ import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 
 export const Navbar = () => {
 	const navigate = useNavigate()
-	const { store } = useGlobalReducer();
+	const { store, dispatch } = useGlobalReducer();
+
+function logout() {
+		navigate ('/shelterLogin')
+		dispatch({ type: "set_shelter_auth", payload: null })
+		localStorage.removeItem('sheltertoken')	}
 
 	return (
 		<nav className="navbar navbar-light bg-light">
@@ -15,7 +20,7 @@ export const Navbar = () => {
 				</Link>
 
 				<div className="d-flex gap-2 align-items-center">
-					{store.userAuth ? (
+					{store.shelterAuth ? (
 						<>
 							<button className="btn btn-info" onClick={() => navigate("/dashboard-user")}>User Dashboard</button>
 						</>
@@ -25,7 +30,17 @@ export const Navbar = () => {
 						</button>
 					)}
 				</div>
-
+				{
+					!store.shelterAuth ? (
+					<>
+						<Link to="/shelterLogin" className="btn btn-secondary" >
+							Shelter Login
+						</Link>
+					</>
+					): (
+						<button onClick={logout} className=" btn btn-warning">Desconectar</button>
+					)
+				}
 				<div className="d-flex align-items-center gap-2">
 					<button className="btn btn-primary" onClick={() => navigate("/user")}>Users</button>
 					<button className="btn btn-primary" onClick={() => navigate("/pets")}>Pets</button>

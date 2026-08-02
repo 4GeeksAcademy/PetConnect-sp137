@@ -16,6 +16,8 @@ import EditVeterinarian from "./pages/EditVeterinarian";
 import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
 import { Shelter } from "./pages/Shelter";
+import { ShelterLogin } from "./pages/ShelterLogin";
+import { ShelterDashboard } from "./pages/ShelterDashboard";
 import { ShelterCreate } from "./pages/ShelterCreate";
 import { ShelterView } from "./pages/ShelterView";
 import ShelterEdit from "./pages/ShelterEdit";
@@ -51,6 +53,8 @@ export const router = createBrowserRouter(
     <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>} >
       <Route path="/" element={<Home />} />
       <Route path="/shelter" element={<Shelter />} />
+      <Route path="/shelterLogin" element={<ShelterLogin />} />
+      <Route path="/shelterDashboard" element={<ShelterDashboard />} />
       <Route path="/ShelterCreate" element={<ShelterCreate />} />
       <Route path="/ShelterEdit/:id" element={<ShelterEdit />} />
       <Route path="/shelterview/:id" element={<ShelterView />} />

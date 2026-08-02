@@ -20,6 +20,12 @@ export default function storeReducer(store, action = {}) {
         userAuth: action.payload
       };
 
+    case 'set_shelter_auth':
+      return {
+        ...store,
+        shelterAuth: action.payload
+      };
+
     case "load_data": {
       const { nuevosShelters } = action.payload;
       return {

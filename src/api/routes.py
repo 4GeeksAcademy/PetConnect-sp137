@@ -7,6 +7,8 @@ from api.models import db, User, Breed, Pet, Shelter, Adoption, MedicalAppointme
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
 
 api = Blueprint('api', __name__)
 # Allow CORS requests to this API
@@ -361,11 +363,31 @@ def get_breeds():
     return jsonify([breed.serialize() for breed in breeds]), 200
 
 ###############################################################################################################
+
+
+@api.route("/shelterLogin", methods=["POST"])
+def login():
+    data = request.get_json()
+    email = data.get("email")
+    password = data.get("password")
+
+    #De nuevo verifico que no hayan campos vacios
+    if not email or not password:
+        return jsonify({"msg": "Se requiere un Email o password"}), 400
+    
+    user = db.session.execute(db.select(User).where(User.email == email, User.password == password)).scalar_one_or_none()
+
+    if user is None:
+        return jsonify({"msg": "Email o Password incorrecto"}), 400
+    
+    #Cuando user y pass son correctas. no hay conflictos:
+    access_token = create_access_token(identity=str(user.id)) #token creado
+    return jsonify(access_token=access_token), 200
+
 ###############################################################################################################
-
+###############################################################################################################
+    
 # GET - Obtener una raza por ID
-
-
 @api.route('/breed/<int:breed_id>', methods=['GET'])
 def get_breed(breed_id):
     breed = Breed.query.get(breed_id)
