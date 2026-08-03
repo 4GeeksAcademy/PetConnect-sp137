@@ -7,12 +7,12 @@ import {
 } from "react-router-dom";
 
 import { Layout } from "./pages/Layout";
-import { Breed } from "./pages/Breed";
-import { CreateBreed } from "./pages/CreateBreed";
-import { EditBreed } from "./pages/EditBreed";
-import { Veterinarian } from "./pages/Veterinarian";
-import { CreateVeterinarian } from "./pages/CreateVeterinarian";
-import { EditVeterinarian } from "./pages/EditVeterinarian";
+import Breed from "./pages/Breed";
+import CreateBreed from "./pages/CreateBreed";
+import EditBreed from "./pages/EditBreed";
+import Veterinarian from "./pages/Veterinarian";
+import CreateVeterinarian from "./pages/CreateVeterinarian";
+import EditVeterinarian from "./pages/EditVeterinarian";
 import { VeterinarianLogin } from "./pages/VeterinarianLogin";
 import { VeterinarianDashboard } from "./pages/VeterinarianDashboard";
 import { Single } from "./pages/Single";
