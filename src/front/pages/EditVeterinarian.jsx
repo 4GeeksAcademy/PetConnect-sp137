@@ -9,6 +9,7 @@ const EditVeterinarian = () => {
 
     const [form, setForm] = useState({
         name: "",
+        password: "",
         city: "",
         address: "",
         email: "",
@@ -74,6 +75,14 @@ const EditVeterinarian = () => {
                 name="name"
                 placeholder="Nombre"
                 value={form.name}
+                onChange={handleChange}
+            />
+
+            <input
+                className="form-control mb-2"
+                name="password"
+                placeholder="Contraseña"
+                value={form.password}
                 onChange={handleChange}
             />
 

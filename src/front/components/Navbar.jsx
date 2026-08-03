@@ -7,10 +7,11 @@ export const Navbar = () => {
 	const navigate = useNavigate()
 	const { store, dispatch } = useGlobalReducer();
 
-function logout() {
-		navigate ('/shelterLogin')
+	function logout() {
+		navigate('/shelterLogin')
 		dispatch({ type: "set_shelter_auth", payload: null })
-		localStorage.removeItem('sheltertoken')	}
+		localStorage.removeItem('sheltertoken')
+	}
 
 	return (
 		<nav className="navbar navbar-light bg-light">
@@ -32,12 +33,15 @@ function logout() {
 				</div>
 				{
 					!store.shelterAuth ? (
-					<>
-						<Link to="/shelterLogin" className="btn btn-secondary" >
-							Shelter Login
-						</Link>
-					</>
-					): (
+						<>
+							<Link to="/shelterLogin" className="btn btn-secondary" >
+								Shelter Login
+							</Link>
+							<Link to="/loginVeterinarian" className="btn btn-secondary">
+								Veterinarian Login
+							</Link>
+						</>
+					) : (
 						<button onClick={logout} className=" btn btn-warning">Desconectar</button>
 					)
 				}
@@ -48,6 +52,8 @@ function logout() {
 					<button className="btn btn-primary" onClick={() => navigate("/medapps")}>Medical Appointments</button>
 					<button className="btn btn-primary" onClick={() => navigate("/breed")}>Breed</button>
 					<button className="btn btn-primary" onClick={() => navigate("/shelter")}>Shelter</button>
+					<button className="btn btn-primary" onClick={() => navigate("/veterinarian")}>Veterinarian</button>
+					
 				</div>
 			</div>
 		</nav>

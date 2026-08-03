@@ -14,10 +14,11 @@ api = Blueprint('api', __name__)
 # Allow CORS requests to this API
 CORS(api)
 
+
 @api.route('/loginUser', methods=['POST'])
 def login_user():
     body = request.get_json()
-    
+
     user = User.query.filter_by(email=body.get('email')).first()
 
     if not user or user.password != body.get('password'):
@@ -26,7 +27,34 @@ def login_user():
     access_token = create_access_token(identity=str(user.id))
     return jsonify({"access_token": access_token, "user": user.serialize()}), 200
 
+
+@api.route('/loginVeterinarian', methods=['POST'])
+def login_veterinarian():
+    body = request.get_json()
+
+    if not body:
+        return jsonify({"message": "Request body is required"}), 400
+
+    email = body.get("email")
+    password = body.get("password")
+
+    if not email or not password:
+        return jsonify({"message": "Email and password are required"}), 400
+
+    veterinarian = Veterinarian.query.filter_by(email=email).first()
+
+    if not veterinarian or veterinarian.password != password:
+        return jsonify({"message": "Incorrect email or password"}), 401
+
+    access_token = create_access_token(identity=str(veterinarian.id))
+
+    return jsonify({
+        "access_token": access_token,
+        "veterinarian": veterinarian.serialize()
+    }), 200
+
 ################# Pets #################
+
 
 @api.route('/pets', methods=['GET'])
 def get_pets():
@@ -371,23 +399,26 @@ def login():
     email = data.get("email")
     password = data.get("password")
 
-    #De nuevo verifico que no hayan campos vacios
+    # De nuevo verifico que no hayan campos vacios
     if not email or not password:
         return jsonify({"msg": "Se requiere un Email o password"}), 400
-    
-    user = db.session.execute(db.select(User).where(User.email == email, User.password == password)).scalar_one_or_none()
+
+    user = db.session.execute(db.select(User).where(
+        User.email == email, User.password == password)).scalar_one_or_none()
 
     if user is None:
         return jsonify({"msg": "Email o Password incorrecto"}), 400
-    
-    #Cuando user y pass son correctas. no hay conflictos:
-    access_token = create_access_token(identity=str(user.id)) #token creado
+
+    # Cuando user y pass son correctas. no hay conflictos:
+    access_token = create_access_token(identity=str(user.id))  # token creado
     return jsonify(access_token=access_token), 200
 
 ###############################################################################################################
 ###############################################################################################################
-    
+
 # GET - Obtener una raza por ID
+
+
 @api.route('/breed/<int:breed_id>', methods=['GET'])
 def get_breed(breed_id):
     breed = Breed.query.get(breed_id)
@@ -632,7 +663,7 @@ def create_veterinarian():
     if not body:
         return jsonify({"message": "Request body is required"}), 400
 
-    required_fields = ["name", "city", "address", "email"]
+    required_fields = ["name", "password", "city", "address", "email"]
 
     for field in required_fields:
         if not body.get(field):
@@ -640,6 +671,7 @@ def create_veterinarian():
 
     new_veterinarian = Veterinarian(
         name=body["name"],
+        password=body["password"],
         city=body["city"],
         address=body["address"],
         email=body["email"],
@@ -665,6 +697,7 @@ def update_veterinarian(veterinarian_id):
     body = request.get_json()
 
     veterinarian.name = body.get("name", veterinarian.name)
+    veterinarian.password = body.get("password", veterinarian.password)
     veterinarian.city = body.get("city", veterinarian.city)
     veterinarian.address = body.get("address", veterinarian.address)
     veterinarian.email = body.get("email", veterinarian.email)

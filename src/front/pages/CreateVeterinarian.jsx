@@ -7,6 +7,7 @@ const CreateVeterinarian = () => {
 
     const [form, setForm] = useState({
         name: "",
+        password: "",
         city: "",
         address: "",
         email: "",
@@ -60,6 +61,14 @@ const CreateVeterinarian = () => {
                     name="name"
                     placeholder="Nombre"
                     value={form.name}
+                    onChange={handleChange}
+                />
+
+                <input
+                    className="form-control mb-3"
+                    name="password"
+                    placeholder="Contraseña"
+                    value={form.password}
                     onChange={handleChange}
                 />
 
