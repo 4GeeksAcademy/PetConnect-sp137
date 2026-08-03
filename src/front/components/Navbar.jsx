@@ -7,10 +7,10 @@ export const Navbar = () => {
 	const navigate = useNavigate()
 	const { store, dispatch } = useGlobalReducer();
 
-	function logout() {
-		navigate('/shelterLogin')
-		dispatch({ type: "set_shelter_auth", payload: null })
-		localStorage.removeItem('sheltertoken')
+	function logoutUser() {
+		navigate('/userLogin')
+		dispatch({ type: "set_user_auth", payload: null })
+		localStorage.removeItem('userToken')
 	}
 
 	return (
@@ -21,7 +21,7 @@ export const Navbar = () => {
 				</Link>
 
 				<div className="d-flex gap-2 align-items-center">
-					{store.shelterAuth ? (
+					{store.userAuth ? (
 						<>
 							<button className="btn btn-info" onClick={() => navigate("/dashboard-user")}>User Dashboard</button>
 						</>
@@ -30,21 +30,28 @@ export const Navbar = () => {
 							User Login
 						</button>
 					)}
-				</div>
-				{
-					!store.shelterAuth ? (
+
+					{store.shelterAuth ? (
 						<>
-							<Link to="/shelterLogin" className="btn btn-secondary" >
-								Shelter Login
-							</Link>
-							<Link to="/loginVeterinarian" className="btn btn-secondary">
-								Veterinarian Login
-							</Link>
+							<button className="btn btn-info" onClick={() => navigate("/ShelterDashboard")}>Shelter Dashboard</button>
 						</>
 					) : (
-						<button onClick={logout} className=" btn btn-warning">Desconectar</button>
-					)
-				}
+						<button className="btn btn-info" onClick={() => navigate("/shelterLogin")}>
+							Shelter Login
+						</button>
+					)}
+
+					{store.veterinarianAuth ? (
+						<>
+							<button className="btn btn-info" onClick={() => navigate("/dashboard-veterinarian")}>Veterinarian Dashboard</button>
+						</>
+					) : (
+						<button className="btn btn-info" onClick={() => navigate("/loginVeterinarian")}>
+							Veterinarian Login
+						</button>
+					)}
+				</div>
+
 				<div className="d-flex align-items-center gap-2">
 					<button className="btn btn-primary" onClick={() => navigate("/user")}>Users</button>
 					<button className="btn btn-primary" onClick={() => navigate("/pets")}>Pets</button>
@@ -53,7 +60,7 @@ export const Navbar = () => {
 					<button className="btn btn-primary" onClick={() => navigate("/breed")}>Breed</button>
 					<button className="btn btn-primary" onClick={() => navigate("/shelter")}>Shelter</button>
 					<button className="btn btn-primary" onClick={() => navigate("/veterinarian")}>Veterinarian</button>
-					
+
 				</div>
 			</div>
 		</nav>

@@ -22,7 +22,7 @@ def login_user():
     user = User.query.filter_by(email=body.get('email')).first()
 
     if not user or user.password != body.get('password'):
-        return jsonify({"Incorrect user or password."}), 401
+        return jsonify({"error": "Incorrect user or password."}), 401
 
     access_token = create_access_token(identity=str(user.id))
     return jsonify({"access_token": access_token, "user": user.serialize()}), 200
