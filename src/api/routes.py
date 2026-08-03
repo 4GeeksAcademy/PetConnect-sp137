@@ -403,14 +403,14 @@ def login():
     if not email or not password:
         return jsonify({"msg": "Se requiere un Email o password"}), 400
 
-    user = db.session.execute(db.select(User).where(
-        User.email == email, User.password == password)).scalar_one_or_none()
+    shelter = db.session.execute(db.select(Shelter).where(
+        Shelter.email == email, Shelter.password == password)).scalar_one_or_none()
 
-    if user is None:
+    if shelter is None:
         return jsonify({"msg": "Email o Password incorrecto"}), 400
 
     # Cuando user y pass son correctas. no hay conflictos:
-    access_token = create_access_token(identity=str(user.id))  # token creado
+    access_token = create_access_token(identity=str(shelter.id))  # token creado
     return jsonify(access_token=access_token), 200
 
 ###############################################################################################################

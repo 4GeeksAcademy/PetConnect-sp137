@@ -25,6 +25,10 @@ export const ShelterDashboard = () => {
     return (
         <div className="container mt-5 text-center">
             <h1>Dashboard Shelter</h1>
+
+                        <button onClick={handleLogout} className=" btn btn-warning">Desconectar</button>
+                    
+                
         </div>
     );
 };
