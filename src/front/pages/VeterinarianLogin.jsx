@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 
 export const VeterinarianLogin = () => {
@@ -64,8 +64,16 @@ export const VeterinarianLogin = () => {
                     <input type="password" onChange={(e) => setPassword(e.target.value)} value={password} className="form-control" />
                 </div>
                 <button type="submit" className="btn btn-primary"> Login </button>
+                <div className="text-center mt-3">
+                    <p>
+                        ¿No tienes una cuenta?{" "}
+                        <Link to="/registerVeterinarian">
+                            Crear cuenta
+                        </Link>
+                    </p>
+                </div>
             </form>
         </div>
-    )
+    )  
 
 }

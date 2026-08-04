@@ -13,6 +13,7 @@ import EditBreed from "./pages/EditBreed";
 import Veterinarian from "./pages/Veterinarian";
 import CreateVeterinarian from "./pages/CreateVeterinarian";
 import EditVeterinarian from "./pages/EditVeterinarian";
+import VeterinarianRegister from "./pages/VeterinarianRegister";
 import { VeterinarianLogin } from "./pages/VeterinarianLogin";
 import { VeterinarianDashboard } from "./pages/VeterinarianDashboard";
 import { Single } from "./pages/Single";
@@ -79,6 +80,7 @@ export const router = createBrowserRouter(
       <Route path="/breed/new" element={<CreateBreed />} />
       <Route path="/breed/edit/:id" element={<EditBreed />} />
       <Route path="/veterinarian" element={<Veterinarian />} />
+      <Route path="/registerVeterinarian" element={<VeterinarianRegister />} />
       <Route path="/loginVeterinarian" element={<VeterinarianLogin />} />
       <Route path="/veterinarianDashboard" element={<VeterinarianDashboard />} />
       <Route path="/veterinarian/new" element={<CreateVeterinarian />} />
