@@ -26,8 +26,10 @@ export const UserLogin = () => {
             const data = await response.json();
 
             localStorage.setItem("userToken", data.access_token);
+            localStorage.setItem("user", JSON.stringify(data.user));
 
             dispatch({ type: "set_user_auth", payload: data.access_token });
+            dispatch({ type: "set_current_user", payload: data.user });
 
             navigate("/dashboard-user");
         } catch (error) {
