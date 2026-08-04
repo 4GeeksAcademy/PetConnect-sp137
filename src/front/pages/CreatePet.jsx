@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 export const CreatePet = () => {
     const navigate = useNavigate();
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
+    const { store } = useGlobalReducer();
     const [users, setUsers] = useState([]);
     const [shelters, setShelters] = useState([]);
     const [breeds, setBreeds] = useState([]);
@@ -97,6 +97,14 @@ export const CreatePet = () => {
             console.error("Error creating pet:", error);
         }
     };
+
+    if (!store.adminUserAuth) {
+        return (
+            <div className="container mt-4">
+                <p>Private Admin</p>
+            </div>
+        );
+    }
 
     return (
         <div className="container mt-4 d-flex flex-column gap-3 align-items-start">

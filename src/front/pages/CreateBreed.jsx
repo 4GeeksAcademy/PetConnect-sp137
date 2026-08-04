@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const CreateBreed = () => {
     const [breedName, setBreedName] = useState("");
-
+    const { store } = useGlobalReducer();
     const navigate = useNavigate();
 
     const API = import.meta.env.VITE_BACKEND_URL + "/api/breed";
@@ -30,6 +30,14 @@ const CreateBreed = () => {
             console.log(error);
         }
     };
+
+    if (!store.adminUserAuth) {
+        return (
+            <div className="container mt-4">
+                <p>Private Admin</p>
+            </div>
+        );
+    }
 
     return (
         <div className="container mt-5">

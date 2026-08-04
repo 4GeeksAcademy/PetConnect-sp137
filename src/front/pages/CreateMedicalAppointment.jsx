@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 export const CreateMedicalAppointment = () => {
     const navigate = useNavigate();
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
+    const { store } = useGlobalReducer();
     const [users, setUsers] = useState([]);
     const [pets, setPets] = useState([]);
     const [veterinarians, setVeterinarians] = useState([]);
@@ -92,6 +92,14 @@ export const CreateMedicalAppointment = () => {
             console.error("Error creating medical appointment:", error);
         }
     };
+
+    if (!store.adminUserAuth) {
+        return (
+            <div className="container mt-4">
+                <p>Private Admin</p>
+            </div>
+        );
+    }
 
     return (
         <div className="container mt-4 d-flex flex-column gap-3 align-items-start">

@@ -8,7 +8,8 @@ export const PetsList = () => {
     const [shelters, setShelters] = useState([]);
     const [users, setUsers] = useState([]);
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
+    const { store } = useGlobalReducer();
+    
     const fetchData = async () => {
         try {
             const [resPets, resBreeds, resShelters, resUsers] = await Promise.all([
@@ -46,6 +47,14 @@ export const PetsList = () => {
             console.error("Error deleting pet:", error);
         }
     };
+
+    if (!store.adminUserAuth) {
+        return (
+            <div className="container mt-4">
+                <p>Private Admin</p>
+            </div>
+        );
+    }
 
     return (
         <div className="container mt-4">

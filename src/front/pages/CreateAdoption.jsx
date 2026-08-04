@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 export const CreateAdoption = () => {
     const navigate = useNavigate();
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
+    const { store } = useGlobalReducer();
     const [loading, setLoading] = useState(true);
 
     const [users, setUsers] = useState([]);
@@ -99,6 +99,14 @@ export const CreateAdoption = () => {
         return (
             <div className="container mt-4">
                 <p>Loading form options...</p>
+            </div>
+        );
+    }
+
+    if (!store.adminUserAuth) {
+        return (
+            <div className="container mt-4">
+                <p>Private Admin</p>
             </div>
         );
     }

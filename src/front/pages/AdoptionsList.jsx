@@ -7,6 +7,7 @@ export const AdoptionsList = () => {
     const [users, setUsers] = useState([]);
     const [pets, setPets] = useState([]);
     const [shelters, setShelters] = useState([]);
+    const { store } = useGlobalReducer();
     
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -59,6 +60,14 @@ export const AdoptionsList = () => {
         }
     };
 
+    if (!store.adminUserAuth) {
+        return (
+            <div className="container mt-4">
+                <p>Private Admin</p>
+            </div>
+        );
+    }
+
     return (
         <div className="container mt-4">
             <div className="d-flex justify-content-between align-items-center mb-4">
@@ -73,13 +82,13 @@ export const AdoptionsList = () => {
             ) : (
                 <div className="row g-3">
                     {adoptions.map((adoption) => (
-                        <AdoptionCard 
-                            key={adoption.id} 
-                            adoption={adoption} 
-                            users={users} 
+                        <AdoptionCard
+                            key={adoption.id}
+                            adoption={adoption}
+                            users={users}
                             pets={pets}
                             shelters={shelters}
-                            onDelete={handleDelete} 
+                            onDelete={handleDelete}
                         />
                     ))}
                 </div>

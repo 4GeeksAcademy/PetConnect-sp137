@@ -41,6 +41,7 @@ import { MedicalAppointmentDetail } from "./pages/MedicalAppointmentDetail";
 import { MedicalAppointmentView } from "./pages/MedicalAppointmentView";
 import { AdoptionView } from "./pages/AdoptionView";
 import { UserLogin } from "./pages/UserLogin";
+import { AdminUserLogin } from "./pages/AdminUserLogin";
 import { DashboardUser } from "./pages/DashboardUser";
 
 export const router = createBrowserRouter(
@@ -89,6 +90,7 @@ export const router = createBrowserRouter(
       <Route path="/medapps-view/:id" element={<MedicalAppointmentView />} />
       <Route path="/adoption-view/:id" element={<AdoptionView />} />
       <Route path="/userLogin" element={<UserLogin />} />
+      <Route path="/adminUserLogin" element={<AdminUserLogin />} />
       <Route path="/dashboard-user" element={<DashboardUser />} />
     </Route>
   )

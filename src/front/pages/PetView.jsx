@@ -4,7 +4,7 @@ import { useParams, Link } from "react-router-dom";
 export const PetView = () => {
     const { id } = useParams();
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
+    const { store } = useGlobalReducer();
     const [loading, setLoading] = useState(true);
     const [pet, setPet] = useState(null);
     const [users, setUsers] = useState([]);
@@ -61,6 +61,14 @@ export const PetView = () => {
     const breedName = breeds.find(b => b.id === pet.breed_id)?.breedName || "Not specified";
     const userName = users.find(u => u.id === pet.user_id)?.name || "Not assigned";
     const shelterName = shelters.find(s => s.id === pet.shelter_id)?.name || "Not assigned";
+
+    if (!store.adminUserAuth) {
+        return (
+            <div className="container mt-4">
+                <p>Private Admin</p>
+            </div>
+        );
+    }
 
     return (
         <div className="container mt-4">

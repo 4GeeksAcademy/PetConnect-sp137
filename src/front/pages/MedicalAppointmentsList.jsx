@@ -7,7 +7,8 @@ export const MedicalAppointmentsList = () => {
     const [users, setUsers] = useState([]);
     const [pets, setPets] = useState([]);
     const [veterinarians, setVeterinarians] = useState([]);
-
+    const { store } = useGlobalReducer();
+    
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     const fetchAppointments = async () => {
@@ -58,6 +59,14 @@ export const MedicalAppointmentsList = () => {
             console.error("Error deleting medical appointment:", error);
         }
     };
+
+    if (!store.adminUserAuth) {
+        return (
+            <div className="container mt-4">
+                <p>Private Admin</p>
+            </div>
+        );
+    }
 
     return (
         <div className="container mt-4">

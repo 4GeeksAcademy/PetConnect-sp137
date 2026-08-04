@@ -6,7 +6,7 @@ export const AdoptionView = () => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     const [loading, setLoading] = useState(true);
-
+    const { store } = useGlobalReducer();
     const [users, setUsers] = useState([]);
     const [pets, setPets] = useState([]);
     const [shelters, setShelters] = useState([]);
@@ -60,6 +60,14 @@ export const AdoptionView = () => {
         return (
             <div className="container mt-4">
                 <p>Loading adoption details...</p>
+            </div>
+        );
+    }
+
+    if (!store.adminUserAuth) {
+        return (
+            <div className="container mt-4">
+                <p>Private Admin</p>
             </div>
         );
     }

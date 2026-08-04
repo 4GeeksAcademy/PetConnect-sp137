@@ -5,7 +5,7 @@ export const PetDetail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
+    const { store } = useGlobalReducer();
     const [loading, setLoading] = useState(true);
     const [users, setUsers] = useState([]);
     const [shelters, setShelters] = useState([]);
@@ -114,6 +114,14 @@ export const PetDetail = () => {
         return (
             <div className="container mt-4">
                 <p>Loading pet details...</p>
+            </div>
+        );
+    }
+
+    if (!store.adminUserAuth) {
+        return (
+            <div className="container mt-4">
+                <p>Private Admin</p>
             </div>
         );
     }

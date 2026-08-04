@@ -4,7 +4,7 @@ import { useParams, Link } from "react-router-dom";
 export const MedicalAppointmentView = () => {
     const { id } = useParams();
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
+    const { store } = useGlobalReducer();
     const [loading, setLoading] = useState(true);
     const [users, setUsers] = useState([]);
     const [pets, setPets] = useState([]);
@@ -58,6 +58,14 @@ export const MedicalAppointmentView = () => {
         return (
             <div className="container mt-4">
                 <p>Loading medical appointment details...</p>
+            </div>
+        );
+    }
+
+    if (!store.adminUserAuth) {
+        return (
+            <div className="container mt-4">
+                <p>Private Admin</p>
             </div>
         );
     }

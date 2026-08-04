@@ -5,7 +5,7 @@ export const MedicalAppointmentDetail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
+    const { store } = useGlobalReducer();
     const [loading, setLoading] = useState(true);
     const [users, setUsers] = useState([]);
     const [pets, setPets] = useState([]);
@@ -65,7 +65,7 @@ export const MedicalAppointmentDetail = () => {
 
     const handleSave = async (e) => {
         e.preventDefault();
-        
+
         const payload = {
             user_id: appointment.user_id ? Number(appointment.user_id) : null,
             idUser: appointment.user_id ? Number(appointment.user_id) : null,

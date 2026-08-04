@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Breed, Pet, Shelter, Adoption, MedicalAppointment, Veterinarian
+from api.models import db, User, Breed, Pet, Shelter, Adoption, MedicalAppointment, Veterinarian, AdminUser
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token
@@ -26,6 +26,19 @@ def login_user():
 
     access_token = create_access_token(identity=str(user.id))
     return jsonify({"access_token": access_token, "user": user.serialize()}), 200
+
+
+@api.route('/adminUserLogin', methods=['POST'])
+def login_adminUser():
+    body = request.get_json()
+
+    adminUser = AdminUser.query.filter_by(email=body.get('email')).first()
+
+    if not adminUser or adminUser.password != body.get('password'):
+        return jsonify({"error": "Incorrect admin user or password."}), 401
+
+    access_token = create_access_token(identity=str(adminUser.id))
+    return jsonify({"access_token": access_token, "adminUser": adminUser.serialize()}), 200
 
 
 @api.route('/loginVeterinarian', methods=['POST'])
@@ -410,7 +423,8 @@ def login():
         return jsonify({"msg": "Email o Password incorrecto"}), 400
 
     # Cuando user y pass son correctas. no hay conflictos:
-    access_token = create_access_token(identity=str(shelter.id))  # token creado
+    access_token = create_access_token(
+        identity=str(shelter.id))  # token creado
     return jsonify(access_token=access_token), 200
 
 ###############################################################################################################

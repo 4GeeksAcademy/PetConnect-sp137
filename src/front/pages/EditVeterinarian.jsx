@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 const EditVeterinarian = () => {
 
     const { id } = useParams();
-
+    const { store } = useGlobalReducer();
     const navigate = useNavigate();
 
     const [form, setForm] = useState({
@@ -64,6 +64,14 @@ const EditVeterinarian = () => {
             [e.target.name]: e.target.value
         });
     };
+
+    if (!store.adminUserAuth) {
+        return (
+            <div className="container mt-4">
+                <p>Private Admin</p>
+            </div>
+        );
+    }
 
     return (
         <div className="container mt-5">

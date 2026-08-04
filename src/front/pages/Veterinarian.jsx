@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const Veterinarian = () => {
     const navigate = useNavigate();
-
+    const { store } = useGlobalReducer();
     const [veterinarians, setVeterinarians] = useState([]);
 
     const API = "/api/veterinarians";
@@ -39,6 +39,14 @@ const Veterinarian = () => {
     useEffect(() => {
         getVeterinarians();
     }, []);
+
+    if (!store.adminUserAuth) {
+        return (
+            <div className="container mt-4">
+                <p>Private Admin</p>
+            </div>
+        );
+    }
 
     return (
         <div className="container mt-5">

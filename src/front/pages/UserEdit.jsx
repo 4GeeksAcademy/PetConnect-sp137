@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const UserEdit = () => {
-
+    const { store } = useGlobalReducer();
     const { id } = useParams();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -50,7 +50,8 @@ const UserEdit = () => {
             });
 
         } catch (error) {
-            console.log(error);}
+            console.log(error);
+        }
     };
 
     // Actualizar
@@ -93,6 +94,14 @@ const UserEdit = () => {
         getUser();
     }, []);
 
+    if (!store.adminUserAuth) {
+        return (
+            <div className="container mt-4">
+                <p>Private Admin</p>
+            </div>
+        );
+    }
+
     return (
         <div className="container mt-5">
             <div className="row">
@@ -122,7 +131,7 @@ const UserEdit = () => {
                                 value={formData.name}
                                 onChange={handleChange}
                                 required
-                                placeholder="Nombre del refugio"/>
+                                placeholder="Nombre del refugio" />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="CIF" className="form-label">DNI/NIE</label>
@@ -133,9 +142,9 @@ const UserEdit = () => {
                                 name="legalDocument"
                                 value={formData.legalDocument}
                                 onChange={handleChange}
-                                placeholder="Documento legal"/>
+                                placeholder="Documento legal" />
                         </div>
-                        
+
                         {/* Fecha de Nacimiento */}
                         <div className="mb-3">
                             <label htmlFor="CIF" className="form-label">Fecha de Nacimiento</label>
@@ -145,7 +154,7 @@ const UserEdit = () => {
                                 id="birthDate"
                                 name="birthDate"
                                 value={formData.birthDate}
-                                onChange={handleChange}/>
+                                onChange={handleChange} />
                         </div>
                         {/* Email */}
                         <div className="mb-3">
@@ -158,7 +167,7 @@ const UserEdit = () => {
                                 value={formData.email}
                                 onChange={handleChange}
                                 required
-                                placeholder="correo@ejemplo.com"/>
+                                placeholder="correo@ejemplo.com" />
                         </div>
 
                         {/* Password */}
@@ -172,7 +181,7 @@ const UserEdit = () => {
                                 value={formData.password}
                                 onChange={handleChange}
                                 required
-                                placeholder="contraseña"/>
+                                placeholder="contraseña" />
                         </div>
 
                         {/* Ciudad */}
@@ -185,7 +194,7 @@ const UserEdit = () => {
                                 name="city"
                                 value={formData.city}
                                 onChange={handleChange}
-                                placeholder="Ciudad"/>
+                                placeholder="Ciudad" />
                         </div>
 
                         {/* Dirección */}
@@ -198,7 +207,7 @@ const UserEdit = () => {
                                 name="address"
                                 value={formData.address}
                                 onChange={handleChange}
-                                placeholder="Dirección completa"/>
+                                placeholder="Dirección completa" />
                         </div>
 
                         {/* Código Postal */}
@@ -211,7 +220,7 @@ const UserEdit = () => {
                                 name="pc"
                                 value={formData.pc}
                                 onChange={handleChange}
-                                placeholder="Código postal"/>
+                                placeholder="Código postal" />
                         </div>
 
                         {/* Botones */}

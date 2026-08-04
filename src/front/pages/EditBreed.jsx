@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 const EditBreed = () => {
 
     const { id } = useParams();
-
+    const { store } = useGlobalReducer();
     const navigate = useNavigate();
 
     const [breedName, setBreedName] = useState("");
@@ -51,6 +51,14 @@ const EditBreed = () => {
     useEffect(() => {
         getBreed();
     }, []);
+
+    if (!store.adminUserAuth) {
+        return (
+            <div className="container mt-4">
+                <p>Private Admin</p>
+            </div>
+        );
+    }
 
     return (
         <div className="container mt-5">
