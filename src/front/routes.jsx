@@ -43,6 +43,10 @@ import { AdoptionView } from "./pages/AdoptionView";
 import { UserLogin } from "./pages/UserLogin";
 import { AdminUserLogin } from "./pages/AdminUserLogin";
 import { DashboardUser } from "./pages/DashboardUser";
+import { CreatePetAsUser } from "./pages/CreatePetAsUser";
+import { EditPetAsUser } from "./pages/EditPetAsUser";
+import { SheltersView } from "./pages/SheltersView";
+import { VeterinariansView } from "./pages/VeterinariansView";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -90,8 +94,12 @@ export const router = createBrowserRouter(
       <Route path="/medapps-view/:id" element={<MedicalAppointmentView />} />
       <Route path="/adoption-view/:id" element={<AdoptionView />} />
       <Route path="/userLogin" element={<UserLogin />} />
+      <Route path="/sheltersView" element={<SheltersView />} />
+      <Route path="/veterinariansView" element={<VeterinariansView />} />
       <Route path="/adminUserLogin" element={<AdminUserLogin />} />
       <Route path="/dashboard-user" element={<DashboardUser />} />
+      <Route path="/create-pet-user" element={<CreatePetAsUser />} />
+      <Route path="/edit-pet-user/:id" element={<EditPetAsUser />} />
     </Route>
   )
 );
