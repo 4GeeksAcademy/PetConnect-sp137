@@ -2,7 +2,7 @@ export const initialStore = () => {
   return {
     shelters: [],
     userAuth: localStorage.getItem("userToken") || null,
-    currentUser: localStorage.getItem("user") || null,
+    currentUser: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null,
     adminUserAuth: localStorage.getItem("adminUserToken") || null,
     shelterAuth: localStorage.getItem("sheltertoken") || null,
     veterinarianAuth: localStorage.getItem("veterinariantoken") || null,
