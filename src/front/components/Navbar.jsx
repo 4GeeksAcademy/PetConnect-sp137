@@ -54,7 +54,7 @@ export const Navbar = () => {
 
 					{store.veterinarianAuth ? (
 						<>
-							<button className="btn btn-info" onClick={() => navigate("/dashboard-veterinarian")}>Veterinarian Dashboard</button>
+							<button className="btn btn-info" onClick={() => navigate("/veterinarianDashboard")}>Veterinarian Dashboard</button>
 						</>
 					) : (
 						<button className="btn btn-info" onClick={() => navigate("/loginVeterinarian")}>

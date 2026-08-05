@@ -66,6 +66,48 @@ def login_veterinarian():
         "veterinarian": veterinarian.serialize()
     }), 200
 
+
+@api.route('/veterinarian/profile', methods=['GET'])
+@jwt_required()
+def get_veterinarian_profile():
+
+    veterinarian_id = get_jwt_identity()
+
+    veterinarian = db.session.get(Veterinarian, int(veterinarian_id))
+
+    if veterinarian is None:
+        return jsonify({"message": "Veterinarian not found"}), 404
+
+    return jsonify(veterinarian.serialize()), 200
+
+
+@api.route('/veterinarian/profile', methods=['PUT'])
+@jwt_required()
+def update_veterinarian_profile():
+
+    veterinarian_id = get_jwt_identity()
+
+    veterinarian = db.session.get(Veterinarian, int(veterinarian_id))
+
+    if veterinarian is None:
+        return jsonify({"message": "Veterinarian not found"}), 404
+
+    body = request.get_json()
+
+    veterinarian.name = body.get("name", veterinarian.name)
+    veterinarian.password = body.get("password", veterinarian.password)
+    veterinarian.city = body.get("city", veterinarian.city)
+    veterinarian.address = body.get("address", veterinarian.address)
+    veterinarian.email = body.get("email", veterinarian.email)
+    veterinarian.pc = body.get("pc", veterinarian.pc)
+    veterinarian.icon_url = body.get("iconUrl", veterinarian.icon_url)
+    veterinarian.iban = body.get("iban", veterinarian.iban)
+    veterinarian.schedule = body.get("schedule", veterinarian.schedule)
+
+    db.session.commit()
+
+    return jsonify(veterinarian.serialize()), 200
+
 ################# Pets #################
 
 
