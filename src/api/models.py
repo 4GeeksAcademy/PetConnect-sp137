@@ -23,6 +23,8 @@ class User(db.Model):
     birth_date: Mapped[Optional[Date]] = mapped_column(Date, nullable=True)
     pc: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
     city: Mapped[str] = mapped_column(String(100), nullable=False)
+    photo_url: Mapped[Optional[str]] = mapped_column(
+        String(255), nullable=True)
 
     pets: Mapped[List["Pet"]] = relationship("Pet", back_populates="owner")
     appointments: Mapped[List["MedicalAppointment"]] = relationship(
@@ -39,6 +41,7 @@ class User(db.Model):
             "email": self.email,
             "birthDate": self.birth_date.strftime('%Y-%m-%d') if self.birth_date else None,
             "pc": self.pc,
+            "photoUrl": self.photo_url,
             "city": self.city
         }
 
@@ -49,14 +52,14 @@ class AdminUser(db.Model):
     email: Mapped[str] = mapped_column(
         String(120), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)
-   
+
     def serialize(self):
         return {
             "id": self.id,
             "name": self.name,
             "email": self.email
         }
-    
+
 
 class Breed(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -227,6 +230,7 @@ class MedicalAppointment(db.Model):
     veterinarian_id: Mapped[int] = mapped_column(
         Integer, ForeignKey('veterinarian.id'), nullable=False)
     date: Mapped[Date] = mapped_column(Date, nullable=False)
+    state: Mapped[str] = mapped_column(String(50), nullable=False)
     hour: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
     comments: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
 
@@ -241,6 +245,7 @@ class MedicalAppointment(db.Model):
             "user_id": self.user_id,
             "pet_id": self.pet_id,
             "veterinarian_id": self.veterinarian_id,
+            "state": self.state,
             "date": self.date.strftime('%Y-%m-%d') if self.date else None,
             "hour": self.hour,
             "comments": self.comments
