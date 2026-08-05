@@ -18,6 +18,7 @@ import VeterinarianProfile from "./pages/VeterinarianProfile";
 import EditVeterinarianProfile from "./pages/EditVeterinarianProfile";
 import { VeterinarianLogin } from "./pages/VeterinarianLogin";
 import { VeterinarianDashboard } from "./pages/VeterinarianDashboard";
+import ManageAppointments from "./pages/ManageAppointments";
 import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
 import { Shelter } from "./pages/Shelter";
@@ -89,6 +90,7 @@ export const router = createBrowserRouter(
       <Route path="/veterinarianDashboard" element={<VeterinarianDashboard />} />
       <Route path="/veterinarian/new" element={<CreateVeterinarian />} />
       <Route path="/veterinarian/edit/:id" element={<EditVeterinarian />} />
+      <Route path="/manageAppointments" element={<ManageAppointments />} />
       <Route path="/single/:theId" element={<Single />} />
       <Route path="/pets/:id" element={<PetDetail />} />
       <Route path="/create-adoption" element={<CreateAdoption />} />

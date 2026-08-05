@@ -1,13 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export const MedicalAppointmentCard = ({ appointment, users = [], pets = [], veterinarians = [], onDelete }) => {
+export const MedicalAppointmentCard = ({ appointment, users = [], pets = [], veterinarians = [], onDelete, onApprove, onReject }) => {
     const userFound = users.find((u) => String(u.id) === String(appointment.user_id));
     const petFound = pets.find((p) => String(p.id) === String(appointment.pet_id));
     const veterinarianFound = veterinarians.find((s) => String(s.id) === String(appointment.veterinarian_id));
 
     if (!userFound || !petFound || !veterinarianFound) {
-        return null;
+        console.log({
+            appointment,
+            userFound,
+            petFound,
+            veterinarianFound
+        });
+
+        return (
+            <div className="alert alert-danger">
+                Error cargando los datos relacionados.
+            </div>
+        );
     }
 
     return (
@@ -35,6 +46,9 @@ export const MedicalAppointmentCard = ({ appointment, users = [], pets = [], vet
                     <p className="card-text mb-1">
                         <strong>Comments:</strong> {appointment.comments || "N/A"}
                     </p>
+                    <p className="card-text mb-1">
+                        <strong>State:</strong> {appointment.state}
+                    </p>
                 </div>
                 <div className="card-footer d-flex justify-content-between bg-white border-top-0 pb-3">
                     <Link to={`/medapps-view/${appointment.id}`} className="btn btn-primary btn-sm">
@@ -43,6 +57,19 @@ export const MedicalAppointmentCard = ({ appointment, users = [], pets = [], vet
                     <Link to={`/medapps/${appointment.id}`} className="btn btn-warning btn-sm">
                         Edit
                     </Link>
+                    <button
+                        className="btn btn-success btn-sm"
+                        onClick={() => onApprove && onApprove(appointment.id)}
+                    >
+                        Approve
+                    </button>
+
+                    <button
+                        className="btn btn-secondary btn-sm"
+                        onClick={() => onReject && onReject(appointment.id)}
+                    >
+                        Reject
+                    </button>
                     {onDelete && (
                         <button className="btn btn-danger btn-sm" onClick={() => onDelete(appointment.id)}>
                             Delete
