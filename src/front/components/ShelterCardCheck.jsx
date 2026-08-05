@@ -66,7 +66,7 @@ export const ShelterCardCheck = (props) => {
 
                 return (
                   <div className="col-12 col-sm-6 col-lg-2" key={pet.id}>
-                    <div className="card h-100 shadow-sm border">
+                    <div className="card h-100 shadow-sm border d-flex flex-column">
                       {pet.photoUrl && (
                         <img
                           src={pet.photoUrl}
@@ -75,7 +75,7 @@ export const ShelterCardCheck = (props) => {
                           style={{ height: "140px", objectFit: "cover" }}
                         />
                       )}
-                      <div className="card-body p-2">
+                      <div className="card-body p-2 flex-grow-1">
                         <h6 className="card-title text-center mb-2">{pet.name}</h6>
                         <p className="card-text mb-1" style={{ fontSize: "0.85rem" }}><strong>Breed:</strong> {breedName}</p>
                         <p className="card-text mb-1" style={{ fontSize: "0.85rem" }}><strong>Shelter:</strong> {shelterName}</p>
@@ -84,7 +84,12 @@ export const ShelterCardCheck = (props) => {
                         <p className="card-text mb-1" style={{ fontSize: "0.85rem" }}><strong>Color:</strong> {pet.color}</p>
                         <p className="card-text mb-1" style={{ fontSize: "0.85rem" }}><strong>Chip:</strong> {pet.chipNumber || "No chip"}</p>
                         <p className="card-text mb-1" style={{ fontSize: "0.85rem" }}><strong>Birth:</strong> {pet.birthDate ? pet.birthDate.split("T")[0] : "Unknown"}</p>
-                        <p className="card-text mb-0" style={{ fontSize: "0.85rem" }}><strong>Castrated:</strong> {pet.castrated ? "Yes" : "No"}</p>
+                        <p className="card-text mb-2" style={{ fontSize: "0.85rem" }}><strong>Castrated:</strong> {pet.castrated ? "Yes" : "No"}</p>
+                      </div>
+                      <div className="card-footer bg-transparent p-2 border-0">
+                        <Link to="/adopt-as-user" state={{ pet }} className="btn btn-primary btn-sm w-100">
+                          Adopt
+                        </Link>
                       </div>
                     </div>
                   </div>

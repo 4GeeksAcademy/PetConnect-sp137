@@ -51,6 +51,8 @@ import { CreatePetAsUser } from "./pages/CreatePetAsUser";
 import { EditPetAsUser } from "./pages/EditPetAsUser";
 import { SheltersView } from "./pages/SheltersView";
 import { VeterinariansView } from "./pages/VeterinariansView";
+import { AdoptionDetailAsUser } from "./pages/AdoptionDetailAsUser";
+
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -108,6 +110,7 @@ export const router = createBrowserRouter(
       <Route path="/dashboard-user" element={<DashboardUser />} />
       <Route path="/create-pet-user" element={<CreatePetAsUser />} />
       <Route path="/edit-pet-user/:id" element={<EditPetAsUser />} />
+      <Route path="/adopt-as-user" element={<AdoptionDetailAsUser />} />
     </Route>
   )
 );
