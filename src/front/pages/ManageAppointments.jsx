@@ -19,10 +19,57 @@ const ManageAppointments = () => {
             });
             if (response.ok) {
                 const data = await response.json();
+
+                console.log("Appointments:", data);
+
                 setAppointments(data);
+            } else {
+                console.log("Status:", response.status);
             }
         } catch (error) {
             console.error("Error fetching medical appointments:", error);
+        }
+    };
+
+    const approveAppointment = async (id) => {
+        try {
+            const response = await fetch(
+                `${backendUrl}/api/veterinarian/appointments/${id}/approve`,
+                {
+                    method: "PUT",
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("veterinariantoken")}`
+                    }
+                }
+            );
+
+            if (response.ok) {
+                fetchAppointments();
+            }
+
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const rejectAppointment = async (id) => {
+        try {
+            const response = await fetch(
+                `${backendUrl}/api/veterinarian/appointments/${id}/reject`,
+                {
+                    method: "PUT",
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("veterinariantoken")}`
+                    }
+                }
+            );
+
+            if (response.ok) {
+                fetchAppointments();
+            }
+
+        } catch (error) {
+            console.error(error);
         }
     };
 
@@ -64,6 +111,8 @@ const ManageAppointments = () => {
                             users={users}
                             pets={pets}
                             veterinarians={veterinarians}
+                            onApprove={approveAppointment}
+                            onReject={rejectAppointment}
                         />
                     ))}
                 </div>
