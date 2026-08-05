@@ -19,6 +19,13 @@ export const VeterinarianDashboard = () => {
                 Mi Perfil
             </button>
 
+            <button
+                className="btn btn-success mt-3 ms-2"
+                onClick={() => navigate("/manageAppointments")}
+            >
+                Gestionar Citas
+            </button>
+
         </div>
     );
 };

@@ -108,6 +108,56 @@ def update_veterinarian_profile():
 
     return jsonify(veterinarian.serialize()), 200
 
+
+@api.route('/veterinarian/appointments/<int:appointment_id>/approve', methods=['PUT'])
+@jwt_required()
+def approve_appointment(appointment_id):
+
+    veterinarian_id = get_jwt_identity()
+
+    appointment = db.session.get(MedicalAppointment, appointment_id)
+
+    if appointment is None:
+        raise APIException("Medical appointment not found", status_code=404)
+
+    # Opcional: comprobar que la cita pertenece a este veterinario
+    if appointment.veterinarian_id != int(veterinarian_id):
+        return jsonify({"message": "Unauthorized"}), 403
+
+    appointment.state = "approved"
+
+    db.session.commit()
+
+    return jsonify({
+        "message": "Appointment approved successfully",
+        "appointment": appointment.serialize()
+    }), 200
+
+
+@api.route('/veterinarian/appointments/<int:appointment_id>/reject', methods=['PUT'])
+@jwt_required()
+def reject_appointment(appointment_id):
+
+    veterinarian_id = get_jwt_identity()
+
+    appointment = db.session.get(MedicalAppointment, appointment_id)
+
+    if appointment is None:
+        raise APIException("Medical appointment not found", status_code=404)
+
+    if appointment.veterinarian_id != int(veterinarian_id):
+        return jsonify({"message": "Unauthorized"}), 403
+
+    appointment.state = "rejected"
+
+    db.session.commit()
+
+    return jsonify({
+        "message": "Appointment rejected successfully",
+        "appointment": appointment.serialize()
+    }), 200
+
+
 ################# Pets #################
 
 
@@ -778,3 +828,18 @@ def delete_veterinarian(veterinarian_id):
     db.session.commit()
 
     return jsonify({"message": "Veterinarian deleted successfully"}), 200
+
+
+@api.route('/veterinarian/appointments', methods=['GET'])
+@jwt_required()
+def get_veterinarian_appointments():
+
+    veterinarian_id = int(get_jwt_identity())
+
+    appointments = MedicalAppointment.query.filter_by(
+        veterinarian_id=veterinarian_id
+    ).order_by(MedicalAppointment.date.asc()).all()
+
+    return jsonify(
+        [appointment.serialize() for appointment in appointments]
+    ), 200

@@ -49,14 +49,14 @@ class AdminUser(db.Model):
     email: Mapped[str] = mapped_column(
         String(120), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)
-   
+
     def serialize(self):
         return {
             "id": self.id,
             "name": self.name,
             "email": self.email
         }
-    
+
 
 class Breed(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -234,6 +234,11 @@ class MedicalAppointment(db.Model):
     pet: Mapped["Pet"] = relationship("Pet", back_populates="appointments")
     veterinarian: Mapped["Veterinarian"] = relationship(
         "Veterinarian", back_populates="appointments")
+    state: Mapped[str] = mapped_column(
+        String(20),
+        nullable=False,
+        default="pending"
+    )
 
     def serialize(self):
         return {
@@ -243,5 +248,6 @@ class MedicalAppointment(db.Model):
             "veterinarian_id": self.veterinarian_id,
             "date": self.date.strftime('%Y-%m-%d') if self.date else None,
             "hour": self.hour,
-            "comments": self.comments
+            "comments": self.comments,
+            "state": self.state
         }
