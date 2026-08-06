@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 export const AdoptionCardAsUser = ({ adoption }) => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
-    const userToken = localStorage.getItem("userToken"); // o de tu store global
+    const userToken = localStorage.getItem("userToken");
 
     const [pet, setPet] = useState(null);
     const [shelter, setShelter] = useState(null);
@@ -27,7 +27,6 @@ export const AdoptionCardAsUser = ({ adoption }) => {
             try {
                 const headers = { "Authorization": `Bearer ${userToken}` };
 
-                // Peticiones individuales para esta tarjeta concreta
                 const petId = adoption?.pet_id || adoption?.petId;
                 const shelterId = adoption?.shelter_id || adoption?.idShelter;
                 const userId = adoption?.user_id;
