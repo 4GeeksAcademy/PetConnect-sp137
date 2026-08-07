@@ -41,7 +41,7 @@ class User(db.Model):
             "email": self.email,
             "birthDate": self.birth_date.strftime('%Y-%m-%d') if self.birth_date else None,
             "pc": self.pc,
-            "photoUrl": self.photo_url,
+            "photo_url": self.photo_url,
             "city": self.city
         }
 

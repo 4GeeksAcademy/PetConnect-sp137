@@ -8,6 +8,7 @@ export const EditPetAsUser = () => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
     const { store } = useGlobalReducer();
     const [loading, setLoading] = useState(true);
+    const [uploading, setUploading] = useState(false);
     const [users, setUsers] = useState([]);
     const [shelters, setShelters] = useState([]);
     const [breeds, setBreeds] = useState([]);
@@ -28,6 +29,40 @@ export const EditPetAsUser = () => {
         shelter_id: "",
         breed_id: ""
     });
+
+    const handleImageUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const uploadData = new FormData();
+        uploadData.append("file", file);
+        uploadData.append("upload_preset", "petconnect");
+
+        setUploading(true);
+        try {
+            const response = await fetch(
+                "https://api.cloudinary.com/v1_1/ojckqgp2/image/upload",
+                {
+                    method: "POST",
+                    body: uploadData,
+                }
+            );
+
+            const data = await response.json();
+            if (data.secure_url) {
+                setPet(prev => ({
+                    ...prev,
+                    photoUrl: data.secure_url
+                }));
+                alert("Image uploaded successfully!");
+            }
+        } catch (error) {
+            console.error("Error uploading image to Cloudinary:", error);
+            alert("Could not upload the image.");
+        } finally {
+            setUploading(false);
+        }
+    };
 
     useEffect(() => {
         if (!userToken) {
@@ -247,14 +282,25 @@ export const EditPetAsUser = () => {
                             />
                         </div>
                         <div className="col-md-12">
-                            <label className="form-label">Photo URL</label>
+                            <label className="form-label">Pet Photo</label>
+                            {pet.photoUrl && (
+                                <div className="mb-2">
+                                    <img
+                                        src={pet.photoUrl}
+                                        alt="Pet Preview"
+                                        className="rounded shadow-sm"
+                                        style={{ width: "100px", height: "100px", objectFit: "cover" }}
+                                    />
+                                </div>
+                            )}
                             <input
-                                type="text"
-                                name="photoUrl"
+                                type="file"
                                 className="form-control"
-                                value={pet.photoUrl}
-                                onChange={handleChange}
+                                accept="image/*"
+                                onChange={handleImageUpload}
+                                disabled={uploading}
                             />
+                            {uploading && <small className="text-muted d-block mt-1">Uploading image...</small>}
                         </div>
                         <div className="col-md-12 form-check mt-3 ms-2">
                             <input
@@ -272,7 +318,7 @@ export const EditPetAsUser = () => {
                     </div>
 
                     <div className="mt-4 d-flex gap-2">
-                        <button type="submit" className="btn btn-success">
+                        <button type="submit" className="btn btn-success" disabled={uploading}>
                             Save Changes
                         </button>
                     </div>

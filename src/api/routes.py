@@ -295,7 +295,6 @@ def create_user():
         if existing_user:
             return jsonify({"error": "El email ya está registrado"}), 400
 
-        # Crear nuevo user
         new_user = User(
             name=body.get('name'),
             birth_date=body.get('birthDate') if body.get(
@@ -305,6 +304,7 @@ def create_user():
             legal_document=body.get('legalDocument'),
             city=body.get('city') or "",
             pc=body.get('pc'),
+            photo_url=body.get('photo_url'),
             address=body.get('adress') or ""
 
         )
@@ -332,7 +332,6 @@ def update_user(user_id):
 
         body = request.get_json()
 
-        # Actualizar campos del user
         user.name = body.get('name', user.name)
         user.birth_date = body.get('birthDate', user.birth_date)
         user.email = body.get('email', user.email)
@@ -341,6 +340,7 @@ def update_user(user_id):
         user.city = body.get('city', user.city)
         user.pc = body.get('pc', user.pc)
         user.address = body.get('adress', user.address)
+        user.photo_url = body.get('photo_url', user.photo_url)
 
         db.session.commit()
 

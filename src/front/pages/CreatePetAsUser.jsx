@@ -7,6 +7,7 @@ export const CreatePetAsUser = () => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
     const { store } = useGlobalReducer();
     const [breeds, setBreeds] = useState([]);
+    const [uploading, setUploading] = useState(false);
 
     const currentUserId = store.currentUser?.id || JSON.parse(localStorage.getItem("user"))?.id;
     const userToken = store.userAuth || localStorage.getItem("userToken");
@@ -24,6 +25,40 @@ export const CreatePetAsUser = () => {
         shelter_id: "",
         breed_id: ""
     });
+
+    const handleImageUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const uploadData = new FormData();
+        uploadData.append("file", file);
+        uploadData.append("upload_preset", "petconnect");
+
+        setUploading(true);
+        try {
+            const response = await fetch(
+                "https://api.cloudinary.com/v1_1/ojckqgp2/image/upload",
+                {
+                    method: "POST",
+                    body: uploadData,
+                }
+            );
+
+            const data = await response.json();
+            if (data.secure_url) {
+                setFormData(prev => ({
+                    ...prev,
+                    photoUrl: data.secure_url
+                }));
+                alert("Image uploaded successfully!");
+            }
+        } catch (error) {
+            console.error("Error uploading image to Cloudinary:", error);
+            alert("Could not upload the image.");
+        } finally {
+            setUploading(false);
+        }
+    };
 
     useEffect(() => {
         if (!userToken) return;
@@ -46,7 +81,7 @@ export const CreatePetAsUser = () => {
 
     useEffect(() => {
         if (currentUserId) {
-            setFormData(prev => ({ ...prev, idUser: currentUserId }));
+            setFormData(prev => ({ ...prev, user_id: currentUserId }));
         }
     }, [currentUserId]);
 
@@ -145,7 +180,7 @@ export const CreatePetAsUser = () => {
                             <select name="breed_id" className="form-select" value={formData.breed_id} onChange={handleChange} required>
                                 <option value="">Select a breed</option>
                                 {breeds.map(b => (
-                                    <option key={b.id} value={b.id}>{b.breedName}</option>
+                                    <option key={b.id} value={b.id}>{b.breedName || b.name}</option>
                                 ))}
                             </select>
                         </div>
@@ -162,15 +197,32 @@ export const CreatePetAsUser = () => {
                             <input type="text" name="chipNumber" className="form-control" value={formData.chipNumber} onChange={handleChange} />
                         </div>
                         <div className="col-md-12">
-                            <label className="form-label">Photo URL</label>
-                            <input type="text" name="photoUrl" className="form-control" value={formData.photoUrl} onChange={handleChange} placeholder="https://example.com/photo.jpg" />
+                            <label className="form-label">Pet Photo</label>
+                            {formData.photoUrl && (
+                                <div className="mb-2">
+                                    <img
+                                        src={formData.photoUrl}
+                                        alt="Pet Preview"
+                                        className="rounded shadow-sm"
+                                        style={{ width: "100px", height: "100px", objectFit: "cover" }}
+                                    />
+                                </div>
+                            )}
+                            <input
+                                type="file"
+                                className="form-control"
+                                accept="image/*"
+                                onChange={handleImageUpload}
+                                disabled={uploading}
+                            />
+                            {uploading && <small className="text-muted d-block mt-1">Uploading image...</small>}
                         </div>
                         <div className="col-md-12 form-check mt-3 ms-2">
                             <input type="checkbox" name="castrated" className="form-check-input" id="createCastrated" checked={formData.castrated} onChange={handleChange} />
                             <label className="form-check-label" htmlFor="createCastrated">Is Castrated?</label>
                         </div>
                     </div>
-                    <button type="submit" className="btn btn-primary mt-4">Register Pet</button>
+                    <button type="submit" className="btn btn-primary mt-4" disabled={uploading}>Register Pet</button>
                 </form>
             </div>
         </div>

@@ -15,6 +15,7 @@ export const DashboardUser = () => {
     const [medicalAppointments, setMedicalAppointments] = useState([]);
     const [veterinarians, setVeterinarians] = useState([]);
     const [adoptions, setAdoptions] = useState([]);
+    const [uploading, setUploading] = useState(false);
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     const currentUserId = store.currentUser?.id;
@@ -28,7 +29,7 @@ export const DashboardUser = () => {
         birthDate: "",
         pc: "",
         city: "",
-        photoUrl: ""
+        photo_url: ""
     });
 
     useEffect(() => {
@@ -56,7 +57,7 @@ export const DashboardUser = () => {
                         birthDate: loggedUser.birthDate || "",
                         pc: loggedUser.pc || "",
                         city: loggedUser.city || "",
-                        photoUrl: loggedUser.photoUrl || ""
+                        photo_url: loggedUser.photo_url || loggedUser.photoUrl || ""
                     });
                 }
 
@@ -109,6 +110,20 @@ export const DashboardUser = () => {
         return null;
     }
 
+    const preparePayload = (currentPhotoUrl) => ({
+        name: userFormData.name,
+        email: userFormData.email,
+        legal_document: userFormData.legalDocument,
+        legalDocument: userFormData.legalDocument,
+        address: userFormData.address,
+        birth_date: userFormData.birthDate,
+        birthDate: userFormData.birthDate,
+        pc: userFormData.pc,
+        city: userFormData.city,
+        photo_url: currentPhotoUrl !== undefined ? currentPhotoUrl : userFormData.photo_url,
+        photoUrl: currentPhotoUrl !== undefined ? currentPhotoUrl : userFormData.photo_url
+    });
+
     const handleLogout = () => {
         localStorage.removeItem("userToken");
         localStorage.removeItem("user");
@@ -125,6 +140,54 @@ export const DashboardUser = () => {
         });
     };
 
+    const handleImageUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const uploadData = new FormData();
+        uploadData.append("file", file);
+        uploadData.append("upload_preset", "petconnect");
+
+        setUploading(true);
+        try {
+            const response = await fetch(
+                "https://api.cloudinary.com/v1_1/ojckqgp2/image/upload",
+                {
+                    method: "POST",
+                    body: uploadData,
+                }
+            );
+
+            const data = await response.json();
+            if (data.secure_url) {
+                const newPhotoUrl = data.secure_url;
+
+                setUserFormData((prev) => ({
+                    ...prev,
+                    photo_url: newPhotoUrl
+                }));
+
+                const updateResponse = await fetch(`${backendUrl}/api/user/${currentUserId}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${userToken}`
+                    },
+                    body: JSON.stringify(preparePayload(newPhotoUrl))
+                });
+
+                if (!updateResponse.ok) {
+                    console.error("Failed to update photo_url in database");
+                }
+            }
+        } catch (error) {
+            console.error("Error uploading image to Cloudinary:", error);
+            alert("Could not upload the image.");
+        } finally {
+            setUploading(false);
+        }
+    };
+
     const handleSaveUserChanges = async (e) => {
         e.preventDefault();
         try {
@@ -134,7 +197,7 @@ export const DashboardUser = () => {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${userToken}`
                 },
-                body: JSON.stringify(userFormData)
+                body: JSON.stringify(preparePayload())
             });
 
             if (response.ok) {
@@ -190,9 +253,9 @@ export const DashboardUser = () => {
             <div className="card p-4 mb-5 shadow-sm">
                 <div className="row align-items-center mb-4">
                     <div className="col-md-3 text-center mb-3 mb-md-0">
-                        {userFormData.photoUrl ? (
+                        {userFormData.photo_url ? (
                             <img
-                                src={userFormData.photoUrl}
+                                src={userFormData.photo_url}
                                 alt="User Profile"
                                 className="rounded-circle img-thumbnail shadow-sm"
                                 style={{ width: "130px", height: "130px", objectFit: "cover" }}
@@ -257,15 +320,15 @@ export const DashboardUser = () => {
                             />
                         </div>
                         <div className="col-md-12">
-                            <label className="form-label">Photo URL</label>
+                            <label className="form-label">User Image</label>
                             <input
-                                type="url"
-                                name="photoUrl"
+                                type="file"
                                 className="form-control"
-                                placeholder="https://example.com/photo.jpg"
-                                value={userFormData.photoUrl}
-                                onChange={handleUserChange}
+                                accept="image/*"
+                                onChange={handleImageUpload}
+                                disabled={uploading}
                             />
+                            {uploading && <small className="text-muted d-block mt-1">Uploading image...</small>}
                         </div>
                         <div className="col-md-12">
                             <label className="form-label">Address</label>
@@ -300,7 +363,7 @@ export const DashboardUser = () => {
                             />
                         </div>
                     </div>
-                    <button type="submit" className="btn btn-success mt-4">Save Changes</button>
+                    <button type="submit" className="btn btn-success mt-4" disabled={uploading}>Save Changes</button>
                 </form>
             </div>
 
