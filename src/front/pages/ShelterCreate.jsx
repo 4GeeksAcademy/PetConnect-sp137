@@ -257,7 +257,7 @@ export const ShelterCreate = () => {
                                 name="iban"
                                 value={formData.iban}
                                 onChange={handleChange}
-                                placeholder="IBAN for donations"
+                                placeholder="IBAN"
                             />
                         </div>
 

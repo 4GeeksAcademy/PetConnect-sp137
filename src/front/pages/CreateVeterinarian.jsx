@@ -141,7 +141,7 @@ const CreateVeterinarian = () => {
                 />
 
                 <div className="mb-3">
-                    <label className="form-label">Veterinarian Icon or Image</label>
+                    <label className="form-label">Veterinarian Image</label>
                     <input 
                         type="file" 
                         className="form-control" 
