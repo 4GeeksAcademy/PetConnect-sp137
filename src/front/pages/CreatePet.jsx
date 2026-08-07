@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 
 export const CreatePet = () => {
     const navigate = useNavigate();
@@ -8,6 +9,7 @@ export const CreatePet = () => {
     const [users, setUsers] = useState([]);
     const [shelters, setShelters] = useState([]);
     const [breeds, setBreeds] = useState([]);
+    const [uploading, setUploading] = useState(false);
 
     const [formData, setFormData] = useState({
         name: "",
@@ -49,6 +51,39 @@ export const CreatePet = () => {
             ...formData,
             [name]: type === "checkbox" ? checked : value
         });
+    };
+
+    const handleImageUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const uploadData = new FormData();
+        uploadData.append("file", file);
+        uploadData.append("upload_preset", "petconnect");
+
+        setUploading(true);
+        try {
+            const response = await fetch(
+                "https://api.cloudinary.com/v1_1/ojckqgp2/image/upload",
+                {
+                    method: "POST",
+                    body: uploadData,
+                }
+            );
+
+            const data = await response.json();
+            if (data.secure_url) {
+                setFormData((prev) => ({
+                    ...prev,
+                    photoUrl: data.secure_url
+                }));
+            }
+        } catch (error) {
+            console.error("Error uploading image to Cloudinary:", error);
+            alert("No se pudo subir la imagen.");
+        } finally {
+            setUploading(false);
+        }
     };
 
     const resetForm = () => {
@@ -175,15 +210,28 @@ export const CreatePet = () => {
                             <input type="text" name="chipNumber" className="form-control" value={formData.chipNumber} onChange={handleChange} />
                         </div>
                         <div className="col-md-12">
-                            <label className="form-label">Photo URL</label>
-                            <input type="text" name="photoUrl" className="form-control" value={formData.photoUrl} onChange={handleChange} placeholder="https://example.com/photo.jpg" />
+                            <label className="form-label">Pet Photo</label>
+                            <input 
+                                type="file" 
+                                className="form-control" 
+                                accept="image/*" 
+                                onChange={handleImageUpload} 
+                                disabled={uploading}
+                            />
+                            {uploading && <small className="text-muted d-block mt-1">Subiendo imagen a Cloudinary...</small>}
+                            {formData.photoUrl && !uploading && (
+                                <div className="mt-2">
+                                    <small className="text-success d-block">✔ Imagen cargada correctamente</small>
+                                    <img src={formData.photoUrl} alt="Preview" style={{ width: "90px", height: "90px", objectFit: "cover" }} className="mt-1 rounded border" />
+                                </div>
+                            )}
                         </div>
                         <div className="col-md-12 form-check mt-3 ms-2">
                             <input type="checkbox" name="castrated" className="form-check-input" id="createCastrated" checked={formData.castrated} onChange={handleChange} />
                             <label className="form-check-label" htmlFor="createCastrated">Is Castrated?</label>
                         </div>
                     </div>
-                    <button type="submit" className="btn btn-primary mt-4">Register Pet</button>
+                    <button type="submit" className="btn btn-primary mt-4" disabled={uploading}>Register Pet</button>
                 </form>
             </div>
         </div>
