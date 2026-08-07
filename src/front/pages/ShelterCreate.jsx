@@ -35,7 +35,7 @@ export const ShelterCreate = () => {
 
         const uploadData = new FormData();
         uploadData.append("file", file);
-        uploadData.append("upload_preset", "TU_UPLOAD_PRESET");
+        uploadData.append("upload_preset", "petconnect");
 
         setUploading(true);
         setError(null);
