@@ -5,6 +5,7 @@ export const ShelterCreate = () => {
 
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
+    const [uploading, setUploading] = useState(false)
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(false)
 
@@ -28,58 +29,98 @@ export const ShelterCreate = () => {
         }))
     }
 
+    const handleImageUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const uploadData = new FormData();
+        uploadData.append("file", file);
+        uploadData.append("upload_preset", "TU_UPLOAD_PRESET");
+
+        setUploading(true);
+        setError(null);
+        try {
+            const response = await fetch(
+                "https://api.cloudinary.com/v1_1/ojckqgp2/image/upload",
+                {
+                    method: "POST",
+                    body: uploadData,
+                }
+            );
+
+            const data = await response.json();
+            if (data.secure_url) {
+                setFormData((prev) => ({
+                    ...prev,
+                    iconUrl: data.secure_url
+                }));
+            } else {
+                throw new Error(data.error?.message || "Error uploading image");
+            }
+        } catch (err) {
+            console.error("Error uploading image to Cloudinary:", err);
+            setError("Could not upload the image.");
+        } finally {
+            setUploading(false);
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
         setError(null)
         setSuccess(false)
 
-
         const backendUrl = import.meta.env.VITE_BACKEND_URL
 
-        if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file")
-
-        console.log("Enviando datos a:", backendUrl + "/api/shelter")
-        console.log("Datos del formulario:", formData)
-
-        const response = await fetch(backendUrl + "/api/shelter", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(formData)
-        })
-
-        const data = await response.json()
-
-        if (!response.ok) {
-            throw new Error(data.error || "Error al crear el refugio")
+        if (!backendUrl) {
+            setLoading(false);
+            throw new Error("VITE_BACKEND_URL is not defined in .env file")
         }
 
-        setSuccess(true)
-        setFormData({
-            name: "",
-            email: "",
-            password: "",
-            city: "",
-            cif: "",
-            address: "",
-            pc: "",
-            iconUrl: "",
-            iban: ""
-        })
+        try {
+            const response = await fetch(backendUrl + "/api/shelter", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
+            })
 
-        // Redirigir a home después de 2 segundos
-        setTimeout(() => {
-            navigate("/")
-        }, 2000)
+            const data = await response.json()
+
+            if (!response.ok) {
+                throw new Error(data.error || "Error creating shelter")
+            }
+
+            setSuccess(true)
+            setFormData({
+                name: "",
+                email: "",
+                password: "",
+                city: "",
+                cif: "",
+                address: "",
+                pc: "",
+                iconUrl: "",
+                iban: ""
+            })
+
+            setTimeout(() => {
+                navigate("/")
+            }, 2000)
+        } catch (err) {
+            setError(err.message)
+        } finally {
+            setLoading(false)
+        }
     }
 
     return (
         <div className="container mt-5">
             <div className="row">
                 <div className="col-md-8 offset-md-2">
-                    <h2 className="mb-4">Crear Refugio</h2>
+                    <h2 className="mb-4">Create Shelter</h2>
 
                     {error && (
                         <div className="alert alert-danger" role="alert">
@@ -89,14 +130,13 @@ export const ShelterCreate = () => {
 
                     {success && (
                         <div className="alert alert-success" role="alert">
-                            ¡Refugio creado exitosamente!
+                            Shelter created successfully!
                         </div>
                     )}
 
                     <form onSubmit={handleSubmit}>
-                        {/* Nombre */}
                         <div className="mb-3">
-                            <label htmlFor="name" className="form-label">Nombre *</label>
+                            <label htmlFor="name" className="form-label">Name *</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -105,11 +145,10 @@ export const ShelterCreate = () => {
                                 value={formData.name}
                                 onChange={handleChange}
                                 required
-                                placeholder="Nombre del refugio"
+                                placeholder="Shelter name"
                             />
                         </div>
 
-                        {/* Email */}
                         <div className="mb-3">
                             <label htmlFor="email" className="form-label">Email *</label>
                             <input
@@ -120,11 +159,10 @@ export const ShelterCreate = () => {
                                 value={formData.email}
                                 onChange={handleChange}
                                 required
-                                placeholder="correo@ejemplo.com"
+                                placeholder="email@example.com"
                             />
                         </div>
 
-                        {/* Password */}
                         <div className="mb-3">
                             <label htmlFor="password" className="form-label">Password *</label>
                             <input
@@ -135,13 +173,12 @@ export const ShelterCreate = () => {
                                 value={formData.password}
                                 onChange={handleChange}
                                 required
-                                placeholder="contraseña"
+                                placeholder="Password"
                             />
                         </div>
 
-                        {/* Ciudad */}
                         <div className="mb-3">
-                            <label htmlFor="city" className="form-label">Ciudad</label>
+                            <label htmlFor="city" className="form-label">City</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -149,11 +186,10 @@ export const ShelterCreate = () => {
                                 name="city"
                                 value={formData.city}
                                 onChange={handleChange}
-                                placeholder="Ciudad"
+                                placeholder="City"
                             />
                         </div>
 
-                        {/* CIF */}
                         <div className="mb-3">
                             <label htmlFor="cif" className="form-label">CIF</label>
                             <input
@@ -163,13 +199,12 @@ export const ShelterCreate = () => {
                                 name="cif"
                                 value={formData.cif}
                                 onChange={handleChange}
-                                placeholder="CIF del refugio"
+                                placeholder="Shelter CIF"
                             />
                         </div>
 
-                        {/* Dirección */}
                         <div className="mb-3">
-                            <label htmlFor="address" className="form-label">Dirección</label>
+                            <label htmlFor="address" className="form-label">Address</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -177,13 +212,12 @@ export const ShelterCreate = () => {
                                 name="address"
                                 value={formData.address}
                                 onChange={handleChange}
-                                placeholder="Dirección completa"
+                                placeholder="Full address"
                             />
                         </div>
 
-                        {/* Código Postal */}
                         <div className="mb-3">
-                            <label htmlFor="pc" className="form-label">Código Postal</label>
+                            <label htmlFor="pc" className="form-label">Postal Code</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -191,25 +225,29 @@ export const ShelterCreate = () => {
                                 name="pc"
                                 value={formData.pc}
                                 onChange={handleChange}
-                                placeholder="Código postal"
+                                placeholder="Postal code"
                             />
                         </div>
 
-                        {/* URL de Icono */}
                         <div className="mb-3">
-                            <label htmlFor="iconUrl" className="form-label">URL del Icono</label>
+                            <label htmlFor="iconUrl" className="form-label">Shelter Image</label>
                             <input
-                                type="url"
+                                type="file"
                                 className="form-control"
                                 id="iconUrl"
-                                name="iconUrl"
-                                value={formData.iconUrl}
-                                onChange={handleChange}
-                                placeholder="https://ejemplo.com/icono.png"
+                                accept="image/*"
+                                onChange={handleImageUpload}
+                                disabled={loading || uploading}
                             />
+                            {uploading && <small className="text-muted d-block mt-1">Uploading image...</small>}
+                            {formData.iconUrl && !uploading && (
+                                <div className="mt-2">
+                                    <small className="text-success d-block">Image loaded.</small>
+                                    <img src={formData.iconUrl} alt="Preview" style={{ width: "90px", height: "90px", objectFit: "cover" }} className="mt-1 rounded border" />
+                                </div>
+                            )}
                         </div>
 
-                        {/* IBAN */}
                         <div className="mb-3">
                             <label htmlFor="iban" className="form-label">IBAN</label>
                             <input
@@ -219,26 +257,25 @@ export const ShelterCreate = () => {
                                 name="iban"
                                 value={formData.iban}
                                 onChange={handleChange}
-                                placeholder="IBAN para donaciones"
+                                placeholder="IBAN for donations"
                             />
                         </div>
 
-                        {/* Botones */}
                         <div className="d-flex gap-2">
                             <button
                                 type="submit"
                                 className="btn btn-primary"
-                                disabled={loading}
+                                disabled={loading || uploading}
                             >
-                                {loading ? "Guardando..." : "Guardar Refugio"}
+                                {loading ? "Saving..." : "Save Shelter"}
                             </button>
                             <button
                                 type="button"
                                 className="btn btn-secondary"
                                 onClick={() => navigate("/shelter")}
-                                disabled={loading}
+                                disabled={loading || uploading}
                             >
-                                Cancelar
+                                Cancel
                             </button>
                         </div>
                     </form>
