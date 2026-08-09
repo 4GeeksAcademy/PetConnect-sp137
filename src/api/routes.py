@@ -9,6 +9,7 @@ from flask_cors import CORS
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+import requests
 
 api = Blueprint('api', __name__)
 # Allow CORS requests to this API
@@ -586,8 +587,40 @@ def delete_breed(breed_id):
 
     return jsonify({"message": "Breed deleted successfully"}), 200
 
+############ Breeds Api ############
+
+
+@api.route('/dog-breeds', methods=['GET'])
+def get_dog_breeds():
+    response = requests.get("https://dog.ceo/api/breeds/list/all")
+
+    if response.status_code != 200:
+        return jsonify({"message": "Error getting dog breeds"}), 500
+
+    data = response.json()
+
+    return jsonify(data), 200
+
+
+@api.route('/dog-breeds/<string:breed>/image', methods=['GET'])
+def get_dog_breed_image(breed):
+
+    response = requests.get(
+        f"https://dog.ceo/api/breed/{breed}/images/random"
+    )
+
+    if response.status_code != 200:
+        return jsonify({"message": "Breed not found"}), 404
+
+    data = response.json()
+
+    return jsonify({
+        "breed": breed,
+        "image": data["message"]
+    }), 200
 
 ################# Adoptions #################
+
 
 @api.route('/adoptions', methods=['GET'])
 def get_adoptions():
