@@ -4,6 +4,7 @@ import useGlobalReducer from "../hooks/useGlobalReducer";
 import { PetCardAsUser } from "../components/PetCardAsUser";
 import { MedicalAppointmentCardAsUser } from "../components/MedicalAppointmentCardAsUser";
 import { AdoptionCardAsUser } from "../components/AdoptionCardAsUser";
+import { Geolocation } from "../components/Geolocation";
 
 export const DashboardUser = () => {
     const navigate = useNavigate();
@@ -29,7 +30,9 @@ export const DashboardUser = () => {
         birthDate: "",
         pc: "",
         city: "",
-        photo_url: ""
+        photo_url: "",
+        latitude: "",
+        longitude: ""
     });
 
     useEffect(() => {
@@ -57,7 +60,9 @@ export const DashboardUser = () => {
                         birthDate: loggedUser.birthDate || "",
                         pc: loggedUser.pc || "",
                         city: loggedUser.city || "",
-                        photo_url: loggedUser.photo_url || loggedUser.photoUrl || ""
+                        photo_url: loggedUser.photo_url || loggedUser.photoUrl || "",
+                        latitude: loggedUser.latitude !== null && loggedUser.latitude !== undefined ? loggedUser.latitude : "",
+                        longitude: loggedUser.longitude !== null && loggedUser.longitude !== undefined ? loggedUser.longitude : ""
                     });
                 }
 
@@ -120,6 +125,8 @@ export const DashboardUser = () => {
         birthDate: userFormData.birthDate,
         pc: userFormData.pc,
         city: userFormData.city,
+        latitude: userFormData.latitude !== "" ? Number(userFormData.latitude) : null,
+        longitude: userFormData.longitude !== "" ? Number(userFormData.longitude) : null,
         photo_url: currentPhotoUrl !== undefined ? currentPhotoUrl : userFormData.photo_url,
         photoUrl: currentPhotoUrl !== undefined ? currentPhotoUrl : userFormData.photo_url
     });
@@ -362,9 +369,38 @@ export const DashboardUser = () => {
                                 required
                             />
                         </div>
+                        <div className="col-md-6">
+                            <label className="form-label">Latitude</label>
+                            <input
+                                type="number"
+                                step="any"
+                                name="latitude"
+                                className="form-control"
+                                value={userFormData.latitude}
+                                onChange={handleUserChange}
+                                placeholder="e.g. 40.4168"
+                            />
+                        </div>
+                        <div className="col-md-6">
+                            <label className="form-label">Longitude</label>
+                            <input
+                                type="number"
+                                step="any"
+                                name="longitude"
+                                className="form-control"
+                                value={userFormData.longitude}
+                                onChange={handleUserChange}
+                                placeholder="e.g. -3.7038"
+                            />
+                        </div>
                     </div>
                     <button type="submit" className="btn btn-success mt-4" disabled={uploading}>Save Changes</button>
                 </form>
+            </div>
+
+            <div className="mb-4">
+                <h3 className="mb-3">My Location</h3>
+                <Geolocation latitude={userFormData.latitude} longitude={userFormData.longitude} />
             </div>
 
             <div className="d-flex justify-content-between align-items-center mb-3">

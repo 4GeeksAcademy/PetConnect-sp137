@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from typing import Optional, List
-from sqlalchemy import String, Boolean, Date, Integer, ForeignKey, Text
+from sqlalchemy import String, Boolean, Date, Integer, ForeignKey, Text, Numeric
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from typing import Optional, List
 from sqlalchemy import String, Boolean, Date, Integer, ForeignKey, Text
@@ -25,6 +25,10 @@ class User(db.Model):
     city: Mapped[str] = mapped_column(String(100), nullable=False)
     photo_url: Mapped[Optional[str]] = mapped_column(
         String(255), nullable=True)
+    latitude: Mapped[Optional[float]] = mapped_column(
+        Numeric(10, 8), nullable=True)
+    longitude: Mapped[Optional[float]] = mapped_column(
+        Numeric(11, 8), nullable=True)
 
     pets: Mapped[List["Pet"]] = relationship("Pet", back_populates="owner")
     appointments: Mapped[List["MedicalAppointment"]] = relationship(
@@ -42,7 +46,9 @@ class User(db.Model):
             "birthDate": self.birth_date.strftime('%Y-%m-%d') if self.birth_date else None,
             "pc": self.pc,
             "photo_url": self.photo_url,
-            "city": self.city
+            "city": self.city,
+            "latitude": float(self.latitude) if self.latitude is not None else None,
+            "longitude": float(self.longitude) if self.longitude is not None else None
         }
 
 

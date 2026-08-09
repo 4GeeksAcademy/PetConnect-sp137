@@ -17,7 +17,9 @@ export const UserCreate = () => {
         city: "",
         adress: "",
         pc: "",
-        iconUrl: ""
+        iconUrl: "",
+        latitude: "",
+        longitude: ""
     })
 
     const handleChange = (e) => {
@@ -77,13 +79,20 @@ export const UserCreate = () => {
             throw new Error("VITE_BACKEND_URL is not defined in .env file")
         }
 
+        // Convertimos latitud y longitud a número si existen, de lo contrario se envían como null
+        const payload = {
+            ...formData,
+            latitude: formData.latitude !== "" ? parseFloat(formData.latitude) : null,
+            longitude: formData.longitude !== "" ? parseFloat(formData.longitude) : null
+        };
+
         try {
             const response = await fetch(backendUrl + "/api/user", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(payload)
             })
 
             const data = await response.json()
@@ -101,7 +110,9 @@ export const UserCreate = () => {
                 city: "",
                 adress: "",
                 pc: "",
-                iconUrl: ""
+                iconUrl: "",
+                latitude: "",
+                longitude: ""
             })
 
             setTimeout(() => {
@@ -222,6 +233,35 @@ export const UserCreate = () => {
                                 onChange={handleChange}
                                 placeholder="Postal code"
                             />
+                        </div>
+
+                        <div className="row">
+                            <div className="col-md-6 mb-3">
+                                <label htmlFor="latitude" className="form-label">Latitude</label>
+                                <input
+                                    type="number"
+                                    step="any"
+                                    className="form-control"
+                                    id="latitude"
+                                    name="latitude"
+                                    value={formData.latitude}
+                                    onChange={handleChange}
+                                    placeholder="e.g. 41.3879"
+                                />
+                            </div>
+                            <div className="col-md-6 mb-3">
+                                <label htmlFor="longitude" className="form-label">Longitude</label>
+                                <input
+                                    type="number"
+                                    step="any"
+                                    className="form-control"
+                                    id="longitude"
+                                    name="longitude"
+                                    value={formData.longitude}
+                                    onChange={handleChange}
+                                    placeholder="e.g. 2.1699"
+                                />
+                            </div>
                         </div>
 
                         <div className="mb-3">
