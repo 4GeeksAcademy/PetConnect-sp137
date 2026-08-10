@@ -3,10 +3,12 @@ import { useState, useEffect } from "react";
 import rigoImageUrl from "../assets/img/rigo-baby.jpg";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export const ShelterView = (props) => {
   const { id } = useParams();
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const navigate = useNavigate();
   const [shelter, setShelter] = useState(null);
 
   useEffect(() => {
@@ -54,9 +56,13 @@ export const ShelterView = (props) => {
               <li className="list-group-item">Icon URL: {shelter.iconUrl}</li>
             </ul>
             <div className="card-body d-flex gap-4 justify-content-center">
-              <Link to="/shelter">
-                <span className="card-link btn btn-primary btn-sm" href="#" role="button">Volver</span>
-              </Link>
+              <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => navigate("/shelterDashboard")}
+              >
+                  Cancelar
+              </button>
             </div>
           </div>
         </div>
