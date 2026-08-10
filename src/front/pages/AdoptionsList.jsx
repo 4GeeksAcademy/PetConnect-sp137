@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AdoptionCard } from "../components/AdoptionCard";
+import useGlobalReducer from "../hooks/useGlobalReducer";
 
 export const AdoptionsList = () => {
     const [adoptions, setAdoptions] = useState([]);
@@ -8,7 +9,7 @@ export const AdoptionsList = () => {
     const [pets, setPets] = useState([]);
     const [shelters, setShelters] = useState([]);
     const { store } = useGlobalReducer();
-    
+
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     const fetchAdoptions = async () => {

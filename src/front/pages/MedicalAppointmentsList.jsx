@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { MedicalAppointmentCard } from "../components/MedicalAppointmentCard";
+import useGlobalReducer from "../hooks/useGlobalReducer";
 
 export const MedicalAppointmentsList = () => {
     const [appointments, setAppointments] = useState([]);
