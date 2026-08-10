@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 
-const ShelterEdit = () => {
+const ShelterEditProfile = () => {
     const { store } = useGlobalReducer();
-    const { id } = useParams();
+    const params = useParams();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: "",
@@ -30,6 +30,8 @@ const ShelterEdit = () => {
         }));
     };
 
+    const shelterId = params.id || store.currentShelter?.id;
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         await updateShelter();
@@ -37,8 +39,9 @@ const ShelterEdit = () => {
 
     // búsqueda por id
     const getShelter = async () => {
+        if (!shelterId) return;
         try {
-            const response = await fetch(`${API}/${id}`);
+            const response = await fetch(`${API}/${shelterId}`);
             const data = await response.json();
 
             setFormData({
@@ -52,9 +55,9 @@ const ShelterEdit = () => {
                 iconUrl: data.iconUrl || "",
                 iban: data.iban || ""
             });
-
         } catch (error) {
             console.log(error);
+            setError("Error al obtener los datos del refugio");
         }
     };
 
@@ -67,7 +70,7 @@ const ShelterEdit = () => {
         setSuccess(false);
 
         try {
-            const response = await fetch(`${API}/${id}`, {
+            const response = await fetch(`${API}/${shelterId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"
@@ -84,7 +87,8 @@ const ShelterEdit = () => {
             }
 
             setSuccess(true);
-            navigate("/shelter");
+            navigate("/shelterview/" + shelterId);
+            //navigate(`/shelterview/${shelterId}`);
 
         } catch (error) {
             console.log(error);
@@ -95,10 +99,29 @@ const ShelterEdit = () => {
     };
 
     useEffect(() => {
-        getShelter();
-    }, []);
+        if (!shelterId) {
+            navigate("/shelterLogin");
+            return;
+        }
 
-    if (!store.adminUserAuth) {
+        if (store.currentShelter && String(store.currentShelter.id) === String(shelterId)) {
+            setFormData({
+                name: store.currentShelter.name || "",
+                email: store.currentShelter.email || "",
+                password: store.currentShelter.password || "",
+                city: store.currentShelter.city || "",
+                cif: store.currentShelter.cif || "",
+                address: store.currentShelter.address || "",
+                pc: store.currentShelter.pc || "",
+                iconUrl: store.currentShelter.iconUrl || "",
+                iban: store.currentShelter.iban || ""
+            });
+        }
+
+        getShelter();
+    }, [shelterId, navigate, store.currentShelter]);
+
+    if (!store.shelterAuth) {
         return (
             <div className="container mt-4">
                 <p>Private Admin</p>
@@ -110,7 +133,7 @@ const ShelterEdit = () => {
         <div className="container mt-5">
             <div className="row">
                 <div className="col-md-8 offset-md-2">
-                    <h2 className="mb-4">Crear Refugio</h2>
+                    <h2 className="mb-4">Editar Perfil</h2>
 
                     {error && (
                         <div className="alert alert-danger" role="alert">
@@ -265,7 +288,7 @@ const ShelterEdit = () => {
                             <button
                                 type="button"
                                 className="btn btn-secondary"
-                                onClick={() => navigate("/shelter")}
+                                onClick={() => navigate("/shelterDashboard")}
                                 disabled={loading}
                             >
                                 Cancelar
@@ -278,5 +301,5 @@ const ShelterEdit = () => {
     )
 }
 
-export default ShelterEdit;
+export default ShelterEditProfile;
 

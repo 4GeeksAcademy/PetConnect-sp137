@@ -34,45 +34,49 @@ export const ShelterCreate = () => {
         setError(null)
         setSuccess(false)
 
+        try {
+            const backendUrl = import.meta.env.VITE_BACKEND_URL
 
-        const backendUrl = import.meta.env.VITE_BACKEND_URL
+            if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file")
 
-        if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file")
+            console.log("Enviando datos a:", backendUrl + "/api/shelter")
+            console.log("Datos del formulario:", formData)
 
-        console.log("Enviando datos a:", backendUrl + "/api/shelter")
-        console.log("Datos del formulario:", formData)
+            const response = await fetch(backendUrl + "/api/shelter", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
+            })
 
-        const response = await fetch(backendUrl + "/api/shelter", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(formData)
-        })
+            const data = await response.json()
 
-        const data = await response.json()
+            if (!response.ok) {
+                throw new Error(data.error || "Error al crear el refugio")
+            }
 
-        if (!response.ok) {
-            throw new Error(data.error || "Error al crear el refugio")
+            setSuccess(true)
+            setFormData({
+                name: "",
+                email: "",
+                password: "",
+                city: "",
+                cif: "",
+                address: "",
+                pc: "",
+                iconUrl: "",
+                iban: ""
+            })
+
+            setTimeout(() => {
+                navigate("/shelterLogin")
+            }, 2000)
+        } catch (err) {
+            setError(err.message)
+        } finally {
+            setLoading(false)
         }
-
-        setSuccess(true)
-        setFormData({
-            name: "",
-            email: "",
-            password: "",
-            city: "",
-            cif: "",
-            address: "",
-            pc: "",
-            iconUrl: "",
-            iban: ""
-        })
-
-        // Redirigir a home después de 2 segundos
-        setTimeout(() => {
-            navigate("/")
-        }, 2000)
     }
 
     return (
@@ -235,7 +239,7 @@ export const ShelterCreate = () => {
                             <button
                                 type="button"
                                 className="btn btn-secondary"
-                                onClick={() => navigate("/shelter")}
+                                onClick={() => navigate("/shelterLogin")}
                                 disabled={loading}
                             >
                                 Cancelar

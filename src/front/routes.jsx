@@ -23,9 +23,15 @@ import { Demo } from "./pages/Demo";
 import { Shelter } from "./pages/Shelter";
 import { ShelterLogin } from "./pages/ShelterLogin";
 import { ShelterDashboard } from "./pages/ShelterDashboard";
+import { ShelterDashboardViewPets } from "./pages/ShelterDashboardViewPets";
+import ShelterDashboardAddPet from "./pages/ShelterDashboardAddPet";
+import { ShelterDashboardEditPet } from "./pages/ShelterDashboardEditPet";
+import { ShelterDashboardViewAdoptions } from "./pages/ShelterDashboardViewAdoptions";
+import { ShelterDashboardAdoptionPet } from "./pages/ShelterDashboardAdoptionPet";
 import { ShelterCreate } from "./pages/ShelterCreate";
 import { ShelterView } from "./pages/ShelterView";
 import ShelterEdit from "./pages/ShelterEdit";
+import ShelterEditProfile from "./pages/ShelterEditProfile";
 import { User } from "./pages/User";
 import { UserCreate } from "./pages/UserCreate";
 import UserEdit from "./pages/UserEdit";
@@ -65,8 +71,15 @@ export const router = createBrowserRouter(
       <Route path="/shelter" element={<Shelter />} />
       <Route path="/shelterLogin" element={<ShelterLogin />} />
       <Route path="/shelterDashboard" element={<ShelterDashboard />} />
-      <Route path="/ShelterCreate" element={<ShelterCreate />} />
+      <Route path="/shelterDashboardViewPets" element={<ShelterDashboardViewPets />} />
+      <Route path="/shelterDashboardViewPets/:id" element={<ShelterDashboardViewPets />} />
+      <Route path="/shelterDashboardAddPet" element={<ShelterDashboardAddPet />} />
+      <Route path="/shelterDashboardEditPet/:id" element={<ShelterDashboardEditPet />} />
+      <Route path="/shelterDashboardViewAdoptions/:id" element={<ShelterDashboardViewAdoptions />} />
+      <Route path="/shelterDashboardAdoptionPet" element={<ShelterDashboardAdoptionPet />} />
+      <Route path="/shelterCreate" element={<ShelterCreate />} />
       <Route path="/ShelterEdit/:id" element={<ShelterEdit />} />
+      <Route path="/ShelterEditProfile/:id" element={<ShelterEditProfile />} />
       <Route path="/shelterview/:id" element={<ShelterView />} />
       <Route path="/user" element={<User />} />
       <Route path="/userCreate" element={<UserCreate />} />

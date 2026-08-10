@@ -5,14 +5,12 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Breed, Pet, Shelter, Adoption, MedicalAppointment, Veterinarian, AdminUser
 from api.utils import generate_sitemap, APIException
-from flask_cors import CORS
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+from datetime import datetime
 
 api = Blueprint('api', __name__)
-# Allow CORS requests to this API
-CORS(api)
 
 
 @api.route('/loginUser', methods=['POST'])
@@ -113,7 +111,15 @@ def update_veterinarian_profile():
 
 @api.route('/pets', methods=['GET'])
 def get_pets():
-    pets = Pet.query.order_by(Pet.id.asc()).all()
+    shelter_id = request.args.get('shelter_id')
+    pets_query = Pet.query
+    if shelter_id:
+        try:
+            pets_query = pets_query.filter(Pet.shelter_id == int(shelter_id))
+        except ValueError:
+            raise APIException("Invalid shelter_id", status_code=400)
+
+    pets = pets_query.order_by(Pet.id.asc()).all()
     results = [pet.serialize() for pet in pets]
     return jsonify(results), 200
 
@@ -163,23 +169,50 @@ def create_pet():
 
 @api.route('/pet-detail/<int:pet_id>', methods=['PUT'])
 def update_pet(pet_id):
-    body = request.get_json()
+    body = request.get_json(silent=True) or {}
     pet = db.session.get(Pet, pet_id)
 
     if pet is None:
         raise APIException("Pet not found.", status_code=404)
 
-    pet.name = body['name']
-    pet.genre = body['genre']
-    pet.color = body['color']
-    pet.size = body['size']
-    pet.castrated = body['castrated']
-    pet.chip_number = body['chipNumber']
-    pet.photo_url = body['photoUrl']
-    pet.user_id = body['user_id']
-    pet.shelter_id = body['shelter_id']
-    pet.breed_id = body['breed_id']
-    pet.birth_date = body['birthDate']
+    pet.name = body.get('name', pet.name)
+    pet.genre = body.get('genre', pet.genre)
+    pet.color = body.get('color', pet.color)
+    pet.size = body.get('size', pet.size)
+    pet.castrated = body.get('castrated', pet.castrated)
+    pet.chip_number = body.get('chipNumber', pet.chip_number)
+    pet.photo_url = body.get('photoUrl', pet.photo_url)
+
+    try:
+        if body.get('user_id') not in (None, '', False):
+            pet.user_id = int(body['user_id'])
+        else:
+            pet.user_id = None
+        if body.get('shelter_id') not in (None, '', False):
+            pet.shelter_id = int(body['shelter_id'])
+        else:
+            pet.shelter_id = None
+        if body.get('breed_id') not in (None, '', False):
+            pet.breed_id = int(body['breed_id'])
+        else:
+            pet.breed_id = None
+    except (TypeError, ValueError):
+        pet.user_id = None
+        pet.shelter_id = None
+        pet.breed_id = None
+
+    birth_date = body.get('birthDate')
+    if birth_date:
+        if isinstance(birth_date, str):
+            try:
+                pet.birth_date = datetime.strptime(
+                    birth_date, "%Y-%m-%d").date()
+            except ValueError:
+                pet.birth_date = None
+        else:
+            pet.birth_date = birth_date
+    else:
+        pet.birth_date = None
 
     db.session.commit()
 
@@ -467,7 +500,7 @@ def login():
     # Cuando user y pass son correctas. no hay conflictos:
     access_token = create_access_token(
         identity=str(shelter.id))  # token creado
-    return jsonify(access_token=access_token), 200
+    return jsonify(access_token=access_token, shelter=shelter.serialize()), 200
 
 ###############################################################################################################
 ###############################################################################################################
@@ -541,7 +574,16 @@ def delete_breed(breed_id):
 
 @api.route('/adoptions', methods=['GET'])
 def get_adoptions():
-    adoptions = Adoption.query.order_by(Adoption.id.asc()).all()
+    shelter_id = request.args.get('shelter_id')
+    adoptions_query = Adoption.query
+    if shelter_id:
+        try:
+            adoptions_query = adoptions_query.filter(
+                Adoption.shelter_id == int(shelter_id))
+        except ValueError:
+            raise APIException("Invalid shelter_id", status_code=400)
+
+    adoptions = adoptions_query.order_by(Adoption.id.asc()).all()
     results = [adoption.serialize() for adoption in adoptions]
     return jsonify(results), 200
 

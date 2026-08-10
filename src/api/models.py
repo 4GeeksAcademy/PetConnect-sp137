@@ -143,7 +143,7 @@ class Pet(db.Model):
     appointments: Mapped[List["MedicalAppointment"]] = relationship(
         "MedicalAppointment", back_populates="pet")
     adoptions: Mapped[List["Adoption"]] = relationship(
-        "Adoption", back_populates="pet")
+        "Adoption", back_populates="pet", cascade="all, delete-orphan")
 
     def serialize(self):
         return {

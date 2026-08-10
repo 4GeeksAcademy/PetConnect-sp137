@@ -37,9 +37,14 @@ export const ShelterLogin = () => {
             }
 
             localStorage.setItem("sheltertoken", data.access_token);
+            localStorage.setItem("shelter", JSON.stringify(data.shelter));
             dispatch({
                 type: "set_shelter_auth",
-                payload: { token: data.access_token }
+                payload: data.access_token
+            });
+            dispatch({
+                type: "set_current_shelter",
+                payload: data.shelter
             });
 
             navigate("/shelterDashboard");

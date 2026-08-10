@@ -5,6 +5,7 @@ export const initialStore = () => {
     currentUser: localStorage.getItem("user") || null,
     adminUserAuth: localStorage.getItem("adminUserToken") || null,
     shelterAuth: localStorage.getItem("sheltertoken") || null,
+    currentShelter: JSON.parse(localStorage.getItem("shelter") || "null"),
     veterinarianAuth: localStorage.getItem("veterinariantoken") || null,
   };
 };
@@ -39,6 +40,17 @@ export default function storeReducer(store, action = {}) {
       return {
         ...store,
         shelterAuth: action.payload,
+      };
+
+    case "set_current_shelter":
+      return {
+        ...store,
+        currentShelter: action.payload,
+      };
+    case "set_current_pet":
+      return {
+        ...store,
+        currentPet: action.payload,
       };
 
     case "set_veterinarian_auth":
