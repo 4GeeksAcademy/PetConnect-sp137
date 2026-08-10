@@ -50,7 +50,6 @@ export const ShelterDashboard = () => {
             const response = await fetch(`${backendUrl}/api/pets`);
             if (response.ok) {
                 const data = await response.json();
-                console.log(data.length)
                 setPets(data);
             }
         } catch (error) {
