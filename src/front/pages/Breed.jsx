@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer";
-<<<<<<< ours
-=======
->>>>>>> theirs
+
 const Breed = () => {
     const navigate = useNavigate();
     const { store } = useGlobalReducer();
