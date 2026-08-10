@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer";
-
+<<<<<<< ours
+=======
+>>>>>>> theirs
 const Breed = () => {
     const navigate = useNavigate();
     const { store } = useGlobalReducer();
     const [breeds, setBreeds] = useState([]);
+    const [dogBreed, setDogBreed] = useState("");
+    const [dogImage, setDogImage] = useState("");
+    const [dogBreeds, setDogBreeds] = useState([]);
 
     const API = "/api/breed";
 
@@ -18,6 +23,41 @@ const Breed = () => {
             setBreeds(data);
         } catch (error) {
             console.log(error);
+        }
+    };
+
+    const getDogBreeds = async () => {
+        try {
+            const response = await fetch("/api/dog-breeds");
+            const data = await response.json();
+
+            setDogBreeds(Object.keys(data.message));
+
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const searchDogBreed = async () => {
+        if (!dogBreed.trim()) return;
+
+        try {
+            const response = await fetch(
+                `/api/dog-breeds/${dogBreed.toLowerCase().trim()}/image`
+            );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                setDogImage("");
+                alert("Raza no encontrada");
+                return;
+            }
+
+            setDogImage(data.image);
+        } catch (error) {
+            console.log(error);
+            setDogImage("");
         }
     };
 
@@ -42,6 +82,7 @@ const Breed = () => {
 
     useEffect(() => {
         getBreeds();
+        getDogBreeds();
     }, []);
 
     if (!store.adminUserAuth) {
@@ -101,7 +142,49 @@ const Breed = () => {
                     ))}
                 </tbody>
             </table>
+            <div className="d-flex gap-2 mb-4">
+                <select
+                    className="form-select"
+                    value={dogBreed}
+                    onChange={(e) => setDogBreed(e.target.value)}
+                >
+                    <option value="">Selecciona una raza</option>
 
+                    {dogBreeds.map((breed) => (
+                        <option key={breed} value={breed}>
+                            {breed.charAt(0).toUpperCase() + breed.slice(1)}
+                        </option>
+                    ))}
+                </select>
+
+                <button
+                    className="btn btn-primary"
+                    onClick={searchDogBreed}
+                    disabled={!dogBreed}
+                >
+                    Buscar
+                </button>
+            </div>
+
+            {dogImage && (
+                <div className="card" style={{ width: "350px" }}>
+                    <img
+                        src={dogImage}
+                        className="card-img-top"
+                        alt={dogBreed}
+                        style={{
+                            height: "250px",
+                            objectFit: "cover"
+                        }}
+                    />
+
+                    <div className="card-body">
+                        <h5 className="card-title text-capitalize">
+                            {dogBreed}
+                        </h5>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
