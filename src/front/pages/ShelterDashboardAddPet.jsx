@@ -7,6 +7,7 @@ const ShelterDashboardAddPet = () => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
     const { store } = useGlobalReducer();
     const [formData, setFormData] = useState({
+        shelter_id: store.currentShelter?.id,
         name: "",
         genre: "male",
         birthDate: "",
@@ -27,6 +28,7 @@ const ShelterDashboardAddPet = () => {
 
     const resetForm = () => {
         setFormData({
+            shelter_id: store.currentShelter?.id,
             name: "",
             genre: "male",
             birthDate: "",

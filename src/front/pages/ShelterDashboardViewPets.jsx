@@ -30,18 +30,14 @@ export const ShelterDashboardViewPets = () => {
 
         const data = await res.json();
         const storedShelter = store.currentShelter || JSON.parse(localStorage.getItem("shelter") || "null");
-        const shelterId = id && id !== "undefined" && id !== "null" ? id : storedShelter?.id;
+        const shelterId = storedShelter.id;
 
-        if (!shelterId) {
-          setPets([]);
-          return;
-        }
+        const shelterPets = data.filter((pet) => {
+          const petShelterId = String(pet.shelter_id || pet.idShelter || "");
+          return shelterId ? petShelterId === String(shelterId) : false;
+        });
+        setPets(shelterPets);
 
-        if (Array.isArray(data)) {
-          setPets(data);
-        } else {
-          setPets([]);
-        }
       } catch (err) {
         console.error("Error loading pets:", err);
       } finally {
