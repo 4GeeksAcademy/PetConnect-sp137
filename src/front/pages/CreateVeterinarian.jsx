@@ -73,7 +73,7 @@ const CreateVeterinarian = () => {
             });
 
             if (response.ok) {
-                navigate("/veterinarian");
+                navigate("/loginveterinarian");
             } else {
                 alert("Error creating veterinarian");
             }
@@ -142,11 +142,11 @@ const CreateVeterinarian = () => {
 
                 <div className="mb-3">
                     <label className="form-label">Veterinarian Image</label>
-                    <input 
-                        type="file" 
-                        className="form-control" 
-                        accept="image/*" 
-                        onChange={handleImageUpload} 
+                    <input
+                        type="file"
+                        className="form-control"
+                        accept="image/*"
+                        onChange={handleImageUpload}
                         disabled={uploading}
                     />
                     {uploading && <small className="text-muted d-block mt-1">Uploading image...</small>}
