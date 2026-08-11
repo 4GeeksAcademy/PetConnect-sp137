@@ -64,7 +64,12 @@ export const Navbar = () => {
 				</div>
 
 				<div className="d-flex align-items-center gap-2">
-
+					<button
+						className="btn btn-success"
+						onClick={() => navigate("/adoption-survey")}
+					>
+						🐾 Adoption Survey
+					</button>
 					<button className="btn btn-primary" onClick={() => navigate("/userCreate")}>Register User</button>
 					<button className="btn btn-primary" onClick={() => navigate("/ShelterCreate")}>Register Shelter</button>
 					<button className="btn btn-primary" onClick={() => navigate("/veterinarian/new")}>Register Veterinarian</button>
