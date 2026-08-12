@@ -635,7 +635,7 @@ def get_dog_breeds():
     return jsonify(data), 200
 
 
-@api.route('/dog-breeds/<string:breed>/image', methods=['GET'])
+@api.route('/dog-breeds/<path:breed>/image', methods=['GET'])
 def get_dog_breed_image(breed):
 
     response = requests.get(
