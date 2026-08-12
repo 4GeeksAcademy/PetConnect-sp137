@@ -310,7 +310,7 @@ export const ShelterDashboard = () => {
                                                     alt="Pet"
                                                     style={{ objectFit: "cover" }}
                                                 />
-                                            </div>f                                                                                        
+                                            </div>                                                                                        
                                             <div className="card-body">
                                                 <h5 className="card-title">{pet.name}</h5>
                                                 <p className="card-text mb-1"><strong>Gender:</strong> {pet.genre}</p>
