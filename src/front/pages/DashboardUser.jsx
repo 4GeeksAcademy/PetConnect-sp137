@@ -60,9 +60,9 @@ export const DashboardUser = () => {
                         birthDate: loggedUser.birthDate || "",
                         pc: loggedUser.pc || "",
                         city: loggedUser.city || "",
-                        photo_url: loggedUser.photo_url || loggedUser.photoUrl || "",
-                        latitude: loggedUser.latitude !== null && loggedUser.latitude !== undefined ? loggedUser.latitude : "",
-                        longitude: loggedUser.longitude !== null && loggedUser.longitude !== undefined ? loggedUser.longitude : ""
+                        photo_url: loggedUser.photo_url || "",
+                        latitude: loggedUser.latitude || "0.0",
+                        longitude: loggedUser.longitude || "0.0"
                     });
                 }
 
@@ -246,6 +246,10 @@ export const DashboardUser = () => {
         navigate(`/veterinariansView`);
     };
 
+    const goRecomendation = () => {
+        navigate(`/petRecomendation`);
+    };
+
     return (
         <div className="container mt-5 mb-5">
             <div className="d-flex justify-content-between align-items-center mb-4">
@@ -253,6 +257,7 @@ export const DashboardUser = () => {
                 <div className="d-flex gap-2">
                     <button className="btn btn-success" onClick={goShelters}>Shelters</button>
                     <button className="btn btn-info" onClick={goVeterinarians}>Veterinarians</button>
+                    <button className="btn btn-primary" onClick={goRecomendation}>Pet Recomendation</button>
                     <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
                 </div>
             </div>
