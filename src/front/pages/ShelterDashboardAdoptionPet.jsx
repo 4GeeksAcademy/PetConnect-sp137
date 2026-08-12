@@ -87,7 +87,7 @@ export const ShelterDashboardAdoptionPet = () => {
             if (response.ok) {
                 alert("Adoption request created successfully!");
                 resetForm();
-                navigate("/adoptions");
+                navigate("/shelterDashboard");
             } else {
                 alert("Failed to create adoption request.");
             }

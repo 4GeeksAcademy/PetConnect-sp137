@@ -1,7 +1,7 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-
+from google import genai
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Breed, Pet, Shelter, Adoption, MedicalAppointment, Veterinarian, AdminUser
 from api.utils import generate_sitemap, APIException
@@ -918,3 +918,39 @@ def get_veterinarian_appointments():
     return jsonify(
         [appointment.serialize() for appointment in appointments]
     ), 200
+
+
+
+
+
+
+@api.route('/pet-recommendation', methods=['POST'])
+def pet_recommendation():
+    body = request.get_json()
+    if not body or not body.get('prompt'):
+        return jsonify({"error": "Prompt is required"}), 400
+
+    user_prompt = body.get('prompt')
+
+    try:
+        client = genai.Client()
+
+        system_instruction = (
+            "You are an expert veterinarian and professional animal behaviorist. "
+            "Your goal is to help users find the ideal pet and exact breed that best matches their personality, daily routine, activity level, and living space."
+            "Provide warm, well-structured, and realistic recommendations."
+        )
+
+        response = client.models.generate_content(
+            model="gemini-3.5-flash",
+            contents=user_prompt,
+            config={
+                "system_instruction": system_instruction,
+            }
+        )
+
+        return jsonify({"recommendation": response.text}), 200
+
+    except Exception as e:
+        print("Error generating pet recommendation:", str(e))
+        return jsonify({"error": "Failed to generate recommendation from AI service"}), 500
