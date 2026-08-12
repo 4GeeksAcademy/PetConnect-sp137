@@ -5,6 +5,7 @@ import { PetCardAsUser } from "../components/PetCardAsUser";
 import { MedicalAppointmentCardAsUser } from "../components/MedicalAppointmentCardAsUser";
 import { AdoptionCardAsUser } from "../components/AdoptionCardAsUser";
 import { Geolocation } from "../components/Geolocation";
+import { UserCardMatchPets } from "../components/UserCardMatchPets.jsx";
 
 export const DashboardUser = () => {
     const navigate = useNavigate();
@@ -402,7 +403,11 @@ export const DashboardUser = () => {
                 <h3 className="mb-3">My Location</h3>
                 <Geolocation latitude={userFormData.latitude} longitude={userFormData.longitude} />
             </div>
-
+            <div> {/* Pascual */}
+                <h3 className="mb-3">Match Pets</h3>
+                <UserCardMatchPets />
+            
+            </div>
             <div className="d-flex justify-content-between align-items-center mb-3">
                 <h2>My Pets</h2>
                 <button className="btn btn-primary" onClick={() => navigate("/create-pet-user")}>
