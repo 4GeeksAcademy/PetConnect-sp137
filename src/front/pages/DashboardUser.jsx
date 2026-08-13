@@ -128,8 +128,7 @@ export const DashboardUser = () => {
         city: userFormData.city,
         latitude: userFormData.latitude !== "" ? Number(userFormData.latitude) : null,
         longitude: userFormData.longitude !== "" ? Number(userFormData.longitude) : null,
-        photo_url: currentPhotoUrl !== undefined ? currentPhotoUrl : userFormData.photo_url,
-        photoUrl: currentPhotoUrl !== undefined ? currentPhotoUrl : userFormData.photo_url
+        photo_url: currentPhotoUrl !== undefined ? currentPhotoUrl : userFormData.photo_url
     });
 
     const handleLogout = () => {
@@ -251,14 +250,19 @@ export const DashboardUser = () => {
         navigate(`/petRecomendation`);
     };
 
+    const goPetSearch = () => {
+        navigate(`/petSearch`);
+    };
+
     return (
         <div className="container mt-5 mb-5">
             <div className="d-flex justify-content-between align-items-center mb-4">
                 <h1>Dashboard User</h1>
                 <div className="d-flex gap-2">
-                    <button className="btn btn-success" onClick={goShelters}>Shelters</button>
-                    <button className="btn btn-info" onClick={goVeterinarians}>Veterinarians</button>
+                    <button className="btn btn-primary" onClick={goShelters}>Shelters</button>
+                    <button className="btn btn-primary" onClick={goVeterinarians}>Veterinarians</button>
                     <button className="btn btn-primary" onClick={goRecomendation}>Pet Recomendation</button>
+                    <button className="btn btn-primary" onClick={goPetSearch}>Pet Search</button>
                     <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
                 </div>
             </div>
@@ -411,7 +415,7 @@ export const DashboardUser = () => {
             <div> {/* Pascual */}
                 <h3 className="mb-3">Match Pets</h3>
                 <UserCardMatchPets />
-            
+
             </div>
             <div className="d-flex justify-content-between align-items-center mb-3">
                 <h2>My Pets</h2>
@@ -444,7 +448,7 @@ export const DashboardUser = () => {
             </div>
 
             {medicalAppointments.length === 0 ? (
-                <p className="text-muted mb-5">You have no medical appointments registered yet.</p>
+                <p className="text-muted mb-5">You have no medical appointments scheduled yet.</p>
             ) : (
                 <div className="row g-3 mb-5">
                     {medicalAppointments.map(appointment => (

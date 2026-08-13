@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 58ed9d4d56a4
+Revision ID: 2117d7ea7370
 Revises: 
-Create Date: 2026-08-07 09:42:28.667749
+Create Date: 2026-08-12 09:34:06.754751
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '58ed9d4d56a4'
+revision = '2117d7ea7370'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -44,6 +44,8 @@ def upgrade():
     sa.Column('pc', sa.String(length=20), nullable=True),
     sa.Column('icon_url', sa.String(length=255), nullable=True),
     sa.Column('iban', sa.String(length=34), nullable=True),
+    sa.Column('latitude', sa.Numeric(precision=10, scale=8), nullable=True),
+    sa.Column('longitude', sa.Numeric(precision=11, scale=8), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('cif'),
     sa.UniqueConstraint('email')
@@ -59,6 +61,8 @@ def upgrade():
     sa.Column('pc', sa.String(length=20), nullable=True),
     sa.Column('city', sa.String(length=100), nullable=False),
     sa.Column('photo_url', sa.String(length=255), nullable=True),
+    sa.Column('latitude', sa.Numeric(precision=10, scale=8), nullable=True),
+    sa.Column('longitude', sa.Numeric(precision=11, scale=8), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('legal_document')
@@ -114,7 +118,7 @@ def upgrade():
     sa.Column('pet_id', sa.Integer(), nullable=False),
     sa.Column('veterinarian_id', sa.Integer(), nullable=False),
     sa.Column('date', sa.Date(), nullable=False),
-    sa.Column('state', sa.String(length=50), nullable=False),
+    sa.Column('state', sa.String(length=20), nullable=False),
     sa.Column('hour', sa.String(length=20), nullable=True),
     sa.Column('comments', sa.Text(), nullable=True),
     sa.ForeignKeyConstraint(['pet_id'], ['pet.id'], ),
