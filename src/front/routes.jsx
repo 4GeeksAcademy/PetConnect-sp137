@@ -61,6 +61,7 @@ import { AdoptionDetailAsUser } from "./pages/AdoptionDetailAsUser";
 import AdoptionSurvey from "./pages/AdoptionSurvey";
 import { MedicalAppointmentCreate } from "./pages/MedicalAppointmentCreate";
 import { PetRecomendation } from "./pages/PetRecomendation";
+import { AvailablePetsView } from "./pages/AvailablePetsView";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -129,6 +130,7 @@ export const router = createBrowserRouter(
       <Route path="/adopt-as-user" element={<AdoptionDetailAsUser />} />
       <Route path="/book-medical-appointment" element={<MedicalAppointmentCreate />} />
       <Route path="/petRecomendation" element={<PetRecomendation />} />
+      <Route path="/petSearch" element={<AvailablePetsView />} />
     </Route>
   )
 );

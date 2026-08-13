@@ -11,6 +11,7 @@ export const UserCreate = () => {
 
     const [formData, setFormData] = useState({
         name: "",
+        password: "",
         legalDocument: "",
         birthDate: "",
         email: "",
@@ -79,7 +80,6 @@ export const UserCreate = () => {
             throw new Error("VITE_BACKEND_URL is not defined in .env file")
         }
 
-        // Convertimos latitud y longitud a número si existen, de lo contrario se envían como null
         const payload = {
             ...formData,
             latitude: formData.latitude !== "" ? parseFloat(formData.latitude) : null,
@@ -104,6 +104,7 @@ export const UserCreate = () => {
             setSuccess(true)
             setFormData({
                 name: "",
+                password: "",
                 legalDocument: "",
                 birthDate: "",
                 email: "",
@@ -155,6 +156,20 @@ export const UserCreate = () => {
                                 onChange={handleChange}
                                 required
                                 placeholder="Name"
+                            />
+                        </div>
+
+                        <div className="mb-3">
+                            <label htmlFor="password" className="form-label">Password *</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="password"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                required
+                                placeholder="Password"
                             />
                         </div>
 

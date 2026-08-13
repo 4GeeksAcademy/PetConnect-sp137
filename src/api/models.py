@@ -94,6 +94,8 @@ class Shelter(db.Model):
     pc: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
     icon_url: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     iban: Mapped[Optional[str]] = mapped_column(String(34), nullable=True)
+    latitude: Mapped[Optional[float]] = mapped_column(Numeric(10, 8), nullable=True)
+    longitude: Mapped[Optional[float]] = mapped_column(Numeric(11, 8), nullable=True)
 
     pets: Mapped[List["Pet"]] = relationship("Pet", back_populates="shelter")
     adoptions: Mapped[List["Adoption"]] = relationship(
@@ -110,7 +112,9 @@ class Shelter(db.Model):
             "creationDate": self.creation_date.strftime('%Y-%m-%d') if self.creation_date else None,
             "pc": self.pc,
             "iconUrl": self.icon_url,
-            "iban": self.iban
+            "iban": self.iban,
+            "latitude": float(self.latitude) if self.latitude is not None else None,
+            "longitude": float(self.longitude) if self.longitude is not None else None
         }
 
 

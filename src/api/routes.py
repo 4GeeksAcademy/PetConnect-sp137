@@ -920,8 +920,26 @@ def get_veterinarian_appointments():
     ), 200
 
 
+@api.route('/pets/available-for-adoption', methods=['GET'])
+def get_available_pets():
+    pets = Pet.query.filter(Pet.user_id.is_(
+        None), Pet.shelter_id.isnot(None)).all()
 
+    result = []
+    for pet in pets:
+        pet_data = pet.serialize()
+        if pet.shelter:
+            pet_data["shelter"] = pet.shelter.serialize()
+        else:
+            pet_data["shelter"] = None
 
+        if pet.breed:
+            pet_data["breed"] = pet.breed.serialize()
+        else:
+            pet_data["breed"] = None
+        result.append(pet_data)
+
+    return jsonify(result), 200
 
 
 @api.route('/pet-recommendation', methods=['POST'])
