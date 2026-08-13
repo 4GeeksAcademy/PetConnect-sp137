@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export const PetAdoptionCard = ({ pet, distance, onAdoptClick }) => {
-    console.log(pet);
     return (
         <div className="col-md-4 mb-4">
             <div className="card h-100 shadow-sm">
