@@ -1,0 +1,215 @@
+/* =========================================
+   PET CONNECT - NAVBAR
+   ========================================= */
+
+.petconnect-navbar {
+  width: 100%;
+  background-color: #292a3a;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  z-index: 1000;
+}
+
+.petconnect-navbar-container {
+  width: 100%;
+  max-width: 1400px;
+  min-height: 86px;
+  margin: 0 auto;
+  padding: 0 30px;
+
+  display: flex;
+  align-items: center;
+}
+
+/* =========================================
+   LOGO / PET CONNECT
+   ========================================= */
+
+.petconnect-logo {
+  display: flex;
+  align-items: center;
+
+  text-decoration: none;
+
+  white-space: nowrap;
+
+  transition: opacity 0.2s ease;
+}
+
+.petconnect-logo:hover {
+  opacity: 0.9;
+}
+
+.petconnect-logo-image {
+  display: block;
+
+  width: 230px;
+  height: auto;
+
+  object-fit: contain;
+}
+
+/* =========================================
+   MAIN MENU
+   ========================================= */
+
+.petconnect-menu {
+  display: flex;
+  align-items: center;
+
+  gap: 42px;
+  margin-left: 85px;
+}
+
+.petconnect-nav-link {
+  position: relative;
+
+  text-decoration: none;
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  padding: 34px 0;
+
+  white-space: nowrap;
+
+  transition: color 0.2s ease;
+}
+
+.petconnect-nav-link:hover {
+  color: #20a9e8;
+}
+
+/* HOME / active link */
+
+.petconnect-nav-link:first-child {
+  color: #20a9e8;
+}
+
+/* Underline on hover */
+
+.petconnect-nav-link::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  bottom: 25px;
+
+  width: 0;
+  height: 2px;
+
+  background-color: #20a9e8;
+
+  transition: width 0.2s ease;
+}
+
+.petconnect-nav-link:hover::after {
+  width: 100%;
+}
+
+/* =========================================
+   SPACE FOR TEAMMATE COMPONENTS
+   ========================================= */
+
+.petconnect-teammate-space {
+  flex: 1;
+}
+
+/* =========================================
+   USER ICON
+   ========================================= */
+
+.petconnect-user-button {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  background: transparent;
+  border: none;
+
+  color: #ffffff;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.petconnect-user-button:hover {
+  color: #20a9e8;
+  transform: translateY(-1px);
+}
+
+.petconnect-user-icon {
+  width: 25px;
+  height: 25px;
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 991px) {
+  .petconnect-navbar-container {
+    min-height: 75px;
+    padding: 0 20px;
+  }
+
+  .petconnect-menu {
+    gap: 25px;
+    margin-left: 40px;
+  }
+
+  .petconnect-nav-link {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 767px) {
+  .petconnect-navbar-container {
+    flex-wrap: wrap;
+    min-height: auto;
+    padding: 20px;
+  }
+
+  .petconnect-logo {
+    font-size: 23px;
+  }
+
+  .petconnect-menu {
+    order: 3;
+
+    width: 100%;
+
+    justify-content: center;
+
+    margin-left: 0;
+    margin-top: 20px;
+
+    gap: 25px;
+  }
+
+  .petconnect-nav-link {
+    padding: 5px 0;
+  }
+
+  .petconnect-nav-link::after {
+    bottom: -3px;
+  }
+
+  .petconnect-teammate-space {
+    display: none;
+  }
+
+  .petconnect-user-button {
+    margin-left: auto;
+  }
+}

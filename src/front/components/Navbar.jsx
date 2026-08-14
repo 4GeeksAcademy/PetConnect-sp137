@@ -1,91 +1,83 @@
-import { Link } from "react-router-dom";
-import React, { useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import petConnectLogo from "../assets/img/pet-connect-navbar.png";
 
 export const Navbar = () => {
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 	const { store, dispatch } = useGlobalReducer();
 
 	function logoutAdminUser() {
-		navigate('/')
-		dispatch({ type: "set_admin_auth", payload: null })
-		localStorage.removeItem('adminToken')
+		navigate("/");
+		dispatch({ type: "set_admin_auth", payload: null });
+		localStorage.removeItem("adminToken");
 	}
 
 	return (
-		<nav className="navbar navbar-light bg-light">
-			<div className="container d-flex justify-content-between align-items-center">
-				<Link to="/" className="text-decoration-none">
-					<span className="navbar-brand mb-0 h1">Home</span>
+		<nav className="petconnect-navbar">
+			<div className="petconnect-navbar-container">
+
+				<Link to="/" className="petconnect-logo">
+					<img
+						src={petConnectLogo}
+						alt="Pet Connect"
+						className="petconnect-logo-image"
+					/>
 				</Link>
 
-				<div className="d-flex gap-2 align-items-center">
+				{/* Menú principal */}
+				<div className="petconnect-menu">
 
-					{store.adminUserAuth ? (
-						<>
-							<button className="btn btn-danger" onClick={() => logoutAdminUser()}>Logout Admin</button>
-						</>
-					) : (
-						<button className="btn btn-danger" onClick={() => navigate("/adminUserLogin")}>
-							Admin Login
-						</button>
-					)}
+					<Link to="/" className="petconnect-nav-link">
+						HOME
+					</Link>
 
-					{store.userAuth ? (
-						<>
-							<button className="btn btn-info" onClick={() => navigate("/dashboard-user")}>User Dashboard</button>
-						</>
-					) : (
-						<button className="btn btn-info" onClick={() => navigate("/userLogin")}>
-							User Login
-						</button>
-					)}
+					<Link to="/team" className="petconnect-nav-link">
+						TEAM
+					</Link>
 
-					{store.shelterAuth ? (
-						<>
-							<button className="btn btn-info" onClick={() => navigate("/ShelterDashboard")}>Shelter Dashboard</button>
-						</>
-					) : (
-						<button className="btn btn-info" onClick={() => navigate("/shelterLogin")}>
-							Shelter Login
-						</button>
-					)}
+					<Link to="/about" className="petconnect-nav-link">
+						ABOUT US
+					</Link>
 
-					{store.veterinarianAuth ? (
-						<>
-							<button className="btn btn-info" onClick={() => navigate("/veterinarianDashboard")}>Veterinarian Dashboard</button>
-						</>
-					) : (
-						<button className="btn btn-info" onClick={() => navigate("/loginVeterinarian")}>
-							Veterinarian Login
-						</button>
-					)}
+					<Link to="/contact" className="petconnect-nav-link">
+						CONTACT
+					</Link>
+
 				</div>
 
-				<div className="d-flex align-items-center gap-2">
-					<button
-						className="btn btn-success"
-						onClick={() => navigate("/adoption-survey")}
+				{/* Espacio reservado para los 3 componentes del compañero */}
+				<div className="petconnect-teammate-space">
+				</div>
+
+				{/* Icono de usuario */}
+				<button
+					type="button"
+					className="petconnect-user-button"
+					onClick={() => navigate("/userLogin")}
+					aria-label="User login"
+				>
+					<svg
+						className="petconnect-user-icon"
+						viewBox="0 0 24 24"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
 					>
-						🐾 Adoption Survey
-					</button>
-					<button className="btn btn-primary" onClick={() => navigate("/userCreate")}>Register User</button>
-					<button className="btn btn-primary" onClick={() => navigate("/ShelterCreate")}>Register Shelter</button>
-					<button className="btn btn-primary" onClick={() => navigate("/veterinarian/new")}>Register Veterinarian</button>
-					{store.adminUserAuth && (
-						<>
-							<button className="btn btn-primary" onClick={() => navigate("/user")}>Users</button>
-							<button className="btn btn-primary" onClick={() => navigate("/pets")}>Pets</button>
-							<button className="btn btn-primary" onClick={() => navigate("/adoptions")}>Adoptions</button>
-							<button className="btn btn-primary" onClick={() => navigate("/medapps")}>Medical Appointments</button>
-							<button className="btn btn-primary" onClick={() => navigate("/breed")}>Breed</button>
-							<button className="btn btn-primary" onClick={() => navigate("/shelter")}>Shelter</button>
-							<button className="btn btn-primary" onClick={() => navigate("/veterinarian")}>Veterinarian</button>
-						</>
-					)}
+						<circle
+							cx="12"
+							cy="8"
+							r="4"
+							stroke="currentColor"
+							strokeWidth="1.8"
+						/>
+						<path
+							d="M4.5 21C5.3 16.8 8 14.5 12 14.5C16 14.5 18.7 16.8 19.5 21"
+							stroke="currentColor"
+							strokeWidth="1.8"
+							strokeLinecap="round"
+						/>
+					</svg>
+				</button>
 
-				</div>
 			</div>
 		</nav>
 	);
