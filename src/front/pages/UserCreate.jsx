@@ -325,7 +325,7 @@ export const UserCreate = () => {
                                 style={{ fontWeight: 800 }}
                                 disabled={loading || uploading}
                             >
-                                {loading ? "Saving..." : "Save User"}
+                                {loading ? "Saving..." : "Register User"}
                             </button>
                             <button
                                 type="button"

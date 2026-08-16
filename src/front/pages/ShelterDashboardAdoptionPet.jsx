@@ -22,11 +22,11 @@ export const ShelterDashboardAdoptionPet = () => {
     };
 
     const [formData, setFormData] = useState(initialFormState);
-                                                                   
+
     useEffect(() => {
         const fetchData = async () => {
             try {     /* resUsers,  */
-                const [resUsers, resPets, resShelters] = await Promise.all([  
+                const [resUsers, resPets, resShelters] = await Promise.all([
                     fetch(`${backendUrl}/api/user`),
                     fetch(`${backendUrl}/api/pets`),
                     fetch(`${backendUrl}/api/shelter`)
@@ -96,7 +96,7 @@ export const ShelterDashboardAdoptionPet = () => {
         }
     };
 
-     if (loading) {
+    if (loading) {
         return (
             <div className="container mt-4">
                 <p>Loading form options...</p>
@@ -114,16 +114,13 @@ export const ShelterDashboardAdoptionPet = () => {
 
     return (
         <div className="container mt-4 d-flex flex-column gap-3 align-items-start">
-            <Link to="/adoptions" className="btn btn-primary">
-                ← Back to Adoptions List
-            </Link>
 
             <div className="card p-4 mb-5 shadow-sm w-100">
                 <h3>Create Adoption Request</h3>
                 <form onSubmit={handleCreate}>
                     <div className="row g-3 mt-1">
-                       
-                         <div className="col-md-4">
+
+                        <div className="col-md-4">
                             <label className="form-label">User</label>
                             <select
                                 name="user_id"
@@ -219,9 +216,9 @@ export const ShelterDashboardAdoptionPet = () => {
                         </div>
                     </div>
 
-                    <button 
-                    type="submit" 
-                    className="btn btn-primary mt-4"
+                    <button
+                        type="submit"
+                        className="btn btn-primary mt-4"
                     >
                         Submit Adoption Request
                     </button>

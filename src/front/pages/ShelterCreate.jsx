@@ -116,11 +116,11 @@ export const ShelterCreate = () => {
         }
     }
 
- return (
+    return (
         <div className="container justify-content-center align-items-center py-5"
             style={{
                 minHeight: "100vh",
-                background: "#f8f9fa", 
+                background: "#f8f9fa",
             }}>
             <div className="row">
                 <div className="col-md-8 offset-md-2">
@@ -287,7 +287,7 @@ export const ShelterCreate = () => {
                                 style={{ fontWeight: 800 }}
                                 disabled={loading || uploading}
                             >
-                                {loading ? "Saving..." : "Save Shelter"}
+                                {loading ? "Saving..." : "Register Shelter"}
                             </button>
                             <button
                                 type="button"

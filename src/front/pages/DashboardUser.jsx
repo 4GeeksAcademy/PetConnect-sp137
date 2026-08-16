@@ -238,36 +238,9 @@ export const DashboardUser = () => {
         navigate(`/edit-pet-user/${id}`);
     };
 
-    const goShelters = () => {
-        navigate(`/sheltersView`);
-    };
-
-    const goVeterinarians = () => {
-        navigate(`/veterinariansView`);
-    };
-
-    const goRecomendation = () => {
-        navigate(`/petRecomendation`);
-    };
-
-    const goPetSearch = () => {
-        navigate(`/petSearch`);
-    };
-
     return (
         <div className="container mt-5 mb-5">
-            <div className="d-flex justify-content-between align-items-center mb-4">
-                <h1>Dashboard User</h1>
-                <div className="d-flex gap-2">
-                    <button className="btn btn-primary" onClick={goShelters}>Shelters</button>
-                    <button className="btn btn-primary" onClick={goVeterinarians}>Veterinarians</button>
-                    <button className="btn btn-primary" onClick={goRecomendation}>Pet Recomendation</button>
-                    <button className="btn btn-primary" onClick={goPetSearch}>Pet Search</button>
-                    <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
-                </div>
-            </div>
-
-            <div className="card p-4 mb-5 shadow-sm">
+            <div className="card p-4 mb-4 shadow-sm">
                 <div className="row align-items-center mb-4">
                     <div className="col-md-3 text-center mb-3 mb-md-0">
                         {userFormData.photo_url ? (
@@ -408,80 +381,87 @@ export const DashboardUser = () => {
                 </form>
             </div>
 
-            <div className="mb-4">
+            <div className="card p-4 mb-4 shadow-sm">
                 <h3 className="mb-3">My Location</h3>
                 <Geolocation latitude={userFormData.latitude} longitude={userFormData.longitude} />
             </div>
-            <div> {/* Pascual */}
+
+            <div className="card p-4 mb-4 shadow-sm">
                 <h3 className="mb-3">Match Pets</h3>
                 <UserCardMatchPets />
-
-            </div>
-            <div className="d-flex justify-content-between align-items-center mb-3">
-                <h2>My Pets</h2>
-                <button className="btn btn-primary" onClick={() => navigate("/create-pet-user")}>
-                    New Pet
-                </button>
             </div>
 
-            {pets.length === 0 ? (
-                <p className="text-muted mb-5">You have no pets registered yet.</p>
-            ) : (
-                <div className="row g-3 mb-5">
-                    {pets.map(pet => (
-                        <div className="col-12" key={pet.id}>
-                            <PetCardAsUser
-                                pet={pet}
+            <div className="card p-4 mb-4 shadow-sm">
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                    <h2>My Pets</h2>
+                    <button className="btn btn-primary" onClick={() => navigate("/create-pet-user")}>
+                        New Pet
+                    </button>
+                </div>
+
+                {pets.length === 0 ? (
+                    <p className="text-muted mb-0">You have no pets registered yet.</p>
+                ) : (
+                    <div className="row g-3">
+                        {pets.map(pet => (
+                            <div className="col-12" key={pet.id}>
+                                <PetCardAsUser
+                                    pet={pet}
+                                    users={users}
+                                    shelters={shelters}
+                                    breeds={breeds}
+                                    onEdit={handleEdit}
+                                    onDelete={handleDelete}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+
+            <div className="card p-4 mb-4 shadow-sm">
+                <div className="mb-3">
+                    <h2>Medical Appointments</h2>
+                </div>
+
+                {medicalAppointments.length === 0 ? (
+                    <p className="text-muted mb-0">You have no medical appointments scheduled yet.</p>
+                ) : (
+                    <div className="row g-3">
+                        {medicalAppointments.map(appointment => (
+                            <MedicalAppointmentCardAsUser
+                                key={appointment.id}
+                                appointment={appointment}
                                 users={users}
-                                shelters={shelters}
-                                breeds={breeds}
-                                onEdit={handleEdit}
-                                onDelete={handleDelete}
+                                pets={pets}
+                                veterinarians={veterinarians}
                             />
-                        </div>
-                    ))}
-                </div>
-            )}
-
-            <div className="mb-3">
-                <h2>Medical Appointments</h2>
+                        ))}
+                    </div>
+                )}
             </div>
 
-            {medicalAppointments.length === 0 ? (
-                <p className="text-muted mb-5">You have no medical appointments scheduled yet.</p>
-            ) : (
-                <div className="row g-3 mb-5">
-                    {medicalAppointments.map(appointment => (
-                        <MedicalAppointmentCardAsUser
-                            key={appointment.id}
-                            appointment={appointment}
-                            users={users}
-                            pets={pets}
-                            veterinarians={veterinarians}
-                        />
-                    ))}
+            <div className="card p-4 mb-4 shadow-sm">
+                <div className="mb-3">
+                    <h2>My Adoptions</h2>
                 </div>
-            )}
 
-            <div className="mb-3">
-                <h2>My Adoptions</h2>
+                {adoptions.length === 0 ? (
+                    <p className="text-muted mb-0">You have no adoptions registered yet.</p>
+                ) : (
+                    <div className="row g-3">
+                        {adoptions.map(adoption => (
+                            <AdoptionCardAsUser
+                                key={adoption.id}
+                                adoption={adoption}
+                                users={users}
+                                pets={pets}
+                                shelters={shelters}
+                            />
+                        ))}
+                    </div>
+                )}
             </div>
-
-            {adoptions.length === 0 ? (
-                <p className="text-muted">You have no adoptions registered yet.</p>
-            ) : (
-                <div className="row g-3">
-                    {adoptions.map(adoption => (
-                        <AdoptionCardAsUser
-                            key={adoption.id}
-                            adoption={adoption}
-                            users={users}
-                            pets={pets}
-                            shelters={shelters}
-                        />
-                    ))}
-                </div>
-            )}
         </div>
     );
 };

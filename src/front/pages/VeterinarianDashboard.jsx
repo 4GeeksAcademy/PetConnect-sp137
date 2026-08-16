@@ -12,7 +12,7 @@ export const VeterinarianDashboard = () => {
 
             <p>Bienvenido al panel privado del veterinario.</p>
 
-            <button
+            {/*<button
                 className="btn btn-primary mt-3"
                 onClick={() => navigate("/veterinarianProfile")}
             >
@@ -24,7 +24,7 @@ export const VeterinarianDashboard = () => {
                 onClick={() => navigate("/manageAppointments")}
             >
                 Gestionar Citas
-            </button>
+            </button>*/}
 
         </div>
     );
