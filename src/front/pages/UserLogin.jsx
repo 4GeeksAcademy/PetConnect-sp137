@@ -37,32 +37,73 @@ export const UserLogin = () => {
         }
     };
 
-    return (
-        <div className="container mt-5" style={{ maxWidth: "400px" }}>
-            <h2>User Login</h2>
-            <form onSubmit={handleLogin}>
-                <div className="mb-3">
-                    <label className="form-label">Email</label>
-                    <input
-                        type="email"
-                        className="form-control"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Password</label>
-                    <input
-                        type="password"
-                        className="form-control"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <button type="submit" className="btn btn-primary w-100">Login</button>
-            </form>
+ return (
+    <div
+      className="container d-flex justify-content-center align-items-center py-5"
+        style={{
+        minHeight: "100vh",
+        background: "linear-gradient(135deg, #fff8f0, #fefefe)"
+        }}>
+      <div
+        className="p-4 rounded-4 shadow-lg"
+        style={{
+          background: "white",
+          width: "600px",
+          border: "2px solid #c9f3d9"
+        }}
+      >
+        <div className="text-center mb-4">
+          <i className="bx bxs-dog" style={{ fontSize: "70px", color: "#2ecc71" }}></i>
+          <h2 style={{ fontWeight: 700, color: "#5a4636" }}>LOGIN USER</h2>
         </div>
-    );
+
+        <form  onSubmit={handleLogin} className="w-50 mx-auto">
+          <div className="mb-3">
+            <label htmlFor="exampleInputEmail" className="form-label">E-MAIL</label>
+            <input 
+                type="email"
+                onChange={(e) => setEmail(e.target.value)} 
+                value={email}
+                className="form-control rounded-pill"
+                required
+                />
+
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="exampleInputEmail" className="form-label">PASSWORD</label>
+            <input 
+                type="password"
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                className="form-control rounded-pill"
+                required
+                />
+          </div>
+
+          <button
+            type="submit"
+            className="btn w-100 rounded-pill"
+                style={{
+                  background: "#ff9f43",
+                  color: "white",
+                  fontWeight: 600
+                }}
+          >
+            CONNECT
+          </button>
+
+          <p className="text-center mt-3 text-muted">
+            ¿Not registered?{" "}
+            <span
+              style={{ color: "#2ecc71", cursor: "pointer", fontWeight: 600 }}
+              onClick={() => navigate("/userCreate")}
+            >
+              Sign up!
+            </span>
+          </p>
+        </form>
+      </div>
+    </div>
+  );
 };

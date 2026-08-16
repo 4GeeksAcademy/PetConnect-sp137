@@ -2,6 +2,11 @@ import { Link } from "react-router-dom";
 import React, { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./SocialIcons.css";
+import SocialIcons from "./SocialIcons";
+
+
 
 export const Navbar = () => {
 	const navigate = useNavigate()
@@ -62,7 +67,24 @@ export const Navbar = () => {
 						</button>
 					)}
 				</div>
+				<SocialIcons />
+				<div>
+					<button onClick={() => navigate("/loginPage")}>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width={30}
+							height={30}
+							viewBox="0 0 23 23"
+						>
+							<rect width="24" height="24" fill="white" rx="0" />
+							<path
+								fill="#5375e9"
+								d="M18 4h2v16h-2zm-8 13 6-5-6-5v4H3v2h7z"
+							/>
+						</svg>
 
+					</button>
+				</div>
 				<div className="d-flex align-items-center gap-2">
 					<button
 						className="btn btn-success"
@@ -86,7 +108,10 @@ export const Navbar = () => {
 					)}
 
 				</div>
+
 			</div>
 		</nav>
 	);
 };
+
+

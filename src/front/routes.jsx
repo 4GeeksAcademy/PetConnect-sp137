@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 
 import { Layout } from "./pages/Layout";
+import LoginPage from "./pages/LoginPage";
 import Breed from "./pages/Breed";
 import CreateBreed from "./pages/CreateBreed";
 import EditBreed from "./pages/EditBreed";
@@ -62,6 +63,7 @@ import AdoptionSurvey from "./pages/AdoptionSurvey";
 import { MedicalAppointmentCreate } from "./pages/MedicalAppointmentCreate";
 import { PetRecomendation } from "./pages/PetRecomendation";
 import { AvailablePetsView } from "./pages/AvailablePetsView";
+import { i } from "framer-motion/client";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -74,6 +76,7 @@ export const router = createBrowserRouter(
     // Root Route: All navigation will start from here.
     <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>} >
       <Route path="/" element={<Home />} />
+      <Route path="/loginPage" element={<LoginPage />} />
       <Route path="/shelter" element={<Shelter />} />
       <Route path="/shelterLogin" element={<ShelterLogin />} />
       <Route path="/shelterDashboard" element={<ShelterDashboard />} />

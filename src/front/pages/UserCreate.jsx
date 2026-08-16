@@ -126,11 +126,31 @@ export const UserCreate = () => {
         }
     }
 
-    return (
-        <div className="container mt-5">
+
+ return (
+        <div className="container justify-content-center align-items-center py-5"
+            style={{
+                    minHeight: "100vh",
+                    background: "#f8f9fa", 
+                }}>
             <div className="row">
                 <div className="col-md-8 offset-md-2">
-                    <h2 className="mb-4">Create User</h2>
+                    <i
+                        className="bx bxs-home-heart"
+                        style={{
+                            fontSize: "70px",
+                            color: "#2ecc71",
+                        }}
+                    ></i>
+
+                    <h2
+                        style={{
+                            fontWeight: 700,
+                            color: "#5a4636",
+                        }}
+                    >
+                        CREATE USER
+                    </h2>
 
                     {error && (
                         <div className="alert alert-danger" role="alert">
@@ -144,7 +164,7 @@ export const UserCreate = () => {
                         </div>
                     )}
 
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} >
                         <div className="mb-3">
                             <label htmlFor="name" className="form-label">Name *</label>
                             <input
@@ -301,15 +321,17 @@ export const UserCreate = () => {
                         <div className="d-flex gap-2">
                             <button
                                 type="submit"
-                                className="btn btn-primary"
+                                className="btn btn-success w-50 rounded-pill py-2"
+                                style={{ fontWeight: 800 }}
                                 disabled={loading || uploading}
                             >
                                 {loading ? "Saving..." : "Save User"}
                             </button>
                             <button
                                 type="button"
-                                className="btn btn-secondary"
-                                onClick={() => navigate("/user")}
+                                className="btn btn-secondary w-50 rounded-pill py-2"
+                                style={{ fontWeight: 800 }}
+                                onClick={() => navigate("/userLogin")}
                                 disabled={loading || uploading}
                             >
                                 Cancel
