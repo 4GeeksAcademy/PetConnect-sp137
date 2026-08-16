@@ -1,84 +1,98 @@
 import { Link, useNavigate } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import petConnectLogo from "../assets/img/pet-connect-navbar.png";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./SocialIcons.css";
+import SocialIcons from "./SocialIcons";
 
 export const Navbar = () => {
-	const navigate = useNavigate();
-	const { store, dispatch } = useGlobalReducer();
+    const navigate = useNavigate();
+    const { store, dispatch } = useGlobalReducer();
 
-	function logoutAdminUser() {
-		navigate("/");
-		dispatch({ type: "set_admin_auth", payload: null });
-		localStorage.removeItem("adminToken");
-	}
+    function logoutAdminUser() {
+        navigate("/");
+        dispatch({ type: "set_admin_auth", payload: null });
+        localStorage.removeItem("adminToken");
+    }
 
-	return (
-		<nav className="petconnect-navbar">
-			<div className="petconnect-navbar-container">
+    return (
+        <nav className="petconnect-navbar">
+            <div className="petconnect-navbar-container">
 
-				<Link to="/" className="petconnect-logo">
-					<img
-						src={petConnectLogo}
-						alt="Pet Connect"
-						className="petconnect-logo-image"
-					/>
-				</Link>
+                {/* Logo */}
+                <Link to="/" className="petconnect-logo">
+                    <img
+                        src={petConnectLogo}
+                        alt="Pet Connect"
+                        className="petconnect-logo-image"
+                    />
+                </Link>
 
-				{/* Menú principal */}
-				<div className="petconnect-menu">
+                {/* Menú principal */}
+                <div className="petconnect-menu">
 
-					<Link to="/" className="petconnect-nav-link">
-						HOME
-					</Link>
+                    <Link to="/" className="petconnect-nav-link">
+                        HOME
+                    </Link>
 
-					<Link to="/team" className="petconnect-nav-link">
-						TEAM
-					</Link>
+                    <Link to="/team" className="petconnect-nav-link">
+                        TEAM
+                    </Link>
 
-					<Link to="/about" className="petconnect-nav-link">
-						ABOUT US
-					</Link>
+                    <Link to="/about" className="petconnect-nav-link">
+                        ABOUT US
+                    </Link>
 
-					<Link to="/contact" className="petconnect-nav-link">
-						CONTACT
-					</Link>
+                    <Link to="/contact" className="petconnect-nav-link">
+                        CONTACT
+                    </Link>
 
-				</div>
+                </div>
 
-				{/* Espacio reservado para los 3 componentes del compañero */}
-				<div className="petconnect-teammate-space">
-				</div>
+                {/* Iconos sociales */}
+                <SocialIcons />
 
-				{/* Icono de usuario */}
-				<button
-					type="button"
-					className="petconnect-user-button"
-					onClick={() => navigate("/userLogin")}
-					aria-label="User login"
-				>
-					<svg
-						className="petconnect-user-icon"
-						viewBox="0 0 24 24"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<circle
-							cx="12"
-							cy="8"
-							r="4"
-							stroke="currentColor"
-							strokeWidth="1.8"
-						/>
-						<path
-							d="M4.5 21C5.3 16.8 8 14.5 12 14.5C16 14.5 18.7 16.8 19.5 21"
-							stroke="currentColor"
-							strokeWidth="1.8"
-							strokeLinecap="round"
-						/>
-					</svg>
-				</button>
+                {/* Acciones */}
+                <div className="petconnect-teammate-space">
+                </div>
 
-			</div>
-		</nav>
-	);
+                {/* Login */}
+                <button
+                    type="button"
+                    className="petconnect-user-button"
+                    onClick={() => navigate("/loginPage")}
+                    aria-label="Login"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="30"
+                        height="30"
+                        viewBox="0 0 23 23"
+                    >
+                        <rect
+                            width="24"
+                            height="24"
+                            fill="white"
+                            rx="0"
+                        />
+                        <path
+                            fill="#5375e9"
+                            d="M18 4h2v16h-2zm-8 13 6-5-6-5v4H3v2h7z"
+                        />
+                    </svg>
+                </button>
+
+                {/* Adoption survey */}
+                <div className="d-flex align-items-center gap-2">
+                    <button
+                        className="btn btn-success"
+                        onClick={() => navigate("/adoption-survey")}
+                    >
+                        Adoption Survey
+                    </button>
+                </div>
+
+            </div>
+        </nav>
+    );
 };

@@ -1,0 +1,47 @@
+.social-icons ul li {
+  list-style: none;
+}
+
+.social-link {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 18px;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+/* Colores por red social */
+.facebook .social-link {
+  background: #3b5998;
+}
+.twitter .social-link {
+  background: #1da1f2;
+}
+.linkedin .social-link {
+  background: #0077b5;
+}
+.github .social-link {
+  background: #333;
+}
+
+/* Usuario
+.user-icon .social-link {
+  background: #6c757d;
+}*/
+
+/* Hover */
+.social-link:hover {
+  transform: translateY(-3px);
+  opacity: 0.85;
+}
+
+/* Barra vertical */
+.separator {
+  color: #999;
+  font-size: 30px;
+  line-height: 20px;
+}

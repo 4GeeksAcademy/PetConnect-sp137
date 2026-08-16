@@ -116,11 +116,30 @@ export const ShelterCreate = () => {
         }
     }
 
-    return (
-        <div className="container mt-5">
+ return (
+        <div className="container justify-content-center align-items-center py-5"
+            style={{
+                minHeight: "100vh",
+                background: "#f8f9fa", 
+            }}>
             <div className="row">
                 <div className="col-md-8 offset-md-2">
-                    <h2 className="mb-4">Create Shelter</h2>
+                    <i
+                        className="bx bxs-home-heart"
+                        style={{
+                            fontSize: "70px",
+                            color: "#2ecc71",
+                        }}
+                    ></i>
+
+                    <h2
+                        style={{
+                            fontWeight: 700,
+                            color: "#5a4636",
+                        }}
+                    >
+                        Registrar Refugio
+                    </h2>
 
                     {error && (
                         <div className="alert alert-danger" role="alert">
@@ -264,14 +283,16 @@ export const ShelterCreate = () => {
                         <div className="d-flex gap-2">
                             <button
                                 type="submit"
-                                className="btn btn-primary"
+                                className="btn btn-success w-50 rounded-pill py-2"
+                                style={{ fontWeight: 800 }}
                                 disabled={loading || uploading}
                             >
                                 {loading ? "Saving..." : "Save Shelter"}
                             </button>
                             <button
                                 type="button"
-                                className="btn btn-secondary"
+                                className="btn btn-secondary w-50 rounded-pill py-2"
+                                style={{ fontWeight: 800 }}
                                 onClick={() => navigate("/shelterLogin")}
                                 disabled={loading}
                             >

@@ -50,9 +50,28 @@ const VeterinarianRegister = () => {
     };
 
     return (
-        <div className="container mt-5">
+        <div className="container justify-content-center align-items-center py-5 col-md-8 offset-md-2"
+            style={{
+            minHeight: "100vh",
+            background: "#f8f9fa", 
+                }}>
 
-            <h2>Crear cuenta de Veterinario</h2>
+                                <i
+                        className="bx bxs-home-heart"
+                        style={{
+                            fontSize: "70px",
+                            color: "#2ecc71",
+                        }}
+                    ></i>
+
+                    <h2
+                        style={{
+                            fontWeight: 700,
+                            color: "#5a4636",
+                        }}
+                    >
+                        CREATE VETERINARIAN
+                    </h2>
 
             <form onSubmit={handleSubmit}>
 
@@ -128,7 +147,9 @@ const VeterinarianRegister = () => {
                     onChange={handleChange}
                 />
 
-                <button className="btn btn-success">
+                <button                             
+                className="btn btn-success w-50 rounded-pill py-2"
+                style={{ fontWeight: 800 }}>
                     Registrarse
                 </button>
 
