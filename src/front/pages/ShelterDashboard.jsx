@@ -288,7 +288,7 @@ export const ShelterDashboard = () => {
                                         <div className="card border-0 shadow-sm rounded-3 h-100 bg-light">
                                             <div className="ratio ratio-16x9 border-bottom">
                                                 <img
-                                                    src="/src/front/assets/img/pet1.jpg"
+                                                    src={pet.photoUrl}
                                                     className="img-fluid w-100 h-100 rounded-top-3"
                                                     alt="Pet"
                                                     style={{ objectFit: "cover" }}

@@ -18,6 +18,8 @@ export const ShelterCreate = () => {
         address: "",
         pc: "",
         iconUrl: "",
+        latitude: "",
+        longitude: "",
         iban: ""
     })
 
@@ -79,6 +81,12 @@ export const ShelterCreate = () => {
             console.log("Enviando datos a:", backendUrl + "/api/shelter")
             console.log("Datos del formulario:", formData)
 
+            const payload = {
+                ...formData,
+                latitude: formData.latitude !== "" ? parseFloat(formData.latitude) : null,
+                longitude: formData.longitude !== "" ? parseFloat(formData.longitude) : null
+            };
+
             const response = await fetch(backendUrl + "/api/shelter", {
                 method: "POST",
                 headers: {
@@ -103,6 +111,8 @@ export const ShelterCreate = () => {
                 address: "",
                 pc: "",
                 iconUrl: "",
+                latitude: "",
+                longitude: "",
                 iban: ""
             })
 
@@ -247,6 +257,37 @@ export const ShelterCreate = () => {
                                 placeholder="Postal code"
                             />
                         </div>
+
+
+                        <div className="mb-3">
+                            <label htmlFor="latitude" className="form-label">Latitude</label>
+                            <input
+                                type="number"
+                                step="any"
+                                className="form-control"
+                                id="latitude"
+                                name="latitude"
+                                value={formData.latitude}
+                                onChange={handleChange}
+                                placeholder="e.g. 41.3879"
+                            />
+                        </div>
+
+                        <div className="mb-3">
+                            <label htmlFor="longitude" className="form-label">Longitude</label>
+                            <input
+                                type="number"
+                                step="any"
+                                className="form-control"
+                                id="longitude"
+                                name="longitude"
+                                value={formData.longitude}
+                                onChange={handleChange}
+                                placeholder="e.g. 2.1699"
+                            />
+                        </div>
+
+
 
                         <div className="mb-3">
                             <label htmlFor="iconUrl" className="form-label">Shelter Image</label>

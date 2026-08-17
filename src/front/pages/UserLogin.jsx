@@ -90,7 +90,7 @@ export const UserLogin = () => {
                   fontWeight: 600
                 }}
           >
-            CONNECT
+            LOGIN
           </button>
 
           <p className="text-center mt-3 text-muted">

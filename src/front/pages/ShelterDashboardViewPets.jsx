@@ -88,7 +88,7 @@ export const ShelterDashboardViewPets = () => {
             <div className="col-md-4" key={pet.id}>
               <div className="card h-100 shadow-sm">
                 <img
-                  src="/src/front/assets/img/pet1.jpg"
+                  src={pet.photoUrl}
                   className="img-fluid w-100 h-100"
                   alt="Pet"
                   style={{ objectFit: "cover" }}

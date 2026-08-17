@@ -46,9 +46,6 @@ export const PetRecomendation = () => {
 
     return (
         <div className="container mt-4">
-            <Link to="/dashboard-user" className="btn btn-outline-secondary mb-3">
-                ← Back
-            </Link>
 
             <div className="card shadow-sm p-4">
                 <h2 className="mb-4 text-center">AI Pet Recommendation Chat</h2>
