@@ -43,6 +43,9 @@ import { CreatePet } from "./pages/CreatePet";
 import { PetDetail } from "./pages/PetDetail";
 import { PetView } from "./pages/PetView";
 import { Home } from "./pages/Home";
+import { About } from "./pages/About";
+import { Contact } from "./pages/Contact";
+import { Team } from "./pages/Team";
 import { AdoptionsList } from "./pages/AdoptionsList";
 import { CreateAdoption } from "./pages/CreateAdoption";
 import { AdoptionDetail } from "./pages/AdoptionDetail";
@@ -76,6 +79,9 @@ export const router = createBrowserRouter(
     // Root Route: All navigation will start from here.
     <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>} >
       <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/team" element={<Team />} />
       <Route path="/loginPage" element={<LoginPage />} />
       <Route path="/shelter" element={<Shelter />} />
       <Route path="/shelterLogin" element={<ShelterLogin />} />

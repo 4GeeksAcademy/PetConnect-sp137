@@ -50,46 +50,47 @@ export const Navbar = () => {
                 </div>
 
                 {/* Iconos sociales */}
-                <SocialIcons />
-
-                {/* Acciones */}
-                <div className="petconnect-teammate-space">
+                <div className="petconnect-social-wrapper">
+                    <SocialIcons />
                 </div>
 
-                {/* Login */}
-                <button
-                    type="button"
-                    className="petconnect-user-button"
-                    onClick={() => navigate("/loginPage")}
-                    aria-label="Login"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="30"
-                        height="30"
-                        viewBox="0 0 23 23"
-                    >
-                        <rect
-                            width="24"
-                            height="24"
-                            fill="white"
-                            rx="0"
-                        />
-                        <path
-                            fill="#5375e9"
-                            d="M18 4h2v16h-2zm-8 13 6-5-6-5v4H3v2h7z"
-                        />
-                    </svg>
-                </button>
+                {/* Acciones de usuario */}
+                <div className="petconnect-actions">
 
-                {/* Adoption survey */}
-                <div className="d-flex align-items-center gap-2">
+                    {/* Login */}
                     <button
-                        className="btn btn-success"
+                        type="button"
+                        className="petconnect-user-button"
+                        onClick={() => navigate("/loginPage")}
+                        aria-label="Login"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="30"
+                            height="30"
+                            viewBox="0 0 23 23"
+                        >
+                            <rect
+                                width="24"
+                                height="24"
+                                fill="white"
+                                rx="0"
+                            />
+                            <path
+                                fill="#5375e9"
+                                d="M18 4h2v16h-2zm-8 13 6-5-6-5v4H3v2h7z"
+                            />
+                        </svg>
+                    </button>
+
+                    {/* Adoption survey */}
+                    <button
+                        className="petconnect-adoption-button"
                         onClick={() => navigate("/adoption-survey")}
                     >
                         Adoption Survey
                     </button>
+
                 </div>
 
             </div>
