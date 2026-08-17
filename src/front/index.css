@@ -2235,16 +2235,33 @@
   margin: 0 0 18px;
 }
 
-.pc-team-github {
+.pc-team-socials {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-top: 4px;
+}
+
+.pc-team-social {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   color: #292a3a;
   font-size: 14px;
   font-weight: 700;
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
-.pc-team-github:hover {
+.pc-team-social i {
+  font-size: 17px;
+}
+
+.pc-team-social:hover {
   color: #20a9e8;
+  transform: translateY(-1px);
 }
 
 @media (max-width: 768px) {

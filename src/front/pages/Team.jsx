@@ -8,18 +8,21 @@ const teamMembers = [
         role: "Full Stack Developer",
         image: teamMember1,
         github: "https://github.com/Sergidev",
+        linkedin: "https://www.linkedin.com/in/sergi-villalobos-gasc%C3%B3n-791278192/?locale=es",
     },
     {
         name: "Pascual March Merino",
         role: "Full Stack Developer",
         image: teamMember2,
         github: "https://github.com/FullPas",
+        linkedin: "http://www.linkedin.com/in/pascual-m-37666b19b",
     },
     {
-        name: "Paula Nataly Zuluaga Sanchez",
+        name: "Paula Nataly Zuluaga Sánchez",
         role: "Full Stack Developer",
         image: teamMember3,
         github: "https://github.com/Nataly-04",
+        linkedin: "https://www.linkedin.com/in/paula-nataly-zuluaga-s%C3%A1nchez-609607227?utm_source=share_via&utm_content=profile&utm_medium=member_ios",
     },
 ];
 
@@ -63,14 +66,29 @@ export const Team = () => {
 
                                 <p>{member.role}</p>
 
-                                <a
-                                    href={member.github}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="pc-team-github"
-                                >
-                                    GitHub →
-                                </a>
+                                <div className="pc-team-socials">
+
+                                    <a
+                                        href={member.github}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="pc-team-social"
+                                    >
+                                        <i className="fa-brands fa-github"></i>
+                                        <span>GitHub</span>
+                                    </a>
+
+                                    <a
+                                        href={member.linkedin}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="pc-team-social"
+                                    >
+                                        <i className="fa-brands fa-linkedin-in"></i>
+                                        <span>LinkedIn</span>
+                                    </a>
+
+                                </div>
                             </div>
                         </article>
                     ))}
