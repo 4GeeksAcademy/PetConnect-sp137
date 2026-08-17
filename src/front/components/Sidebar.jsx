@@ -12,12 +12,12 @@ export const Sidebar = () => {
 
   return (
     <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-primary vh-100" style={{ width: "250px" }}>
-      <Link to="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none py-2">
+      <div className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none py-2">
         <div className="bg-white rounded-circle d-flex align-items-center justify-content-center me-2 shadow-sm" style={{ width: "42px", height: "42px", flexShrink: 0 }}>
           <img src={imgPetConnect} alt="Pet Connect Logo" style={{ width: "44px", height: "44px", objectFit: "contain" }} />
         </div>
         <span className="fs-5 fw-bold">Pet Connect</span>
-      </Link>
+      </div>
 
       <hr className="border-top border-light opacity-25" />
 
