@@ -61,7 +61,7 @@ const LoginPage = () => {
                 }}
                 onClick={() => navigate("/userLogin")}
               >
-                COME IN
+                LOGIN
               </button>
             </div>
           </div>
@@ -89,7 +89,7 @@ const LoginPage = () => {
                 }}
                 onClick={() => navigate("/shelterLogin")}
               >
-                COME IN
+                LOGIN
               </button>
             </div>
           </div>
@@ -117,7 +117,7 @@ const LoginPage = () => {
                 }}
                 onClick={() => navigate("/loginVeterinarian")}
               >
-                COME IN
+                LOGIN
               </button>
             </div>
           </div>
