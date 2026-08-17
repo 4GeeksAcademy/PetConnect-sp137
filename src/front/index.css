@@ -1,6 +1,6 @@
 .bg-paws {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)),
+    linear-gradient(rgba(255, 255, 255, 0.93), rgba(255, 255, 255, 0.9)),
     url("./assets/img/paws.jpg");
   background-repeat: repeat;
   background-size: auto;

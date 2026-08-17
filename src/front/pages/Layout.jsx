@@ -11,24 +11,21 @@ export const Layout = () => {
     const { store } = useGlobalReducer();
 
     const isLoggedIn = Boolean(
-        store.userAuth || 
-        store.shelterAuth || 
+        store.currentVeterinarian || 
         store.currentUser || 
-        store.currentShelter || 
-        localStorage.getItem("token") || 
-        localStorage.getItem("sheltertoken")
+        store.currentShelter
     );
 
     return (
         <ScrollToTop>
-            <div className="d-flex vh-100 overflow-hidden bg-paws">
+            <div className="d-flex vh-100 overflow-hidden">
                 {isLoggedIn && <Sidebar />}
                 <div className="d-flex flex-column flex-grow-1 overflow-y-auto">
                     {isLoggedIn ? <UserNavbar /> : <Navbar />}
                     <div className="flex-grow-1">
                         <Outlet />
                     </div>
-                    {/*<Footer />*/}
+                    <Footer />
                 </div>
             </div>
         </ScrollToTop>

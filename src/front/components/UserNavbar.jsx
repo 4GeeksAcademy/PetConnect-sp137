@@ -1,8 +1,10 @@
 import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 
 export const UserNavbar = () => {
   const { store, dispatch } = useGlobalReducer();
+  const navigate = useNavigate();
 
   const isUser = store.userAuth !== null;
   const isShelter = store.shelterAuth !== null;
@@ -20,6 +22,7 @@ export const UserNavbar = () => {
       dispatch({ type: "set_current_user", payload: null });
       localStorage.removeItem("userToken");
       localStorage.removeItem("user");
+      navigate("/");
     };
   } else if (isShelter && store.currentShelter) {
     displayName = store.currentShelter.name || "Shelter";
@@ -29,6 +32,7 @@ export const UserNavbar = () => {
       dispatch({ type: "set_current_shelter", payload: null });
       localStorage.removeItem("sheltertoken");
       localStorage.removeItem("shelter");
+      navigate("/");
     };
   } else if (isVeterinarian) {
     displayName = store.currentVeterinarian?.name || "Veterinarian";
@@ -38,6 +42,7 @@ export const UserNavbar = () => {
       dispatch({ type: "set_current_veterinarian", payload: null });
       localStorage.removeItem("veterinariantoken");
       localStorage.removeItem("veterinarian");
+      navigate("/");
     };
   }
 
@@ -46,16 +51,16 @@ export const UserNavbar = () => {
       <div className="container-fluid justify-content-end">
         <div className="d-flex align-items-center">
           {displayName && <span className="fw-bold me-3 text-dark">{displayName}</span>}
-          
-          <div 
-            className="bg-white rounded-circle d-flex align-items-center justify-content-center border me-3 overflow-hidden shadow-sm" 
+
+          <div
+            className="bg-white rounded-circle d-flex align-items-center justify-content-center border me-3 overflow-hidden shadow-sm"
             style={{ width: "40px", height: "40px", flexShrink: 0 }}
           >
             {displayImage ? (
-              <img 
-                src={displayImage} 
-                alt="Profile" 
-                style={{ width: "100%", height: "100%", objectFit: "cover" }} 
+              <img
+                src={displayImage}
+                alt="Profile"
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
               />
             ) : (
               <i className="fa-solid fa-user text-secondary"></i>
@@ -63,8 +68,8 @@ export const UserNavbar = () => {
           </div>
 
           {handleLogout && (
-            <button 
-              onClick={handleLogout} 
+            <button
+              onClick={handleLogout}
               className="btn btn-danger btn-sm d-flex align-items-center"
             >
               <i className="fa-solid fa-right-from-bracket me-1"></i>

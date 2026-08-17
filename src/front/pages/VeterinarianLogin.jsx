@@ -32,6 +32,15 @@ export const VeterinarianLogin = () => {
             }
 
             localStorage.setItem("veterinariantoken", data.access_token);
+            
+            if (data.veterinarian) {
+                localStorage.setItem("veterinarian", JSON.stringify(data.veterinarian));
+                dispatch({
+                    type: "set_current_veterinarian",
+                    payload: data.veterinarian
+                });
+            }
+
             dispatch({
                 type: "set_veterinarian_auth",
                 payload: { token: data.access_token }
@@ -42,8 +51,6 @@ export const VeterinarianLogin = () => {
             setError(err.message);
         }
     };
-
-
 
      return (
     <div
@@ -65,7 +72,13 @@ export const VeterinarianLogin = () => {
           <h2 style={{ fontWeight: 700, color: "#5a4636" }}>LOGIN VETERINARIAN</h2>
         </div>
 
-        <form  onSubmit={handleSubmit} className="w-50 mx-auto">
+        {error && (
+            <div className="alert alert-danger text-center" role="alert">
+                {error}
+            </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="w-50 mx-auto">
           <div className="mb-3">
             <label htmlFor="exampleInputEmail" className="form-label">E-MAIL</label>
             <input 
@@ -75,11 +88,10 @@ export const VeterinarianLogin = () => {
                 className="form-control rounded-pill"
                 required
                 />
-
           </div>
 
           <div className="mb-4">
-            <label htmlFor="exampleInputEmail" className="form-label">PASSWORD</label>
+            <label htmlFor="exampleInputPassword" className="form-label">PASSWORD</label>
             <input 
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}

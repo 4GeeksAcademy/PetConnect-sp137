@@ -106,12 +106,6 @@ export const Sidebar = () => {
                 <span>New pet</span>
               </Link>
             </li>
-            <li className="nav-item mb-1">
-              <Link to="/ShelterDashboardAdoptionPet" className="nav-link text-white d-flex align-items-center">
-                <i className="fa-solid fa-file-contract me-2"></i>
-                <span>New Adoption</span>
-              </Link>
-            </li>
           </>
         )}
 

@@ -72,26 +72,15 @@ export const Navbar = () => {
                         <rect
                             width="24"
                             height="24"
-                            fill="white"
+                            fill="#232a3100"
                             rx="0"
                         />
                         <path
-                            fill="#5375e9"
+                            fill="#fbfcff"
                             d="M18 4h2v16h-2zm-8 13 6-5-6-5v4H3v2h7z"
                         />
                     </svg>
                 </button>
-
-                {/* Adoption survey */}
-                <div className="d-flex align-items-center gap-2">
-                    <button
-                        className="btn btn-success"
-                        onClick={() => navigate("/adoption-survey")}
-                    >
-                        Adoption Survey
-                    </button>
-                </div>
-
             </div>
         </nav>
     );

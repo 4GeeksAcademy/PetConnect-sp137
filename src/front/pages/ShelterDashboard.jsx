@@ -125,7 +125,39 @@ export const ShelterDashboard = () => {
             });
 
             if (response.ok) {
-                await fetchAdoptions();
+                if (newState.toLowerCase() === "approved" || newState.toLowerCase() === "accepted") {
+                    const petToUpdate = pets.find((p) => String(p.id) === String(adoptionToUpdate.pet_id));
+                    if (petToUpdate) {
+                        await fetch(`${backendUrl}/api/pet-detail/${adoptionToUpdate.pet_id}`, {
+                            method: "PUT",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                ...petToUpdate,
+                                user_id: adoptionToUpdate.user_id,
+                                shelter_id: null
+                            })
+                        });
+                    }
+                } else if (newState.toLowerCase() === "rejected") {
+                    const petToUpdate = pets.find((p) => String(p.id) === String(adoptionToUpdate.pet_id));
+                    if (petToUpdate) {
+                        await fetch(`${backendUrl}/api/pet-detail/${adoptionToUpdate.pet_id}`, {
+                            method: "PUT",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                ...petToUpdate,
+                                user_id: null,
+                                shelter_id: currentShelterId
+                            })
+                        });
+                    }
+                }
+
+                await fetchAllData();
                 alert(`La solicitud de adopción de ${getPetName(adoptionToUpdate.pet_id)} por ${getUserName(adoptionToUpdate.user_id)} ha sido ${newState.toLowerCase()}.`);
             } else {
                 console.error("Error updating adoption state", response.status);
@@ -343,34 +375,44 @@ export const ShelterDashboard = () => {
                                             </td>
                                         </tr>
                                     ) : (
-                                        shelterAdoptions.map((adoption) => (
-                                            <tr key={adoption.id}>
-                                                <td className="fw-semibold">{getUserName(adoption.user_id)}</td>
-                                                <td>{getPetName(adoption.pet_id)}</td>
-                                                <td>{adoption.date || "--"}</td>
-                                                <td>
-                                                    <span className={`badge ${adoption.state === "Approved" ? "bg-success" : adoption.state === "Rejected" ? "bg-danger" : "bg-warning text-dark"}`}>
-                                                        {adoption.state || "Pending"}
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <button
-                                                        type="button"
-                                                        className="btn btn-sm btn-success me-1 fw-semibold"
-                                                        onClick={() => handleApprove(adoption)}
-                                                    >
-                                                        Approved
-                                                    </button>
-                                                    <button
-                                                        type="button"
-                                                        className="btn btn-sm btn-danger fw-semibold"
-                                                        onClick={() => handleReject(adoption)}
-                                                    >
-                                                        Rejected
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))
+                                        shelterAdoptions.map((adoption) => {
+                                            const status = String(adoption.state || "").trim().toLowerCase();
+                                            const isApproved = status === "approved" || status === "accepted";
+                                            const isRejected = status === "rejected";
+
+                                            return (
+                                                <tr key={adoption.id}>
+                                                    <td className="fw-semibold">{getUserName(adoption.user_id)}</td>
+                                                    <td>{getPetName(adoption.pet_id)}</td>
+                                                    <td>{adoption.date || "--"}</td>
+                                                    <td>
+                                                        <span className={`badge ${isApproved ? "bg-success" : isRejected ? "bg-danger" : "bg-warning text-dark"}`}>
+                                                            {adoption.state || "Pending"}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        {!isApproved && (
+                                                            <>
+                                                                <button
+                                                                    type="button"
+                                                                    className="btn btn-sm btn-success me-1 fw-semibold"
+                                                                    onClick={() => handleApprove(adoption)}
+                                                                >
+                                                                    Approve
+                                                                </button>
+                                                                <button
+                                                                    type="button"
+                                                                    className="btn btn-sm btn-danger fw-semibold"
+                                                                    onClick={() => handleReject(adoption)}
+                                                                >
+                                                                    Reject
+                                                                </button>
+                                                            </>
+                                                        )}
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })
                                     )}
                                 </tbody>
                             </table>

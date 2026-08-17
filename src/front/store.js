@@ -9,6 +9,7 @@ export const initialStore = () => {
     shelterAuth: localStorage.getItem("sheltertoken") || null,
     currentShelter: JSON.parse(localStorage.getItem("shelter") || "null"),
     veterinarianAuth: localStorage.getItem("veterinariantoken") || null,
+    currentVeterinarian: JSON.parse(localStorage.getItem("veterinarian") || "null"),
   };
 };
 
@@ -25,6 +26,7 @@ export default function storeReducer(store, action = {}) {
       localStorage.removeItem("sheltertoken");
       localStorage.removeItem("shelter");
       localStorage.removeItem("veterinariantoken");
+      localStorage.removeItem("veterinarian");
 
       return {
         ...store,
@@ -33,6 +35,7 @@ export default function storeReducer(store, action = {}) {
         shelterAuth: null,
         currentShelter: null,
         veterinarianAuth: null,
+        currentVeterinarian: null,
       };
 
     case "set_current_user":
@@ -47,6 +50,7 @@ export default function storeReducer(store, action = {}) {
       localStorage.removeItem("sheltertoken");
       localStorage.removeItem("shelter");
       localStorage.removeItem("veterinariantoken");
+      localStorage.removeItem("veterinarian");
 
       return {
         ...store,
@@ -56,6 +60,7 @@ export default function storeReducer(store, action = {}) {
         shelterAuth: null,
         currentShelter: null,
         veterinarianAuth: null,
+        currentVeterinarian: null,
       };
 
     case "set_shelter_auth":
@@ -63,6 +68,7 @@ export default function storeReducer(store, action = {}) {
       localStorage.removeItem("user");
       localStorage.removeItem("adminUserToken");
       localStorage.removeItem("veterinariantoken");
+      localStorage.removeItem("veterinarian");
 
       return {
         ...store,
@@ -71,6 +77,7 @@ export default function storeReducer(store, action = {}) {
         currentUser: null,
         adminUserAuth: null,
         veterinarianAuth: null,
+        currentVeterinarian: null,
       };
 
     case "set_current_shelter":
@@ -100,6 +107,12 @@ export default function storeReducer(store, action = {}) {
         adminUserAuth: null,
         shelterAuth: null,
         currentShelter: null,
+      };
+
+    case "set_current_veterinarian":
+      return {
+        ...store,
+        currentVeterinarian: action.payload,
       };
 
     case "load_data": {

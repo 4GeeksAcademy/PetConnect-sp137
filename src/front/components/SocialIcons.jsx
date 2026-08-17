@@ -10,6 +10,7 @@ const SocialIcons = ({
     <section className="hgroup-right">
       <div className="social-icons clearfix">
         <ul className="list-unstyled d-flex gap-2 m-0 p-0">
+          <li className="separator">|</li>
           <li className="linkedin">
             <a
               href={linkedin}
@@ -32,7 +33,7 @@ const SocialIcons = ({
               <i className="fab fa-github"></i>
             </a>
           </li>
-          <li className="separator">|</li>
+
         </ul>
       </div>
     </section>
