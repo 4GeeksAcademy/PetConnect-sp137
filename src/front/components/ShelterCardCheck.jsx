@@ -7,6 +7,9 @@ export const ShelterCardCheck = (props) => {
   const [shelters, setShelters] = useState([]);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
+  // Imagen por defecto si no hay imagen asignada
+  const defaultImage = "https://via.placeholder.com/300x200?text=No+Image";
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,18 +30,31 @@ export const ShelterCardCheck = (props) => {
     fetchData();
   }, [backendUrl]);
 
+  // Filtrar mascotas asociadas a este refugio
   const shelterPets = pets.filter(
     (pet) => Number(pet.shelter_id || pet.idShelter) === Number(props.id)
   );
 
+  // Determinar la imagen del refugio actual
+  // Soporta props directas o búsqueda en el array de shelters por ID
+  const currentShelter = shelters.find((s) => Number(s.id) === Number(props.id));
+  const shelterImageUrl =
+    props.iconUrl ||
+    props.icon_url ||
+    currentShelter?.iconUrl ||
+    currentShelter?.icon_url ||
+    defaultImage;
+
   return (
     <div className="card mb-4 shadow-sm w-100">
-      <img
-        src="https://www.mdzol.com/u/fotografias/m/2022/10/26/f768x1-1305623_1305750_79.jpg"
-        className="card-img-top"
-        alt="..."
-        style={{ height: "200px", objectFit: "cover" }}
-      />
+      <div className="d-flex justify-content-center align-items-center py-3">
+        <img
+          src={shelterImageUrl}
+          className="rounded"
+          alt={props.name || "Shelter Image"}
+          style={{ height: "300px", width: "300px", objectFit: "cover" }}
+        />
+      </div>
       <div className="card-body">
         <h5 className="card-title text-center">{props.name}</h5>
       </div>
@@ -67,14 +83,12 @@ export const ShelterCardCheck = (props) => {
                 return (
                   <div className="col-12 col-sm-6 col-lg-2" key={pet.id}>
                     <div className="card h-100 shadow-sm border d-flex flex-column">
-                      {pet.photoUrl && (
-                        <img
-                          src={pet.photoUrl}
-                          className="card-img-top"
-                          alt={pet.name}
-                          style={{ height: "140px", objectFit: "cover" }}
-                        />
-                      )}
+                      <img
+                        src={pet.photoUrl || pet.photo_url || defaultImage}
+                        className="card-img-top"
+                        alt={pet.name}
+                        style={{ height: "140px", objectFit: "cover" }}
+                      />
                       <div className="card-body p-2 flex-grow-1">
                         <h6 className="card-title text-center mb-2">{pet.name}</h6>
                         <p className="card-text mb-1" style={{ fontSize: "0.85rem" }}><strong>Breed:</strong> {breedName}</p>

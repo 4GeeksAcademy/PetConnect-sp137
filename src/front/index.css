@@ -1479,12 +1479,16 @@
   max-width: none;
   padding-left: max(40px, calc((100% - 1320px) / 2));
   padding-right: max(40px, calc((100% - 1320px) / 2));
+  margin: 40px auto 0;
 }
 
 .pc-shelter-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 310px);
+  justify-content: center;
   gap: 25px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .pc-shelter-card {
@@ -1538,6 +1542,7 @@
   font-weight: 700;
   cursor: pointer;
   transition: background 0.2s ease;
+  margin: 40px auto 0;
 }
 
 .pc-main-button:hover {
@@ -1690,12 +1695,69 @@
 }
 
 .pc-partners-grid {
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 1100px;
+  margin: 45px auto 0;
+
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 20px;
+  gap: 25px;
+
+  align-items: stretch;
+}
+
+.pc-partner-card {
+  min-height: 180px;
+
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+
+  padding: 25px 15px;
+
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+
+  text-align: center;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.pc-partner-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.pc-partner-card img {
+  width: 90px;
+  height: 90px;
+
+  object-fit: contain;
+
+  margin-bottom: 18px;
+}
+
+.pc-partner-card span {
+  color: #292b3a;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Responsive */
+
+@media (max-width: 992px) {
+  .pc-partners-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .pc-partners-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .pc-partners-grid div {
@@ -2069,4 +2131,850 @@
   .pc-footer-newsletter {
     max-width: 100%;
   }
+}
+
+/* =========================================
+   PET CONNECT - TEAM
+========================================= */
+
+.pc-team-page {
+  background: #ffffff;
+  min-height: 100vh;
+}
+
+.pc-team-section {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 75px 40px 90px;
+}
+
+.pc-team-section .pc-section-heading {
+  text-align: center;
+  margin-bottom: 55px;
+}
+
+.pc-team-section .pc-section-heading span {
+  color: #20a9e8;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 5px;
+}
+
+.pc-team-section .pc-section-heading h1 {
+  color: #292a3a;
+  font-size: 42px;
+  font-weight: 800;
+  margin: 12px 0 15px;
+}
+
+.pc-team-section .pc-section-heading p {
+  color: #687080;
+  font-size: 16px;
+  line-height: 1.7;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.pc-team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.pc-team-card {
+  background: #ffffff;
+  border: 1px solid #e5e6e8;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.pc-team-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(41, 42, 58, 0.12);
+}
+
+.pc-team-image {
+  width: 100%;
+  height: 390px;
+  overflow: hidden;
+  background: #f2f3f5;
+}
+
+.pc-team-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.pc-team-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9297a6;
+  font-size: 14px;
+}
+
+.pc-team-content {
+  padding: 25px;
+}
+
+.pc-team-content h2 {
+  color: #292a3a;
+  font-size: 21px;
+  font-weight: 800;
+  margin: 0 0 7px;
+}
+
+.pc-team-content p {
+  color: #20a9e8;
+  font-size: 14px;
+  margin: 0 0 18px;
+}
+
+.pc-team-github {
+  color: #292a3a;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.pc-team-github:hover {
+  color: #20a9e8;
+}
+
+@media (max-width: 768px) {
+  .pc-team-section {
+    padding: 55px 20px 70px;
+  }
+
+  .pc-team-section .pc-section-heading h1 {
+    font-size: 34px;
+  }
+
+  .pc-team-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================
+   PET CONNECT - ABOUT US
+========================================= */
+
+.pc-about-page {
+  background: #ffffff;
+  color: #292a3a;
+}
+
+/* HERO */
+
+.pc-about-hero {
+  min-height: 430px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  background:
+    linear-gradient(rgba(41, 42, 58, 0.88), rgba(41, 42, 58, 0.88)),
+    url("./assets/img/paws.jpg");
+
+  background-size: cover;
+  background-position: center;
+}
+
+.pc-about-hero-content {
+  max-width: 800px;
+  padding: 70px 25px;
+}
+
+.pc-about-hero-content > span,
+.pc-about-intro-content > span,
+.pc-about-mission-content > span,
+.pc-about-cta span {
+  color: #20a9e8;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 5px;
+}
+
+.pc-about-hero-content h1 {
+  color: #ffffff;
+  font-size: 52px;
+  line-height: 1.1;
+  font-weight: 800;
+  margin: 18px 0 22px;
+}
+
+.pc-about-hero-content p {
+  color: #d7d9df;
+  font-size: 17px;
+  line-height: 1.8;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+/* INTRO */
+
+.pc-about-intro {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  padding: 90px 40px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+
+  align-items: center;
+}
+
+.pc-about-intro-image {
+  height: 460px;
+  overflow: hidden;
+}
+
+.pc-about-intro-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.pc-about-intro-content {
+  max-width: 520px;
+}
+
+.pc-about-intro-content h2 {
+  color: #292a3a;
+  font-size: 40px;
+  line-height: 1.15;
+  font-weight: 800;
+  margin: 15px 0 25px;
+}
+
+.pc-about-intro-content p {
+  color: #687080;
+  line-height: 1.8;
+  margin-bottom: 18px;
+}
+
+/* SERVICES */
+
+.pc-about-services {
+  background: #f7f8fa;
+  padding: 90px 40px;
+}
+
+.pc-about-services .pc-section-heading {
+  text-align: center;
+  margin-bottom: 55px;
+}
+
+.pc-about-services .pc-section-heading span {
+  color: #20a9e8;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 5px;
+}
+
+.pc-about-services .pc-section-heading h2 {
+  color: #292a3a;
+  font-size: 40px;
+  font-weight: 800;
+  margin: 14px 0;
+}
+
+.pc-about-services .pc-section-heading p {
+  color: #687080;
+  max-width: 650px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.pc-about-services-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.pc-about-service-card {
+  background: #ffffff;
+  padding: 40px 30px;
+  text-align: center;
+
+  border: 1px solid #e5e6e8;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.pc-about-service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(41, 42, 58, 0.1);
+}
+
+.pc-about-service-icon {
+  width: 60px;
+  height: 60px;
+
+  margin: 0 auto 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #20a9e8;
+  color: #ffffff;
+
+  font-size: 25px;
+}
+
+.pc-about-service-card h3 {
+  color: #292a3a;
+  font-size: 21px;
+  font-weight: 800;
+  margin-bottom: 15px;
+}
+
+.pc-about-service-card p {
+  color: #687080;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* MISSION */
+
+.pc-about-mission {
+  min-height: 430px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  background: #292a3a;
+}
+
+.pc-about-mission-content {
+  max-width: 800px;
+  padding: 70px 30px;
+}
+
+.pc-about-mission-content h2 {
+  color: #ffffff;
+  font-size: 44px;
+  line-height: 1.15;
+  font-weight: 800;
+  margin: 18px 0 25px;
+}
+
+.pc-about-mission-content p {
+  color: #bfc3ce;
+  font-size: 16px;
+  line-height: 1.8;
+  margin: 0 auto;
+}
+
+/* CTA */
+
+.pc-about-cta {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  padding: 80px 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 40px;
+}
+
+.pc-about-cta h2 {
+  color: #292a3a;
+  font-size: 38px;
+  line-height: 1.15;
+  font-weight: 800;
+  margin: 15px 0 0;
+}
+
+.pc-about-cta .pc-main-button {
+  flex-shrink: 0;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+  .pc-about-intro {
+    grid-template-columns: 1fr;
+    gap: 45px;
+  }
+
+  .pc-about-intro-content {
+    max-width: 100%;
+  }
+
+  .pc-about-services-grid {
+    grid-template-columns: 1fr;
+    max-width: 600px;
+  }
+
+  .pc-about-cta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .pc-about-hero-content h1 {
+    font-size: 38px;
+  }
+
+  .pc-about-intro {
+    padding: 60px 25px;
+  }
+
+  .pc-about-intro-image {
+    height: 330px;
+  }
+
+  .pc-about-intro-content h2,
+  .pc-about-services .pc-section-heading h2 {
+    font-size: 32px;
+  }
+
+  .pc-about-services {
+    padding: 60px 25px;
+  }
+
+  .pc-about-mission-content h2 {
+    font-size: 34px;
+  }
+
+  .pc-about-cta {
+    padding: 60px 25px;
+  }
+
+  .pc-about-cta h2 {
+    font-size: 32px;
+  }
+}
+
+/* =========================================
+   PET CONNECT - CONTACT
+========================================= */
+
+.pc-contact-page {
+  background: #ffffff;
+  color: #292a3a;
+}
+
+/* HERO */
+
+.pc-contact-hero {
+  min-height: 390px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  background:
+    linear-gradient(rgba(41, 42, 58, 0.88), rgba(41, 42, 58, 0.88)),
+    url("./assets/img/paws.jpg");
+
+  background-size: cover;
+  background-position: center;
+}
+
+.pc-contact-hero-content {
+  max-width: 760px;
+  padding: 70px 25px;
+}
+
+.pc-contact-hero-content span,
+.pc-contact-info > span,
+.pc-contact-cta span {
+  color: #20a9e8;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 5px;
+}
+
+.pc-contact-hero-content h1 {
+  color: #ffffff;
+  font-size: 52px;
+  line-height: 1.1;
+  font-weight: 800;
+  margin: 18px 0 22px;
+}
+
+.pc-contact-hero-content p {
+  color: #d7d9df;
+  font-size: 17px;
+  line-height: 1.8;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+/* CONTACT SECTION */
+
+.pc-contact-section {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  padding: 90px 40px;
+
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 90px;
+
+  align-items: start;
+}
+
+.pc-contact-info h2 {
+  color: #292a3a;
+  font-size: 42px;
+  line-height: 1.15;
+  font-weight: 800;
+  margin: 15px 0 25px;
+}
+
+.pc-contact-info > p {
+  color: #687080;
+  line-height: 1.8;
+  max-width: 480px;
+  margin-bottom: 40px;
+}
+
+/* DETAILS */
+
+.pc-contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.pc-contact-detail {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.pc-contact-icon {
+  width: 52px;
+  height: 52px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #20a9e8;
+  color: #ffffff;
+
+  border-radius: 50%;
+
+  font-size: 20px;
+}
+
+.pc-contact-detail h3 {
+  margin: 0 0 5px;
+
+  color: #292a3a;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.pc-contact-detail p {
+  margin: 0;
+
+  color: #687080;
+}
+
+/* FORM */
+
+.pc-contact-form-container {
+  background: #f7f8fa;
+  padding: 40px;
+
+  border: 1px solid #e5e6e8;
+}
+
+.pc-contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.pc-contact-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.pc-contact-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pc-contact-field label {
+  color: #292a3a;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.pc-contact-field input,
+.pc-contact-field textarea {
+  width: 100%;
+
+  padding: 14px 15px;
+
+  background: #ffffff;
+
+  border: 1px solid #dfe1e6;
+
+  color: #292a3a;
+
+  font-family: inherit;
+
+  outline: none;
+
+  transition: border-color 0.2s ease;
+}
+
+.pc-contact-field textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+.pc-contact-field input::placeholder,
+.pc-contact-field textarea::placeholder {
+  color: #9da2b0;
+}
+
+.pc-contact-field input:focus,
+.pc-contact-field textarea:focus {
+  border-color: #20a9e8;
+}
+
+.pc-contact-form .pc-main-button {
+  align-self: flex-start;
+  border: none;
+}
+
+/* CTA */
+
+.pc-contact-cta {
+  background: #292a3a;
+
+  padding: 75px 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 40px;
+}
+
+.pc-contact-cta > div {
+  max-width: 700px;
+  margin-left: max(0px, calc((100% - 1120px) / 2));
+}
+
+.pc-contact-cta h2 {
+  color: #ffffff;
+  font-size: 38px;
+  line-height: 1.15;
+  font-weight: 800;
+  margin: 15px 0 0;
+}
+
+.pc-contact-cta .pc-main-button {
+  margin-right: max(0px, calc((100% - 1120px) / 2));
+  flex-shrink: 0;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+  .pc-contact-section {
+    grid-template-columns: 1fr;
+    gap: 55px;
+  }
+
+  .pc-contact-info > p {
+    max-width: 100%;
+  }
+
+  .pc-contact-cta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .pc-contact-cta > div {
+    margin-left: 0;
+  }
+
+  .pc-contact-cta .pc-main-button {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .pc-contact-hero-content h1 {
+    font-size: 38px;
+  }
+
+  .pc-contact-section {
+    padding: 60px 25px;
+  }
+
+  .pc-contact-info h2 {
+    font-size: 34px;
+  }
+
+  .pc-contact-form-container {
+    padding: 25px;
+  }
+
+  .pc-contact-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .pc-contact-cta {
+    padding: 60px 25px;
+  }
+
+  .pc-contact-cta h2 {
+    font-size: 32px;
+  }
+}
+
+/* =========================================
+   NAVBAR - SOCIAL + USER ACTIONS
+========================================= */
+
+.petconnect-social-wrapper {
+  display: flex;
+  align-items: center;
+  margin-left: 35px;
+  margin-right: 24px;
+}
+
+.petconnect-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  padding-left: 22px;
+  border-left: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+/* LOGIN */
+
+.petconnect-user-button {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  background: transparent;
+  border: none;
+
+  cursor: pointer;
+
+  transition: transform 0.2s ease;
+}
+
+.petconnect-user-button:hover {
+  transform: translateY(-1px);
+}
+
+/* ADOPTION SURVEY */
+
+.petconnect-adoption-button {
+  border: none;
+  border-radius: 5px;
+
+  background: #198754;
+  color: #ffffff;
+
+  padding: 10px 17px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.petconnect-adoption-button:hover {
+  background: #157347;
+  transform: translateY(-1px);
+}
+
+/* =========================================
+   PET CONNECT NAVBAR - FINAL SPACING
+========================================= */
+
+.petconnect-navbar-container {
+  max-width: 1400px;
+  padding: 0 60px;
+}
+
+/* Logo → menú */
+.petconnect-menu {
+  margin-left: 115px;
+  gap: 48px;
+}
+
+/* Menú → redes sociales */
+.petconnect-social-wrapper {
+  display: flex;
+  align-items: center;
+
+  margin-left: 200px;
+  margin-right: 0;
+}
+
+/* Acciones de usuario */
+.petconnect-actions {
+  padding-left: 0;
+  border-left: none;
+  gap: 24px;
+}
+
+/* Login */
+.petconnect-user-button {
+  margin: 0;
+}
+
+/* Adoption Survey */
+.petconnect-adoption-button {
+  margin-left: 4px;
 }

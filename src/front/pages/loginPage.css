@@ -1,0 +1,114 @@
+/* src/styles/loginPage.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.login-page-wrapper {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8fafc;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estilo para las Pestañas Superiores */
+.nav-tab-custom {
+  background-color: #e2e8f0;
+  color: #375569;
+  border-top-left-radius: 12px !important;
+  border-top-right-radius: 12px !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 16px 24px;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.nav-tab-custom:hover {
+  background-color: #cbd5e1;
+  color: #183139;
+}
+
+/* Estado activo unificado con #375569 */
+.nav-tab-custom.active-tab {
+  background-color: #ffffff;
+  color: #375569;
+  border-bottom: 4px solid #375569;
+}
+
+/* Tarjeta al 100% de ancho y alto disponible */
+.about-choose-full {
+  background: #ffffff;
+  border-radius: 16px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border: 1px solid #edf2f7;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.choose-left h6 {
+  color: #375569;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.choose-left h1 {
+  font-size: 40px;
+  line-height: 48px;
+  color: #183139;
+  font-weight: 700;
+}
+
+.choose-left h1 span {
+  font-weight: 700;
+  font-size: 44px;
+  color: #183139;
+}
+
+/* Inputs y Botones del Formulario */
+.form-control-custom {
+  border-radius: 50px;
+  padding: 12px 20px;
+  border: 1px solid #cbd5e1;
+  font-size: 14px;
+}
+
+.form-control-custom:focus {
+  box-shadow: 0 0 0 0.25rem rgba(55, 85, 105, 0.15);
+  border-color: #375569;
+}
+
+.btn-login-submit {
+  border-radius: 50px;
+  padding: 12px 24px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background-color: #375569;
+  color: #ffffff;
+  transition: opacity 0.3s ease;
+}
+
+.btn-login-submit:hover {
+  opacity: 0.9;
+  color: #ffffff;
+}
+
+.text-brand-color {
+  color: #375569;
+  cursor: pointer;
+  font-weight: 600;
+}

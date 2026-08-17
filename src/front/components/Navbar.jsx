@@ -50,10 +50,8 @@ export const Navbar = () => {
                 </div>
 
                 {/* Iconos sociales */}
-                <SocialIcons />
-
-                {/* Acciones */}
-                <div className="petconnect-teammate-space">
+                <div className="petconnect-social-wrapper">
+                    <SocialIcons />
                 </div>
 
                 {/* Login */}

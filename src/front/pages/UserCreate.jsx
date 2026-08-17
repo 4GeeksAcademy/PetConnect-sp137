@@ -117,7 +117,7 @@ export const UserCreate = () => {
             })
 
             setTimeout(() => {
-                navigate("/")
+                navigate("/loginPage")
             }, 2000)
         } catch (err) {
             setError(err.message)
@@ -143,14 +143,10 @@ export const UserCreate = () => {
                         }}
                     ></i>
 
-                    <h2
-                        style={{
-                            fontWeight: 700,
-                            color: "#5a4636",
-                        }}
-                    >
+                    <h1>
+       
                         CREATE USER
-                    </h2>
+                    </h1>
 
                     {error && (
                         <div className="alert alert-danger" role="alert">
@@ -166,10 +162,10 @@ export const UserCreate = () => {
 
                     <form onSubmit={handleSubmit} >
                         <div className="mb-3">
-                            <label htmlFor="name" className="form-label">Name *</label>
+                            <label htmlFor="name" className="form-label text-muted fw-bold small mb-1 p-3">Name *</label>
                             <input
                                 type="text"
-                                className="form-control"
+                                className="form-control form-control-custom"
                                 id="name"
                                 name="name"
                                 value={formData.name}
@@ -180,10 +176,10 @@ export const UserCreate = () => {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="password" className="form-label">Password *</label>
+                            <label htmlFor="password" className="form-label text-muted fw-bold small mb-1 p-3">Password *</label>
                             <input
                                 type="text"
-                                className="form-control"
+                                className="form-control form-control-custom"
                                 id="password"
                                 name="password"
                                 value={formData.password}
@@ -194,10 +190,10 @@ export const UserCreate = () => {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="legalDocument" className="form-label">Legal Document</label>
+                            <label htmlFor="legalDocument" className="form-label text-muted fw-bold small mb-1 p-3">Legal Document</label>
                             <input
                                 type="text"
-                                className="form-control"
+                                className="form-control form-control-custom"
                                 id="legalDocument"
                                 name="legalDocument"
                                 value={formData.legalDocument}
@@ -207,10 +203,10 @@ export const UserCreate = () => {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="birthDate" className="form-label">Birth Date</label>
+                            <label htmlFor="birthDate" className="form-label text-muted fw-bold small mb-1 p-3">Birth Date</label>
                             <input
                                 type="date"
-                                className="form-control"
+                                className="form-control form-control-custom"
                                 id="birthDate"
                                 name="birthDate"
                                 value={formData.birthDate}
@@ -219,10 +215,10 @@ export const UserCreate = () => {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="email" className="form-label">Email *</label>
+                            <label htmlFor="email" className="form-label text-muted fw-bold small mb-1 p-3">Email *</label>
                             <input
                                 type="email"
-                                className="form-control"
+                                className="form-control form-control-custom"
                                 id="email"
                                 name="email"
                                 value={formData.email}
@@ -232,10 +228,10 @@ export const UserCreate = () => {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="city" className="form-label">City</label>
+                            <label htmlFor="city" className="form-label text-muted fw-bold small mb-1 p-3">City</label>
                             <input
                                 type="text"
-                                className="form-control"
+                                className="form-control form-control-custom"
                                 id="city"
                                 name="city"
                                 value={formData.city}
@@ -245,10 +241,10 @@ export const UserCreate = () => {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="adress" className="form-label">Address</label>
+                            <label htmlFor="adress" className="form-label text-muted fw-bold small mb-1 p-3">Address</label>
                             <input
                                 type="text"
-                                className="form-control"
+                                className="form-control form-control-custom"
                                 id="adress"
                                 name="adress"
                                 value={formData.adress}
@@ -258,10 +254,10 @@ export const UserCreate = () => {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="pc" className="form-label">Postal Code</label>
+                            <label htmlFor="pc" className="form-label text-muted fw-bold small mb-1 p-3">Postal Code</label>
                             <input
                                 type="text"
-                                className="form-control"
+                                className="form-control form-control-custom"
                                 id="pc"
                                 name="pc"
                                 value={formData.pc}
@@ -272,11 +268,11 @@ export const UserCreate = () => {
 
                         <div className="row">
                             <div className="col-md-6 mb-3">
-                                <label htmlFor="latitude" className="form-label">Latitude</label>
+                                <label htmlFor="latitude" className="form-label text-muted fw-bold small mb-1 p-3">Latitude</label>
                                 <input
                                     type="number"
                                     step="any"
-                                    className="form-control"
+                                    className="form-control form-control-custom"
                                     id="latitude"
                                     name="latitude"
                                     value={formData.latitude}
@@ -285,11 +281,11 @@ export const UserCreate = () => {
                                 />
                             </div>
                             <div className="col-md-6 mb-3">
-                                <label htmlFor="longitude" className="form-label">Longitude</label>
+                                <label htmlFor="longitude" className="form-label text-muted fw-bold small mb-1 p-3">Longitude</label>
                                 <input
                                     type="number"
                                     step="any"
-                                    className="form-control"
+                                    className="form-control form-control-custom"
                                     id="longitude"
                                     name="longitude"
                                     value={formData.longitude}
@@ -300,10 +296,10 @@ export const UserCreate = () => {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="iconUrl" className="form-label">User Image</label>
+                            <label htmlFor="iconUrl" className="form-label text-muted fw-bold small mb-1 p-3">User Image</label>
                             <input
                                 type="file"
-                                className="form-control"
+                                className="form-control form-control-custom"
                                 id="iconUrl"
                                 accept="image/*"
                                 onChange={handleImageUpload}
@@ -321,7 +317,7 @@ export const UserCreate = () => {
                         <div className="d-flex gap-2">
                             <button
                                 type="submit"
-                                className="btn btn-success w-50 rounded-pill py-2"
+                                className="btn btn-login-submit w-100"
                                 style={{ fontWeight: 800 }}
                                 disabled={loading || uploading}
                             >
@@ -331,7 +327,7 @@ export const UserCreate = () => {
                                 type="button"
                                 className="btn btn-secondary w-50 rounded-pill py-2"
                                 style={{ fontWeight: 800 }}
-                                onClick={() => navigate("/userLogin")}
+                                onClick={() => navigate("/")}
                                 disabled={loading || uploading}
                             >
                                 Cancel
