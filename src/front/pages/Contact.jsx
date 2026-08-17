@@ -1,7 +1,45 @@
+import { useState } from "react";
+import emailjs from "@emailjs/browser";
 import { useNavigate } from "react-router-dom";
 
 export const Contact = () => {
     const navigate = useNavigate();
+
+    const [sending, setSending] = useState(false);
+    const [sent, setSent] = useState(false);
+    const [error, setError] = useState(false);
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        const form = event.currentTarget;
+
+        setSending(true);
+        setSent(false);
+        setError(false);
+
+        try {
+            await emailjs.sendForm(
+                "service_4ohdklp",
+                "template_g5z9yhv",
+                form,
+                {
+                    publicKey: "wPmrPvAj_AtpO6Kn1",
+                }
+            );
+
+            setSent(true);
+            form.reset();
+
+        } catch (error) {
+            console.error("Error sending email:", error);
+            setSent(false);
+            setError(true);
+
+        } finally {
+            setSending(false);
+        }
+    };
 
     return (
         <main className="pc-contact-page">
@@ -99,9 +137,7 @@ export const Contact = () => {
 
                     <form
                         className="pc-contact-form"
-                        onSubmit={(event) => {
-                            event.preventDefault();
-                        }}
+                        onSubmit={handleSubmit}
                     >
 
                         <div className="pc-contact-form-row">
@@ -113,6 +149,7 @@ export const Contact = () => {
 
                                 <input
                                     id="name"
+                                    name="name"
                                     type="text"
                                     placeholder="Your name"
                                     required
@@ -127,6 +164,7 @@ export const Contact = () => {
 
                                 <input
                                     id="email"
+                                    name="email"
                                     type="email"
                                     placeholder="Your email address"
                                     required
@@ -143,6 +181,7 @@ export const Contact = () => {
 
                             <input
                                 id="subject"
+                                name="subject"
                                 type="text"
                                 placeholder="How can we help?"
                                 required
@@ -157,6 +196,7 @@ export const Contact = () => {
 
                             <textarea
                                 id="message"
+                                name="message"
                                 rows="6"
                                 placeholder="Write your message..."
                                 required
@@ -167,9 +207,24 @@ export const Contact = () => {
                         <button
                             type="submit"
                             className="pc-main-button"
+                            disabled={sending}
                         >
-                            Send message
+                            {sending ? "Sending..." : "Send message"}
                         </button>
+
+
+                        {sent && (
+                            <p className="pc-contact-success">
+                                Your message has been sent successfully!
+                            </p>
+                        )}
+
+
+                        {error && (
+                            <p className="pc-contact-error">
+                                Something went wrong. Please try again.
+                            </p>
+                        )}
 
                     </form>
 
