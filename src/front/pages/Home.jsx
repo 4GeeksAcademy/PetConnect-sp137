@@ -16,7 +16,7 @@ export const Home = () => {
 	const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 	// =========================================
-	// SLIDER ADOPTA
+	// ADOPTION SLIDER
 	// =========================================
 
 	useEffect(() => {
@@ -30,7 +30,7 @@ export const Home = () => {
 	}, []);
 
 	// =========================================
-	// CARGAR REFUGIOS
+	// LOAD SHELTERS
 	// =========================================
 
 	useEffect(() => {
@@ -44,7 +44,7 @@ export const Home = () => {
 
 				const data = await response.json();
 
-				// Mostramos solamente los primeros 3
+				// Show only the first 3
 				setShelters(data.slice(0, 3));
 
 			} catch (error) {
@@ -59,12 +59,12 @@ export const Home = () => {
 		<main className="petconnect-home">
 
 			{/* =========================================
-                HERO / ADOPTA - CUIDA - CONECTA
+                HERO / ADOPT - CARE - CONNECT
             ========================================= */}
 
 			<section className="petconnect-hero">
 
-				{/* ADOPTA */}
+				{/* ADOPT */}
 				<div
 					className="petconnect-hero-card petconnect-adopta"
 					style={{
@@ -75,25 +75,25 @@ export const Home = () => {
 
 					<div className="petconnect-card-content">
 						<span className="petconnect-card-label">
-							ADOPTA
+							ADOPT
 						</span>
 
 						<h1>
-							Encuentra
+							Find
 							<br />
-							un nuevo hogar
+							a new home
 						</h1>
 
 						<p>
-							Descubre perros que esperan una familia
-							y dales una segunda oportunidad.
+							Discover dogs waiting for a family
+							and give them a second chance.
 						</p>
 
 						<button
 							className="petconnect-card-button"
 							onClick={() => navigate("/sheltersView")}
 						>
-							Ver refugios
+							View shelters
 						</button>
 					</div>
 
@@ -104,17 +104,17 @@ export const Home = () => {
 								className={`petconnect-slider-dot ${currentImage === index ? "active" : ""
 									}`}
 								onClick={() => setCurrentImage(index)}
-								aria-label={`Ver imagen ${index + 1}`}
+								aria-label={`View image ${index + 1}`}
 							/>
 						))}
 					</div>
 				</div>
 
 
-				{/* COLUMNA DERECHA */}
+				{/* RIGHT COLUMN */}
 				<div className="petconnect-hero-side">
 
-					{/* CUIDA */}
+					{/* CARE */}
 					<div
 						className="petconnect-hero-card petconnect-side-card petconnect-cuida"
 						style={{
@@ -125,18 +125,18 @@ export const Home = () => {
 
 						<div className="petconnect-card-content">
 							<span className="petconnect-card-label">
-								CUIDA
+								CARE
 							</span>
 
 							<h2>
-								Cuida a tu
+								Take care of your
 								<br />
-								mejor amigo
+								best friend
 							</h2>
 
 							<p>
-								Encuentra profesionales veterinarios
-								para cuidar la salud y bienestar de tu perro.
+								Find veterinary professionals
+								to care for your dog's health and well-being.
 							</p>
 
 							<button
@@ -145,13 +145,13 @@ export const Home = () => {
 									navigate("/veterinariansView")
 								}
 							>
-								Ver veterinarios
+								View veterinarians
 							</button>
 						</div>
 					</div>
 
 
-					{/* CONECTA */}
+					{/* CONNECT */}
 					<div
 						className="petconnect-hero-card petconnect-side-card petconnect-conecta"
 						style={{
@@ -162,25 +162,25 @@ export const Home = () => {
 
 						<div className="petconnect-card-content">
 							<span className="petconnect-card-label">
-								CONECTA
+								CONNECT
 							</span>
 
 							<h2>
-								Más que una mascota,
+								More than a pet,
 								<br />
-								un compañero
+								a companion
 							</h2>
 
 							<p>
-								Conecta con personas, refugios y veterinarios
-								que comparten tu amor por los perros.
+								Connect with people, shelters and veterinarians
+								who share your love for dogs.
 							</p>
 
 							<button
 								className="petconnect-card-button"
 								onClick={() => navigate("/userLogin")}
 							>
-								Únete a Pet Connect
+								Join Pet Connect
 							</button>
 						</div>
 					</div>
@@ -190,7 +190,7 @@ export const Home = () => {
 
 
 			{/* =========================================
-                INTRODUCCIÓN
+                INTRODUCTION
             ========================================= */}
 
 			<section className="petconnect-intro">
@@ -200,20 +200,20 @@ export const Home = () => {
 				</span>
 
 				<h2>
-					Adopta. Cuida. Conecta.
+					Adopt. Care. Connect.
 				</h2>
 
 				<p>
-					Creamos un espacio donde los perros pueden encontrar
-					una familia, recibir el cuidado que necesitan y conectar
-					con personas que realmente se preocupan por ellos.
+					We created a space where dogs can find
+					a family, receive the care they need and connect
+					with people who truly care about them.
 				</p>
 
 			</section>
 
 
 			{/* =========================================
-                REFUGIOS DESTACADOS
+                FEATURED SHELTERS
             ========================================= */}
 
 			<section className="petconnect-shelters">
@@ -221,16 +221,16 @@ export const Home = () => {
 				<div className="petconnect-section-heading">
 
 					<span className="petconnect-section-label">
-						ADOPCIÓN
+						ADOPTION
 					</span>
 
 					<h2>
-						Refugios destacados
+						Featured shelters
 					</h2>
 
 					<p>
-						Conoce algunos de los centros que trabajan
-						cada día para encontrar un hogar para nuestros perros.
+						Meet some of the organizations that work
+						every day to find a home for our dogs.
 					</p>
 
 				</div>
@@ -262,7 +262,7 @@ export const Home = () => {
 							<div className="petconnect-shelter-content">
 
 								<span className="petconnect-shelter-label">
-									REFUGIO
+									SHELTER
 								</span>
 
 								<h3>
@@ -279,7 +279,7 @@ export const Home = () => {
 										navigate("/sheltersView")
 									}
 								>
-									Ver refugio
+									View shelter
 								</button>
 
 							</div>
@@ -296,7 +296,7 @@ export const Home = () => {
 						className="petconnect-view-all-button"
 						onClick={() => navigate("/sheltersView")}
 					>
-						Ver todos los refugios
+						View all shelters
 					</button>
 
 				</div>
