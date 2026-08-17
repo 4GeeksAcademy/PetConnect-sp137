@@ -1,5 +1,6 @@
 import teamMember1 from "../assets/img/4907123354456755493.jpg";
 import teamMember2 from "../assets/img/4907123354456755494.jpg";
+import teamMember3 from "../assets/img/4909375154270440534.jpg";
 
 const teamMembers = [
     {
@@ -17,7 +18,7 @@ const teamMembers = [
     {
         name: "Paula Nataly Zuluaga Sanchez",
         role: "Full Stack Developer",
-        image: null,
+        image: teamMember3,
         github: "https://github.com/Nataly-04",
     },
 ];
