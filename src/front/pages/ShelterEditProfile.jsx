@@ -7,7 +7,6 @@ const ShelterEditProfile = () => {
     const params = useParams();
     const navigate = useNavigate();
 
-    // Obtener Shelter de LocalStorage si la memoria global (store) no lo tiene
     const parseStoredShelter = () => {
         try {
             return JSON.parse(localStorage.getItem("shelter") || "null");
@@ -17,7 +16,7 @@ const ShelterEditProfile = () => {
     };
 
     const currentShelter = store.currentShelter || parseStoredShelter();
-    const shelterId = params.id || currentShelter?.id;
+    const shelterId = currentShelter?.id;
 
     const [formData, setFormData] = useState({
         name: "",
