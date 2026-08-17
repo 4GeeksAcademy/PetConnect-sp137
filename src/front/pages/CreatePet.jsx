@@ -20,9 +20,9 @@ export const CreatePet = () => {
         color: "",
         photoUrl: "",
         size: "medium",
-        idUser: "",
-        idShelter: "",
-        idBreed: ""
+        user_id: "",
+        shelter_id: "",
+        breed_id: ""
     });
 
     useEffect(() => {
@@ -96,9 +96,9 @@ export const CreatePet = () => {
             color: "",
             photoUrl: "",
             size: "medium",
-            idUser: "",
-            idShelter: "",
-            idBreed: ""
+            user_id: "",
+            shelter_id: "",
+            breed_id: ""
         });
     };
 
@@ -107,9 +107,9 @@ export const CreatePet = () => {
 
         const payload = {
             ...formData,
-            idUser: formData.idUser ? Number(formData.idUser) : null,
-            idShelter: formData.idShelter ? Number(formData.idShelter) : null,
-            idBreed: formData.idBreed ? Number(formData.idBreed) : null
+            user_id: formData.user_id ? Number(formData.user_id) : null,
+            shelter_id: formData.shelter_id ? Number(formData.shelter_id) : null,
+            breed_id: formData.breed_id ? Number(formData.breed_id) : null
         };
 
         try {
@@ -172,7 +172,7 @@ export const CreatePet = () => {
                         </div>
                         <div className="col-md-4">
                             <label className="form-label">Breed</label>
-                            <select name="idBreed" className="form-select" value={formData.idBreed} onChange={handleChange} required>
+                            <select name="breed_id" className="form-select" value={formData.breed_id} onChange={handleChange} required>
                                 <option value="">Select a breed</option>
                                 {breeds.map(b => (
                                     <option key={b.id} value={b.id}>{b.name}</option>
@@ -181,7 +181,7 @@ export const CreatePet = () => {
                         </div>
                         <div className="col-md-4">
                             <label className="form-label">User</label>
-                            <select name="idUser" className="form-select" value={formData.idUser} onChange={handleChange}>
+                            <select name="user_id" className="form-select" value={formData.user_id} onChange={handleChange}>
                                 <option value="">Select a user</option>
                                 {users.map(u => (
                                     <option key={u.id} value={u.id}>{u.name}</option>
@@ -190,7 +190,7 @@ export const CreatePet = () => {
                         </div>
                         <div className="col-md-4">
                             <label className="form-label">Shelter</label>
-                            <select name="idShelter" className="form-select" value={formData.idShelter} onChange={handleChange}>
+                            <select name="shelter_id" className="form-select" value={formData.shelter_id} onChange={handleChange}>
                                 <option value="">Select a shelter</option>
                                 {shelters.map(s => (
                                     <option key={s.id} value={s.id}>{s.name}</option>
@@ -211,11 +211,11 @@ export const CreatePet = () => {
                         </div>
                         <div className="col-md-12">
                             <label className="form-label">Pet Photo</label>
-                            <input 
-                                type="file" 
-                                className="form-control" 
-                                accept="image/*" 
-                                onChange={handleImageUpload} 
+                            <input
+                                type="file"
+                                className="form-control"
+                                accept="image/*"
+                                onChange={handleImageUpload}
                                 disabled={uploading}
                             />
                             {uploading && <small className="text-muted d-block mt-1">Subiendo imagen a Cloudinary...</small>}

@@ -14,7 +14,10 @@ export const ShelterDashboardEditPet = () => {
         birthDate: "",
         chipNumber: "",
         castrated: false,
-        photoUrl: ""
+        photoUrl: "",
+        user_id: "",
+        shelter_id: "",
+        breed_id: ""
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -51,7 +54,10 @@ export const ShelterDashboardEditPet = () => {
                 birthDate: data.birthDate || "",
                 chipNumber: data.chipNumber || "",
                 castrated: Boolean(data.castrated),
-                photoUrl: data.photoUrl || ""
+                photoUrl: data.photoUrl || "",
+                user_id: data.user_id || "",
+                shelter_id: data.shelter_id || "",
+                breed_id: data.breed_id || ""
             });
         } catch (error) {
             console.log(error);
@@ -76,9 +82,9 @@ export const ShelterDashboardEditPet = () => {
                     birthDate: formData.birthDate || null,
                     chipNumber: formData.chipNumber || null,
                     photoUrl: formData.photoUrl || null,
-                    user_id: null,
-                    shelter_id: null,
-                    breed_id: null,
+                    user_id: formData.user_id || "",
+                    shelter_id: formData.shelter_id || "",
+                    breed_id: formData.breed_id || "",
                     castrated: Boolean(formData.castrated)
                 })
             });
