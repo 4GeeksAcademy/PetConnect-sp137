@@ -7,6 +7,11 @@ import pet3 from "../assets/img/pet3.jpg";
 import shelterPatitas from "../assets/img/shelter-patitas-felices.jpg";
 import shelterEsperanza from "../assets/img/shelter-refugio-esperanza.jpg";
 import shelterAmigos from "../assets/img/shelter-amigos-4-patas.jpg";
+import pawsCareImage from "../assets/img/Paws & care.jpg";
+import safePawsImage from "../assets/img/Safe paws.png";
+import vetPartnersImage from "../assets/img/Vet partners.jpg";
+import happyHomesImage from "../assets/img/Happy homes.jpg";
+import dogsCommunityImage from "../assets/img/Dogs community.webp";
 
 export const Home = () => {
 	const navigate = useNavigate();
@@ -584,11 +589,32 @@ export const Home = () => {
 				</div>
 
 				<div className="pc-partners-grid">
-					<div>PAWS & CARE</div>
-					<div>SAFE PAWS</div>
-					<div>VET PARTNERS</div>
-					<div>HAPPY HOMES</div>
-					<div>DOGS COMMUNITY</div>
+
+					<div className="pc-partner-card">
+						<img src={pawsCareImage} alt="Paws & Care" />
+						<span>PAWS & CARE</span>
+					</div>
+
+					<div className="pc-partner-card">
+						<img src={safePawsImage} alt="Safe Paws" />
+						<span>SAFE PAWS</span>
+					</div>
+
+					<div className="pc-partner-card">
+						<img src={vetPartnersImage} alt="Vet Partners" />
+						<span>VET PARTNERS</span>
+					</div>
+
+					<div className="pc-partner-card">
+						<img src={happyHomesImage} alt="Happy Homes" />
+						<span>HAPPY HOMES</span>
+					</div>
+
+					<div className="pc-partner-card">
+						<img src={dogsCommunityImage} alt="Dogs Community" />
+						<span>DOGS COMMUNITY</span>
+					</div>
+
 				</div>
 
 			</section>
