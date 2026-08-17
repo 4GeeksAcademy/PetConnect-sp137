@@ -92,7 +92,7 @@ export const ShelterCreate = () => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(payload)
             })
 
             const data = await response.json()
@@ -117,7 +117,7 @@ export const ShelterCreate = () => {
             })
 
             setTimeout(() => {
-                navigate("/shelterLogin")
+                navigate("/loginPage")
             }, 2000)
         } catch (err) {
             setError(err.message)
@@ -134,22 +134,10 @@ export const ShelterCreate = () => {
             }}>
             <div className="row">
                 <div className="col-md-8 offset-md-2">
-                    <i
-                        className="bx bxs-home-heart"
-                        style={{
-                            fontSize: "70px",
-                            color: "#2ecc71",
-                        }}
-                    ></i>
-
-                    <h2
-                        style={{
-                            fontWeight: 700,
-                            color: "#5a4636",
-                        }}
-                    >
+ 
+                    <h1>
                         Registrar Refugio
-                    </h2>
+                    </h1>
 
                     {error && (
                         <div className="alert alert-danger" role="alert">
@@ -165,10 +153,10 @@ export const ShelterCreate = () => {
 
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
-                            <label htmlFor="name" className="form-label">Name *</label>
+                            <label htmlFor="name" className="form-label text-muted fw-bold small mb-1 p-3">Name *</label>
                             <input
                                 type="text"
-                                className="form-control"
+                                className="form-control form-control-custom"
                                 id="name"
                                 name="name"
                                 value={formData.name}
@@ -179,10 +167,10 @@ export const ShelterCreate = () => {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="email" className="form-label">Email *</label>
+                            <label htmlFor="email" className="form-label text-muted fw-bold small mb-1 p-3">Email *</label>
                             <input
                                 type="email"
-                                className="form-control"
+                                className="form-control form-control-custom"
                                 id="email"
                                 name="email"
                                 value={formData.email}
@@ -193,10 +181,10 @@ export const ShelterCreate = () => {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="password" className="form-label">Password *</label>
+                            <label htmlFor="password" className="form-label text-muted fw-bold small mb-1 p-3">Password *</label>
                             <input
                                 type="password"
-                                className="form-control"
+                                className="form-control form-control-custom"
                                 id="password"
                                 name="password"
                                 value={formData.password}
@@ -207,10 +195,10 @@ export const ShelterCreate = () => {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="city" className="form-label">City</label>
+                            <label htmlFor="city" className="form-label text-muted fw-bold small mb-1 p-3">City</label>
                             <input
                                 type="text"
-                                className="form-control"
+                                className="form-control form-control-custom"
                                 id="city"
                                 name="city"
                                 value={formData.city}
@@ -220,10 +208,10 @@ export const ShelterCreate = () => {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="cif" className="form-label">CIF</label>
+                            <label htmlFor="cif" className="form-label text-muted fw-bold small mb-1 p-3">CIF</label>
                             <input
                                 type="text"
-                                className="form-control"
+                                className="form-control form-control-custom"
                                 id="cif"
                                 name="cif"
                                 value={formData.cif}
@@ -233,10 +221,10 @@ export const ShelterCreate = () => {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="address" className="form-label">Address</label>
+                            <label htmlFor="address" className="form-label text-muted fw-bold small mb-1 p-3">Address</label>
                             <input
                                 type="text"
-                                className="form-control"
+                                className="form-control form-control-custom"
                                 id="address"
                                 name="address"
                                 value={formData.address}
@@ -246,10 +234,10 @@ export const ShelterCreate = () => {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="pc" className="form-label">Postal Code</label>
+                            <label htmlFor="pc" className="form-label text-muted fw-bold small mb-1 p-3">Postal Code</label>
                             <input
                                 type="text"
-                                className="form-control"
+                                className="form-control form-control-custom"
                                 id="pc"
                                 name="pc"
                                 value={formData.pc}
@@ -258,13 +246,13 @@ export const ShelterCreate = () => {
                             />
                         </div>
 
-
-                        <div className="mb-3">
-                            <label htmlFor="latitude" className="form-label">Latitude</label>
+                     <div className="row">
+                        <div className="col-md-6 mb-3">
+                            <label htmlFor="latitude" className="form-label text-muted fw-bold small mb-1 p-3">Latitude</label>
                             <input
                                 type="number"
                                 step="any"
-                                className="form-control"
+                                className="form-control form-control-custom"
                                 id="latitude"
                                 name="latitude"
                                 value={formData.latitude}
@@ -273,12 +261,12 @@ export const ShelterCreate = () => {
                             />
                         </div>
 
-                        <div className="mb-3">
-                            <label htmlFor="longitude" className="form-label">Longitude</label>
+                        <div className="col-md-6 mb-3">
+                            <label htmlFor="longitude" className="form-label text-muted fw-bold small mb-1 p-3">Longitude</label>
                             <input
                                 type="number"
                                 step="any"
-                                className="form-control"
+                                className="form-control form-control-custom"
                                 id="longitude"
                                 name="longitude"
                                 value={formData.longitude}
@@ -286,14 +274,14 @@ export const ShelterCreate = () => {
                                 placeholder="e.g. 2.1699"
                             />
                         </div>
-
+                    </div>
 
 
                         <div className="mb-3">
-                            <label htmlFor="iconUrl" className="form-label">Shelter Image</label>
+                            <label htmlFor="iconUrl" className="form-label text-muted fw-bold small mb-1 p-3">Shelter Image</label>
                             <input
                                 type="file"
-                                className="form-control"
+                                className="form-control form-control-custom"
                                 id="iconUrl"
                                 accept="image/*"
                                 onChange={handleImageUpload}
@@ -309,10 +297,10 @@ export const ShelterCreate = () => {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="iban" className="form-label">IBAN</label>
+                            <label htmlFor="iban" className="form-label text-muted fw-bold small mb-1 p-3">IBAN</label>
                             <input
                                 type="text"
-                                className="form-control"
+                                className="form-control form-control-custom"
                                 id="iban"
                                 name="iban"
                                 value={formData.iban}
@@ -324,7 +312,7 @@ export const ShelterCreate = () => {
                         <div className="d-flex gap-2">
                             <button
                                 type="submit"
-                                className="btn btn-success w-50 rounded-pill py-2"
+                                className="btn btn-login-submit w-100"
                                 style={{ fontWeight: 800 }}
                                 disabled={loading || uploading}
                             >
@@ -334,7 +322,7 @@ export const ShelterCreate = () => {
                                 type="button"
                                 className="btn btn-secondary w-50 rounded-pill py-2"
                                 style={{ fontWeight: 800 }}
-                                onClick={() => navigate("/shelterLogin")}
+                                onClick={() => navigate("/")}
                                 disabled={loading}
                             >
                                 Cancel
