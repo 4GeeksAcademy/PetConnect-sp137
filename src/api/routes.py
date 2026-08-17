@@ -458,7 +458,7 @@ def create_shelter():
             cif=body.get('cif'),
             address=body.get('address'),
             pc=body.get('pc'),
-            icon_url=body.get('iconUrl'),
+            iconUrl=body.get('iconUrl'),
             iban=body.get('iban')
         )
 
@@ -493,7 +493,7 @@ def update_shelter(shelter_id):
         shelter.cif = body.get('cif', shelter.cif)
         shelter.address = body.get('address', shelter.address)
         shelter.pc = body.get('pc', shelter.pc)
-        shelter.icon_url = body.get('iconUrl', shelter.icon_url)
+        shelter.iconUrl = body.get('iconUrl', shelter.iconUrl)
         shelter.iban = body.get('iban', shelter.iban)
 
         db.session.commit()

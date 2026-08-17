@@ -73,7 +73,7 @@ const CreateVeterinarian = () => {
             });
 
             if (response.ok) {
-                navigate("/loginveterinarian");
+                navigate("/loginPage");
             } else {
                 alert("Error creating veterinarian");
             }
@@ -89,7 +89,7 @@ const CreateVeterinarian = () => {
             <h2>New Veterinarian</h2>
 
             <form onSubmit={handleSubmit}>
-
+                
                 <input
                     className="form-control mb-3"
                     name="name"
