@@ -277,7 +277,7 @@ export const UserCreate = () => {
                                     name="latitude"
                                     value={formData.latitude}
                                     onChange={handleChange}
-                                    placeholder="e.g. 41.3879"
+                                    placeholder="e.g. 41.39"
                                 />
                             </div>
                             <div className="col-md-6 mb-3">
@@ -290,7 +290,7 @@ export const UserCreate = () => {
                                     name="longitude"
                                     value={formData.longitude}
                                     onChange={handleChange}
-                                    placeholder="e.g. 2.1699"
+                                    placeholder="e.g. 2.17"
                                 />
                             </div>
                         </div>
