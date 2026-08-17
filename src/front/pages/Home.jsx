@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import pet1 from "../assets/img/pet1.jpg";
 import pet2 from "../assets/img/pet2.jpg";
 import pet3 from "../assets/img/pet3.jpg";
+import shelterPatitas from "../assets/img/shelter-patitas-felices.jpg";
+import shelterEsperanza from "../assets/img/shelter-refugio-esperanza.jpg";
+import shelterAmigos from "../assets/img/shelter-amigos-4-patas.jpg";
 
 export const Home = () => {
 	const navigate = useNavigate();
@@ -12,18 +15,20 @@ export const Home = () => {
 
 	const [currentImage, setCurrentImage] = useState(0);
 	const [shelters, setShelters] = useState([]);
+	const [pets, setPets] = useState([]);
+	const [breedImages, setBreedImages] = useState({});
+	const [shelterImages, setShelterImages] = useState([]);
+	const [featuredImages, setFeaturedImages] = useState([]);
 
 	const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 	// =========================================
-	// ADOPTION SLIDER
+	// HERO SLIDER
 	// =========================================
 
 	useEffect(() => {
 		const interval = setInterval(() => {
-			setCurrentImage(
-				(prev) => (prev + 1) % adoptionImages.length
-			);
+			setCurrentImage((prev) => (prev + 1) % adoptionImages.length);
 		}, 4000);
 
 		return () => clearInterval(interval);
@@ -43,10 +48,7 @@ export const Home = () => {
 				}
 
 				const data = await response.json();
-
-				// Show only the first 3
-				setShelters(data.slice(0, 3));
-
+				setShelters(Array.isArray(data) ? data.slice(0, 4) : []);
 			} catch (error) {
 				console.error("Error fetching shelters:", error);
 			}
@@ -55,12 +57,199 @@ export const Home = () => {
 		fetchShelters();
 	}, [backendUrl]);
 
+	// =========================================
+	// DOG BREEDS
+	// =========================================
+
+	useEffect(() => {
+		const breeds = [
+			{ name: "Golden Retriever", apiName: "retriever/golden" },
+			{ name: "German Shepherd", apiName: "german/shepherd" },
+			{ name: "Labrador Retriever", apiName: "labrador" },
+			{ name: "French Bulldog", apiName: "bulldog/french" },
+			{ name: "Beagle", apiName: "beagle" },
+			{ name: "Husky", apiName: "husky" },
+		];
+
+		const loadBreedImages = async () => {
+			try {
+				const results = await Promise.all(
+					breeds.map(async (breed) => {
+						const response = await fetch(
+							`https://dog.ceo/api/breed/${breed.apiName}/images/random`
+						);
+
+						const data = await response.json();
+
+						return {
+							name: breed.name,
+							image: data.message,
+						};
+					})
+				);
+
+				const images = {};
+
+				results.forEach((breed) => {
+					images[breed.name] = breed.image;
+				});
+
+				setBreedImages(images);
+
+			} catch (error) {
+				console.error("Error loading breed images:", error);
+			}
+		};
+
+		loadBreedImages();
+	}, []);
+
+	// =========================================
+	// SHELTER IMAGES
+	// =========================================
+
+	useEffect(() => {
+		const shelterBreeds = [
+			"pug",
+			"boxer",
+			"dalmatian"
+		];
+
+		const loadShelterImages = async () => {
+			try {
+				const results = await Promise.all(
+					shelterBreeds.map(async (breed) => {
+						const response = await fetch(
+							`https://dog.ceo/api/breed/${breed}/images/random`
+						);
+
+						const data = await response.json();
+						return data.message;
+					})
+				);
+
+				setShelterImages(results);
+			} catch (error) {
+				console.error("Error loading shelter images:", error);
+			}
+		};
+
+		loadShelterImages();
+	}, []);
+
+	// =========================================
+	// HOME SECTION IMAGES
+	// =========================================
+
+	useEffect(() => {
+		const loadHomeImages = async () => {
+			try {
+				const [featuredResponse, shelterResponse] = await Promise.all([
+					fetch("https://dog.ceo/api/breeds/image/random/3"),
+					fetch("https://dog.ceo/api/breeds/image/random/3"),
+				]);
+
+				const featuredData = await featuredResponse.json();
+				const shelterData = await shelterResponse.json();
+
+				if (featuredData.status === "success") {
+					setFeaturedImages(featuredData.message);
+				}
+
+			} catch (error) {
+				console.error("Error loading home images:", error);
+			}
+		};
+
+		loadHomeImages();
+	}, []);
+
+
+	// =========================================
+	// LOAD PETS
+	// =========================================
+
+	useEffect(() => {
+		const fetchPets = async () => {
+			try {
+				const response = await fetch(`${backendUrl}/api/pets`);
+
+				if (!response.ok) {
+					throw new Error("Error loading pets");
+				}
+
+				const data = await response.json();
+				setPets(Array.isArray(data) ? data : []);
+			} catch (error) {
+				console.error("Error fetching pets:", error);
+			}
+		};
+
+		fetchPets();
+	}, [backendUrl]);
+
+	// =========================================
+	// STATIC BREEDS
+	// =========================================
+
+	const breeds = [
+		{
+			name: "Labrador Retriever",
+			description: "Friendly, loyal and loving companions.",
+		},
+		{
+			name: "Golden Retriever",
+			description: "Affectionate dogs perfect for families.",
+		},
+		{
+			name: "German Shepherd",
+			description: "Intelligent, loyal and protective.",
+		},
+		{
+			name: "Beagle",
+			description: "Playful, curious and full of energy.",
+		},
+		{
+			name: "French Bulldog",
+			description: "Small, affectionate and charming.",
+		},
+		{
+			name: "Husky",
+			description: "Energetic, friendly and adventurous.",
+		},
+	];
+
+	const displayPets = pets.length
+		? pets.slice(0, 6)
+		: [
+			{
+				id: 1,
+				name: "Ares",
+				breed: "Labrador Retriever",
+			},
+			{
+				id: 2,
+				name: "Luna",
+				breed: "Golden Retriever",
+			},
+			{
+				id: 3,
+				name: "Max",
+				breed: "German Shepherd",
+			},
+			{
+				id: 4,
+				name: "Toby",
+				breed: "Beagle",
+			},
+		];
+
 	return (
 		<main className="petconnect-home">
 
 			{/* =========================================
-                HERO / ADOPT - CARE - CONNECT
-            ========================================= */}
+			    HERO / ADOPT - CARE - CONNECT
+			========================================= */}
 
 			<section className="petconnect-hero">
 
@@ -68,15 +257,13 @@ export const Home = () => {
 				<div
 					className="petconnect-hero-card petconnect-adopta"
 					style={{
-						backgroundImage: `url(${adoptionImages[currentImage]})`
+						backgroundImage: `url(${adoptionImages[currentImage]})`,
 					}}
 				>
 					<div className="petconnect-card-overlay"></div>
 
 					<div className="petconnect-card-content">
-						<span className="petconnect-card-label">
-							ADOPT
-						</span>
+						<span className="petconnect-card-label">ADOPT</span>
 
 						<h1>
 							Find
@@ -85,8 +272,8 @@ export const Home = () => {
 						</h1>
 
 						<p>
-							Discover dogs waiting for a family
-							and give them a second chance.
+							Discover dogs waiting for a family and give them
+							a second chance.
 						</p>
 
 						<button
@@ -110,23 +297,19 @@ export const Home = () => {
 					</div>
 				</div>
 
-
-				{/* RIGHT COLUMN */}
 				<div className="petconnect-hero-side">
 
 					{/* CARE */}
 					<div
 						className="petconnect-hero-card petconnect-side-card petconnect-cuida"
 						style={{
-							backgroundImage: `url(${pet2})`
+							backgroundImage: `url(${pet2})`,
 						}}
 					>
 						<div className="petconnect-card-overlay"></div>
 
 						<div className="petconnect-card-content">
-							<span className="petconnect-card-label">
-								CARE
-							</span>
+							<span className="petconnect-card-label">CARE</span>
 
 							<h2>
 								Take care of your
@@ -135,35 +318,30 @@ export const Home = () => {
 							</h2>
 
 							<p>
-								Find veterinary professionals
-								to care for your dog's health and well-being.
+								Find veterinary professionals to care for your
+								dog's health and well-being.
 							</p>
 
 							<button
 								className="petconnect-card-button"
-								onClick={() =>
-									navigate("/veterinariansView")
-								}
+								onClick={() => navigate("/veterinariansView")}
 							>
 								View veterinarians
 							</button>
 						</div>
 					</div>
 
-
 					{/* CONNECT */}
 					<div
 						className="petconnect-hero-card petconnect-side-card petconnect-conecta"
 						style={{
-							backgroundImage: `url(${pet3})`
+							backgroundImage: `url(${pet3})`,
 						}}
 					>
 						<div className="petconnect-card-overlay"></div>
 
 						<div className="petconnect-card-content">
-							<span className="petconnect-card-label">
-								CONNECT
-							</span>
+							<span className="petconnect-card-label">CONNECT</span>
 
 							<h2>
 								More than a pet,
@@ -189,116 +367,228 @@ export const Home = () => {
 			</section>
 
 
+
+
 			{/* =========================================
-                INTRODUCTION
-            ========================================= */}
+			    DOGS BY BREED
+			========================================= */}
 
-			<section className="petconnect-intro">
+			<section className="pc-home-section pc-breeds-section">
 
-				<span className="petconnect-intro-label">
-					PET CONNECT
-				</span>
+				<div className="pc-section-heading">
+					<span>EXPLORE</span>
+					<h2>Dogs by Breed</h2>
+					<p>
+						Discover different breeds and find the companion
+						that is right for you.
+					</p>
+				</div>
 
-				<h2>
-					Adopt. Care. Connect.
-				</h2>
+				<div className="pc-breed-grid">
+					{breeds.map((breed) => (
+						<div className="pc-breed-card" key={breed.name}>
+							<div className="pc-breed-image">
+								<img
+									src={breedImages[breed.name]}
+									alt={breed.name}
+								/>
+							</div>
 
-				<p>
-					We created a space where dogs can find
-					a family, receive the care they need and connect
-					with people who truly care about them.
-				</p>
+							<div className="pc-breed-content">
+								<h3>{breed.name}</h3>
+								<p>{breed.description}</p>
+								<button
+									onClick={() => navigate("/breed")}
+								>
+									Explore breed
+								</button>
+							</div>
+						</div>
+					))}
+				</div>
 
 			</section>
 
 
 			{/* =========================================
-                FEATURED SHELTERS
-            ========================================= */}
+			    BEST SHELTERS
+			========================================= */}
 
-			<section className="petconnect-shelters">
+			<section className="pc-home-section pc-shelters-section">
 
-				<div className="petconnect-section-heading">
+				<div className="pc-section-heading">
+					<span>ADOPTION</span>
+					<h2>Best Shelters</h2>
+					<p>
+						Meet the shelters and organizations helping dogs
+						find loving homes.
+					</p>
+				</div>
 
-					<span className="petconnect-section-label">
-						ADOPTION
-					</span>
+				<div className="pc-shelter-grid">
+					{shelters.length > 0 ? (
+						shelters.map((shelter, index) => (
+							<article
+								className="pc-shelter-card"
+								key={shelter.id}
+							>
+								<div className="pc-shelter-image">
+									<img
+										src={shelterImages[index]}
+										alt={shelter.name}
+									/>
+								</div>
+
+								<div className="pc-shelter-content">
+									<span>SHELTER</span>
+									<h3>{shelter.name}</h3>
+									<p>{shelter.city || "Spain"}</p>
+
+									<button
+										onClick={() =>
+											navigate("/sheltersView")
+										}
+									>
+										View shelter
+									</button>
+								</div>
+							</article>
+						))
+					) : (
+						<div className="pc-empty-message">
+							No shelters available yet.
+						</div>
+					)}
+				</div>
+
+				<button
+					className="pc-main-button"
+					onClick={() => navigate("/sheltersView")}
+				>
+					View all shelters
+				</button>
+
+			</section>
+
+
+			{/* =========================================
+			    FAITHFUL COMPANION BANNER
+			========================================= */}
+
+			<section className="pc-companion-banner">
+
+				<div
+					className="pc-companion-image"
+					style={{
+						backgroundImage:
+							"url(https://images.unsplash.com/photo-1558788353-f76d92427f16?auto=format&fit=crop&w=1200&q=80)",
+					}}
+				></div>
+
+				<div className="pc-companion-content">
+					<span>FIND YOUR COMPANION</span>
 
 					<h2>
-						Featured shelters
+						More than a pet.
+						<br />
+						A lifelong friend.
 					</h2>
 
 					<p>
-						Meet some of the organizations that work
-						every day to find a home for our dogs.
+						Every dog deserves a loving home. Find the companion
+						that is waiting to become part of your family.
 					</p>
 
+					<button
+						className="pc-main-button"
+						onClick={() => navigate("/sheltersView")}
+					>
+						Find a dog
+					</button>
 				</div>
 
+			</section>
 
-				<div className="petconnect-shelters-grid">
 
-					{shelters.map((shelter) => (
-						<article
-							className="petconnect-shelter-card"
-							key={shelter.id}
-						>
+			{/* =========================================
+			    FEATURED ADOPTIONS
+			========================================= */}
 
-							<div className="petconnect-shelter-image">
+			<section className="pc-home-section">
 
-								{shelter.iconUrl ? (
-									<img
-										src={shelter.iconUrl}
-										alt={shelter.name}
-									/>
-								) : (
-									<div className="petconnect-shelter-placeholder">
-										🐶
-									</div>
-								)}
+				<div className="pc-section-heading">
+					<span>ADOPTION</span>
+					<h2>Featured Adoptions</h2>
+					<p>
+						These dogs are waiting for someone to give them
+						a loving home.
+					</p>
+				</div>
 
+				<div className="pc-pet-grid">
+					{displayPets.slice(0, 3).map((pet, index) => (
+						<article className="pc-pet-card" key={pet.id || index}>
+							<div className="pc-pet-image">
+								<img
+									src={
+										pet.photo_url ||
+										pet.photoUrl ||
+										breedImages[pet.breed?.name || pet.breed] ||
+										featuredImages[index]
+									}
+									alt={pet.name}
+									onError={(event) => {
+										if (featuredImages[index]) {
+											event.currentTarget.src = featuredImages[index];
+										}
+									}}
+								/>
+								<span>ADOPTION</span>
 							</div>
 
-							<div className="petconnect-shelter-content">
-
-								<span className="petconnect-shelter-label">
-									SHELTER
-								</span>
-
-								<h3>
-									{shelter.name}
-								</h3>
-
+							<div className="pc-pet-content">
+								<h3>{pet.name}</h3>
 								<p>
-									{shelter.city}
+									{pet.breed?.name ||
+										pet.breed ||
+										"Dog looking for a home"}
 								</p>
 
 								<button
-									className="petconnect-shelter-button"
 									onClick={() =>
 										navigate("/sheltersView")
 									}
 								>
-									View shelter
+									Meet this dog
 								</button>
-
 							</div>
-
 						</article>
 					))}
-
 				</div>
 
+			</section>
 
-				<div className="petconnect-shelters-action">
 
-					<button
-						className="petconnect-view-all-button"
-						onClick={() => navigate("/sheltersView")}
-					>
-						View all shelters
-					</button>
+			{/* =========================================
+			    OUR PARTNERS
+			========================================= */}
 
+			<section className="pc-partners-section">
+
+				<div className="pc-section-heading">
+					<span>TOGETHER</span>
+					<h2>Our Partners</h2>
+					<p>
+						Building a better future for dogs together.
+					</p>
+				</div>
+
+				<div className="pc-partners-grid">
+					<div>PAWS & CARE</div>
+					<div>SAFE PAWS</div>
+					<div>VET PARTNERS</div>
+					<div>HAPPY HOMES</div>
+					<div>DOGS COMMUNITY</div>
 				</div>
 
 			</section>

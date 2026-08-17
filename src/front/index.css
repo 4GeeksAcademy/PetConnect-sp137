@@ -1359,3 +1359,714 @@
     font-size: 30px;
   }
 }
+
+/* =========================================================
+   PET CONNECT - HOME / PAToi ADAPTATION
+   ========================================================= */
+
+.pc-home-section {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 80px 40px;
+}
+
+.pc-section-heading {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 45px;
+}
+
+.pc-section-heading span {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: #20a9e8;
+}
+
+.pc-section-heading h2 {
+  margin: 0 0 15px;
+  font-size: 38px;
+  font-weight: 800;
+  color: #292a3a;
+}
+
+.pc-section-heading p {
+  margin: 0;
+  color: #666;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* =========================================================
+   DOGS BY BREED
+   ========================================================= */
+
+.pc-breeds-section {
+  background: #fff;
+}
+
+.pc-breed-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.pc-breed-card {
+  background: #fff;
+  border: 1px solid #eeeeee;
+  overflow: hidden;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.pc-breed-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.pc-breed-image {
+  height: 210px;
+  overflow: hidden;
+}
+
+.pc-breed-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pc-breed-content {
+  padding: 25px;
+  text-align: center;
+}
+
+.pc-breed-content h3 {
+  margin: 0 0 10px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #292a3a;
+}
+
+.pc-breed-content p {
+  min-height: 50px;
+  margin: 0 0 20px;
+  color: #777;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.pc-breed-content button,
+.pc-shelter-content button,
+.pc-pet-content button {
+  border: none;
+  background: transparent;
+  color: #20a9e8;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* =========================================================
+   BEST SHELTERS
+   ========================================================= */
+
+.pc-shelters-section {
+  background: #f8f9fa;
+  max-width: none;
+  padding-left: max(40px, calc((100% - 1320px) / 2));
+  padding-right: max(40px, calc((100% - 1320px) / 2));
+}
+
+.pc-shelter-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+}
+
+.pc-shelter-card {
+  background: #fff;
+  border: 1px solid #eeeeee;
+  overflow: hidden;
+}
+
+.pc-shelter-image {
+  height: 220px;
+  overflow: hidden;
+}
+
+.pc-shelter-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pc-shelter-content {
+  padding: 25px;
+}
+
+.pc-shelter-content > span {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: #20a9e8;
+}
+
+.pc-shelter-content h3 {
+  margin: 10px 0 5px;
+  font-size: 20px;
+  color: #292a3a;
+}
+
+.pc-shelter-content p {
+  margin: 0 0 18px;
+  color: #777;
+}
+
+.pc-main-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 40px auto 0;
+  padding: 14px 28px;
+  border: none;
+  background: #292a3a;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.pc-main-button:hover {
+  background: #20a9e8;
+}
+
+.pc-shelters-section > .pc-main-button {
+  display: flex;
+}
+
+/* =========================================================
+   FAITHFUL COMPANION BANNER
+   ========================================================= */
+
+.pc-companion-banner {
+  max-width: 1320px;
+  min-height: 420px;
+  margin: 80px auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #292a3a;
+  overflow: hidden;
+}
+
+.pc-companion-image {
+  min-height: 420px;
+  background-size: cover;
+  background-position: center;
+}
+
+.pc-companion-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px;
+  color: #fff;
+}
+
+.pc-companion-content > span {
+  margin-bottom: 15px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: #20a9e8;
+}
+
+.pc-companion-content h2 {
+  margin: 0 0 20px;
+  font-size: 42px;
+  line-height: 1.1;
+  font-weight: 800;
+}
+
+.pc-companion-content p {
+  max-width: 500px;
+  margin-bottom: 10px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.7;
+}
+
+.pc-companion-content .pc-main-button {
+  margin: 25px 0 0;
+  align-self: flex-start;
+  background: #fff;
+  color: #292a3a;
+}
+
+.pc-companion-content .pc-main-button:hover {
+  background: #20a9e8;
+  color: #fff;
+}
+
+/* =========================================================
+   FEATURED ADOPTIONS / FEATURED DOGS
+   ========================================================= */
+
+.pc-pet-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.pc-featured-dogs .pc-pet-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.pc-pet-card {
+  background: #fff;
+  border: 1px solid #eeeeee;
+  overflow: hidden;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.pc-pet-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.pc-pet-image {
+  position: relative;
+  height: 280px;
+  overflow: hidden;
+}
+
+.pc-pet-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pc-pet-image > span {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  padding: 7px 12px;
+  background: #20a9e8;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.pc-pet-content {
+  padding: 22px;
+  text-align: center;
+}
+
+.pc-pet-content h3 {
+  margin: 0 0 7px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #292a3a;
+}
+
+.pc-pet-content p {
+  margin: 0 0 15px;
+  color: #777;
+  font-size: 14px;
+}
+
+/* =========================================================
+   OUR PARTNERS
+   ========================================================= */
+
+.pc-partners-section {
+  padding: 80px 40px;
+  background: #f8f9fa;
+}
+
+.pc-partners-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  align-items: center;
+}
+
+.pc-partners-grid div {
+  padding: 25px 10px;
+  text-align: center;
+  color: #777;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  background: #fff;
+  border: 1px solid #eeeeee;
+}
+
+/* =========================================================
+   PET CONNECT VALUES
+   ========================================================= */
+
+.pc-values-section {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 1320px;
+  margin: 80px auto;
+  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.pc-value-item {
+  padding: 40px 25px;
+  text-align: center;
+  border-right: 1px solid #eeeeee;
+}
+
+.pc-value-item:last-child {
+  border-right: none;
+}
+
+.pc-value-icon {
+  width: 58px;
+  height: 58px;
+  margin: 0 auto 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #eef8fc;
+  color: #20a9e8;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.pc-value-item h3 {
+  margin: 0 0 10px;
+  font-size: 17px;
+  color: #292a3a;
+}
+
+.pc-value-item p {
+  margin: 0;
+  color: #777;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.pc-empty-message {
+  grid-column: 1 / -1;
+  padding: 40px;
+  text-align: center;
+  color: #777;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .pc-breed-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pc-shelter-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pc-featured-dogs .pc-pet-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pc-partners-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .pc-values-section {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pc-value-item:nth-child(2) {
+    border-right: none;
+  }
+
+  .pc-value-item:nth-child(-n + 2) {
+    border-bottom: 1px solid #eeeeee;
+  }
+}
+
+@media (max-width: 768px) {
+  .pc-home-section {
+    padding: 60px 20px;
+  }
+
+  .pc-section-heading h2 {
+    font-size: 30px;
+  }
+
+  .pc-breed-grid,
+  .pc-shelter-grid,
+  .pc-pet-grid,
+  .pc-featured-dogs .pc-pet-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pc-companion-banner {
+    margin: 50px 20px;
+    grid-template-columns: 1fr;
+  }
+
+  .pc-companion-image {
+    min-height: 300px;
+  }
+
+  .pc-companion-content {
+    padding: 40px 30px;
+  }
+
+  .pc-companion-content h2 {
+    font-size: 32px;
+  }
+
+  .pc-partners-section {
+    padding: 60px 20px;
+  }
+
+  .pc-partners-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pc-values-section {
+    margin: 50px 20px;
+    grid-template-columns: 1fr;
+  }
+
+  .pc-value-item {
+    border-right: none;
+    border-bottom: 1px solid #eeeeee;
+  }
+
+  .pc-value-item:last-child {
+    border-bottom: none;
+  }
+}
+
+/* =========================================================
+   PET CONNECT FOOTER
+========================================================= */
+
+.pc-footer {
+  background: #292b3a;
+  color: #b8bcc8;
+  margin-top: 0;
+  font-family: inherit;
+}
+
+.pc-footer-main {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 70px 40px 65px;
+
+  display: grid;
+  grid-template-columns: 1.35fr 1fr 1fr 1.45fr;
+  gap: 65px;
+}
+
+/* BRAND */
+
+.pc-footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  color: #ffffff;
+  font-size: 34px;
+  font-weight: 800;
+  margin-bottom: 25px;
+}
+
+.pc-footer-logo-image {
+  display: block;
+  width: 220px;
+  height: auto;
+  object-fit: contain;
+}
+
+.pc-footer-description {
+  max-width: 280px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+}
+
+.pc-footer-contact p {
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+
+.pc-footer-contact strong {
+  color: #ffffff;
+}
+
+/* FOOTER COLUMNS */
+
+.pc-footer-column h3,
+.pc-footer-newsletter h3 {
+  position: relative;
+
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+
+  margin: 0 0 30px;
+  padding-bottom: 14px;
+}
+
+.pc-footer-column h3::after,
+.pc-footer-newsletter h3::after {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  bottom: 0;
+
+  width: 70px;
+  height: 2px;
+
+  background: #1da9e8;
+}
+
+.pc-footer-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pc-footer-column li {
+  margin-bottom: 16px;
+}
+
+.pc-footer-column a {
+  color: #b8bcc8;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.pc-footer-column a::before {
+  content: "›";
+  margin-right: 8px;
+  color: #ffffff;
+}
+
+.pc-footer-column a:hover {
+  color: #1da9e8;
+}
+
+/* NEWSLETTER */
+
+.pc-footer-newsletter p {
+  line-height: 1.7;
+  max-width: 330px;
+  margin-bottom: 20px;
+}
+
+.pc-newsletter-form {
+  display: flex;
+  width: 100%;
+  max-width: 330px;
+  height: 52px;
+}
+
+.pc-newsletter-form input {
+  flex: 1;
+
+  min-width: 0;
+
+  padding: 0 15px;
+
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  color: #ffffff;
+  outline: none;
+}
+
+.pc-newsletter-form input::placeholder {
+  color: #9297a6;
+}
+
+.pc-newsletter-form input:focus {
+  border-color: #1da9e8;
+}
+
+.pc-newsletter-form button {
+  width: 52px;
+
+  border: none;
+
+  background: #1da9e8;
+  color: #ffffff;
+
+  font-size: 25px;
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.pc-newsletter-form button:hover {
+  background: #168ec5;
+}
+
+.pc-footer-newsletter-note {
+  font-size: 13px;
+  margin-top: 18px;
+}
+
+/* BOTTOM */
+
+.pc-footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  text-align: center;
+
+  padding: 25px 20px;
+}
+
+.pc-footer-bottom p {
+  margin: 0;
+  color: #9da2b0;
+  font-size: 14px;
+}
+
+.pc-footer-bottom span {
+  color: #ffffff;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 992px) {
+  .pc-footer-main {
+    grid-template-columns: 1fr 1fr;
+    gap: 45px;
+  }
+}
+
+@media (max-width: 600px) {
+  .pc-footer-main {
+    grid-template-columns: 1fr;
+    padding: 50px 25px;
+    gap: 40px;
+  }
+
+  .pc-footer-logo {
+    font-size: 28px;
+  }
+
+  .pc-footer-newsletter {
+    max-width: 100%;
+  }
+}
