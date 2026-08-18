@@ -18,7 +18,7 @@ export const UserCreate = () => {
         city: "",
         adress: "",
         pc: "",
-        iconUrl: "",
+        photo_url: "",
         latitude: "",
         longitude: ""
     })
@@ -54,7 +54,7 @@ export const UserCreate = () => {
             if (data.secure_url) {
                 setFormData((prev) => ({
                     ...prev,
-                    iconUrl: data.secure_url
+                    photo_url: data.secure_url
                 }));
             } else {
                 throw new Error(data.error?.message || "Error uploading image");
@@ -111,7 +111,7 @@ export const UserCreate = () => {
                 city: "",
                 adress: "",
                 pc: "",
-                iconUrl: "",
+                photo_url: "",
                 latitude: "",
                 longitude: ""
             })
@@ -127,12 +127,12 @@ export const UserCreate = () => {
     }
 
 
- return (
+    return (
         <div className="container justify-content-center align-items-center py-5"
             style={{
-                    minHeight: "100vh",
-                    background: "#f8f9fa", 
-                }}>
+                minHeight: "100vh",
+                background: "#f8f9fa",
+            }}>
             <div className="row">
                 <div className="col-md-8 offset-md-2">
                     <i
@@ -144,7 +144,7 @@ export const UserCreate = () => {
                     ></i>
 
                     <h1>
-       
+
                         CREATE USER
                     </h1>
 
@@ -277,7 +277,7 @@ export const UserCreate = () => {
                                     name="latitude"
                                     value={formData.latitude}
                                     onChange={handleChange}
-                                    placeholder="e.g. 41.3879"
+                                    placeholder="e.g. 41.39"
                                 />
                             </div>
                             <div className="col-md-6 mb-3">
@@ -290,26 +290,26 @@ export const UserCreate = () => {
                                     name="longitude"
                                     value={formData.longitude}
                                     onChange={handleChange}
-                                    placeholder="e.g. 2.1699"
+                                    placeholder="e.g. 2.17"
                                 />
                             </div>
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="iconUrl" className="form-label text-muted fw-bold small mb-1 p-3">User Image</label>
+                            <label htmlFor="photo_url" className="form-label text-muted fw-bold small mb-1 p-3">User Image</label>
                             <input
                                 type="file"
                                 className="form-control form-control-custom"
-                                id="iconUrl"
+                                id="photo_url"
                                 accept="image/*"
                                 onChange={handleImageUpload}
                                 disabled={loading || uploading}
                             />
                             {uploading && <small className="text-muted d-block mt-1">Uploading image...</small>}
-                            {formData.iconUrl && !uploading && (
+                            {formData.photo_url && !uploading && (
                                 <div className="mt-2">
                                     <small className="text-success d-block">Image loaded.</small>
-                                    <img src={formData.iconUrl} alt="Preview" style={{ width: "90px", height: "90px", objectFit: "cover" }} className="mt-1 rounded border" />
+                                    <img src={formData.photo_url} alt="Preview" style={{ width: "90px", height: "90px", objectFit: "cover" }} className="mt-1 rounded border" />
                                 </div>
                             )}
                         </div>

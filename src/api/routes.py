@@ -329,6 +329,9 @@ def create_user():
         if existing_user:
             return jsonify({"error": "El email ya está registrado"}), 400
 
+        lat = body.get('latitude')
+        lng = body.get('longitude')
+
         new_user = User(
             name=body.get('name'),
             birth_date=body.get('birthDate') if body.get(
@@ -339,6 +342,8 @@ def create_user():
             city=body.get('city') or "",
             pc=body.get('pc'),
             photo_url=body.get('photo_url'),
+            latitude=float(lat) if lat not in [None, ""] else None,
+            longitude=float(lng) if lng not in [None, ""] else None,
             address=body.get('adress') or ""
 
         )
@@ -366,6 +371,9 @@ def update_user(user_id):
 
         body = request.get_json()
 
+        lat = body.get('latitude')
+        lng = body.get('longitude')
+
         user.name = body.get('name', user.name)
         user.birth_date = body.get('birthDate', user.birth_date)
         user.email = body.get('email', user.email)
@@ -375,6 +383,11 @@ def update_user(user_id):
         user.pc = body.get('pc', user.pc)
         user.address = body.get('adress', user.address)
         user.photo_url = body.get('photo_url', user.photo_url)
+
+        if lat is not None:
+            user.latitude = float(lat) if lat != "" else None
+        if lng is not None:
+            user.longitude = float(lng) if lng != "" else None
 
         db.session.commit()
 
