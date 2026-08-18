@@ -10,15 +10,15 @@ export const PetCardAsUser = ({ pet, users = [], shelters = [], breeds = [], onE
     const chipNumber = pet.chip_number || pet.chipNumber;
 
     return (
-        <div className="card shadow-sm p-3 h-100" style={{ maxWidth: "450px", margin: "0 auto" }}>
-            <div className="row g-0 align-items-center">
-                <div className="col-4 text-center mb-2 mb-md-0">
+        <div className="card shadow-sm" style={{ maxWidth: "350px", borderRadius: "15px" }}>
+            <div className="row g-3 align-items-center">
+                <div className="text-center">
                     {petPhoto ? (
                         <img
                             src={petPhoto}
                             className="img-fluid rounded"
                             alt={pet.name}
-                            style={{ height: "110px", width: "110px", objectFit: "cover" }}
+                            style={{ height: "150px", width: "100%", objectFit: "cover" }}
                         />
                     ) : (
                         <div className="bg-light text-muted d-flex align-items-center justify-content-center rounded mx-auto" style={{ height: "110px", width: "110px" }}>
@@ -37,7 +37,7 @@ export const PetCardAsUser = ({ pet, users = [], shelters = [], breeds = [], onE
                     <p className="card-text mb-2 small"><strong>Castrated:</strong> {pet.castrated ? "Yes" : "No"}</p>
                 </div>
             </div>
-            <div className="d-flex justify-content-end gap-2 border-top pt-2 mt-2">
+            <div className="d-flex justify-content-end gap-3 border-top" style={{ backgroundColor: "#18313912" }}>
                 <button className="btn btn-sm btn-outline-primary px-3" onClick={() => onEdit(pet.id)}>
                     Edit
                 </button>

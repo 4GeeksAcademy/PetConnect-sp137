@@ -6,6 +6,7 @@ export const ShelterDashboardEditPet = () => {
     const { store } = useGlobalReducer();
     const params = useParams();
     const navigate = useNavigate();
+    const [uploading, setUploading] = useState(false);
     const [formData, setFormData] = useState({
         name: "",
         genre: "",
@@ -138,6 +139,39 @@ export const ShelterDashboardEditPet = () => {
             </div>
         );
     }
+    const handleImageUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const uploadData = new FormData();
+        uploadData.append("file", file);
+        uploadData.append("upload_preset", "petconnect");
+
+        setUploading(true);
+        try {
+            const response = await fetch(
+                "https://api.cloudinary.com/v1_1/ojckqgp2/image/upload",
+                {
+                    method: "POST",
+                    body: uploadData,
+                }
+            );
+
+            const data = await response.json();
+            if (data.secure_url) {
+                setFormData(prev => ({
+                    ...prev,
+                    photoUrl: data.secure_url
+                }));
+                alert("Image uploaded successfully!");
+            }
+        } catch (error) {
+            console.error("Error uploading image to Cloudinary:", error);
+            alert("Could not upload the image.");
+        } finally {
+            setUploading(false);
+        }
+    };
 
     return (
         <div className="container mt-5">
@@ -236,17 +270,26 @@ export const ShelterDashboardEditPet = () => {
                             />
                         </div>
 
-                        <div className="mb-3">
-                            <label htmlFor="photoUrl" className="form-label">URL de foto</label>
+                        <div className="col-md-12">
+                            <label className="form-label">Pet Photo</label>
+                            {formData.photoUrl && (
+                                <div className="mb-2">
+                                    <img
+                                        src={formData.photoUrl}
+                                        alt="Pet Preview"
+                                        className="rounded shadow-sm"
+                                        style={{ width: "100px", height: "100px", objectFit: "cover" }}
+                                    />
+                                </div>
+                            )}
                             <input
-                                type="url"
+                                type="file"
                                 className="form-control"
-                                id="photoUrl"
-                                name="photoUrl"
-                                value={formData.photoUrl}
-                                onChange={handleChange}
-                                placeholder="https://ejemplo.com/foto.jpg"
+                                accept="image/*"
+                                onChange={handleImageUpload}
+                                disabled={uploading}
                             />
+                            {uploading && <small className="text-muted d-block mt-1">Uploading image...</small>}
                         </div>
 
                         <div className="mb-3 form-check">

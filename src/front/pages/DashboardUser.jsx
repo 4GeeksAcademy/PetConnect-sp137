@@ -18,6 +18,7 @@ export const DashboardUser = () => {
     const [veterinarians, setVeterinarians] = useState([]);
     const [adoptions, setAdoptions] = useState([]);
     const [uploading, setUploading] = useState(false);
+    const [isProfileOpen, setIsProfileOpen] = useState(false);
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     const currentUserId = store.currentUser?.id;
@@ -131,14 +132,6 @@ export const DashboardUser = () => {
         photo_url: currentPhotoUrl !== undefined ? currentPhotoUrl : userFormData.photo_url
     });
 
-    const handleLogout = () => {
-        localStorage.removeItem("userToken");
-        localStorage.removeItem("user");
-        dispatch({ type: "set_user_auth", payload: null });
-        dispatch({ type: "set_current_user", payload: null });
-        navigate("/");
-    };
-
     const handleUserChange = (e) => {
         const { name, value } = e.target;
         setUserFormData({
@@ -239,228 +232,292 @@ export const DashboardUser = () => {
     };
 
     return (
-        <div className="container mt-5 mb-5">
-            <div className="card p-4 mb-4 shadow-sm">
-                <div className="row align-items-center mb-4">
-                    <div className="col-md-3 text-center mb-3 mb-md-0">
+        <div className="container my-5" style={{ color: "#193139" }}>
+            {/* Tarjeta de Perfil Desplegable */}
+            <div className="card border-0 shadow-lg mb-5 overflow-hidden" style={{ borderRadius: "16px" }}>
+                <div
+                    className="p-4 d-flex justify-content-between align-items-center text-white"
+                    style={{ backgroundColor: "#4c4d5570", cursor: "pointer" }}
+                    onClick={() => setIsProfileOpen(!isProfileOpen)}
+                >
+                    <div className="d-flex align-items-center">
                         {userFormData.photo_url ? (
                             <img
                                 src={userFormData.photo_url}
                                 alt="User Profile"
-                                className="rounded-circle img-thumbnail shadow-sm"
-                                style={{ width: "130px", height: "130px", objectFit: "cover" }}
+                                className="rounded-circle border border-2 border-white shadow-sm me-3"
+                                style={{ width: "65px", height: "65px", objectFit: "cover" }}
                             />
                         ) : (
                             <div
-                                className="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center mx-auto shadow-sm"
-                                style={{ width: "130px", height: "130px", fontSize: "3rem" }}
+                                className="rounded-circle d-flex align-items-center justify-content-center me-3 shadow-sm"
+                                style={{ width: "65px", height: "65px", fontSize: "1.6rem", backgroundColor: "rgba(255, 255, 255, 0.2)", color: "#183139" }}
                             >
                                 <i className="fa-solid fa-user"></i>
                             </div>
                         )}
-                    </div>
-                    <div className="col-md-9">
-                        <h3 className="mb-1">User Profile</h3>
-                    </div>
-                </div>
-
-                <form onSubmit={handleSaveUserChanges}>
-                    <div className="row g-3">
-                        <div className="col-md-6">
-                            <label className="form-label">Name</label>
-                            <input
-                                type="text"
-                                name="name"
-                                className="form-control"
-                                value={userFormData.name}
-                                onChange={handleUserChange}
-                                required
-                            />
-                        </div>
-                        <div className="col-md-6">
-                            <label className="form-label">Email</label>
-                            <input
-                                type="email"
-                                name="email"
-                                className="form-control"
-                                value={userFormData.email}
-                                onChange={handleUserChange}
-                                required
-                            />
-                        </div>
-                        <div className="col-md-6">
-                            <label className="form-label">Legal Document</label>
-                            <input
-                                type="text"
-                                name="legalDocument"
-                                className="form-control"
-                                value={userFormData.legalDocument}
-                                onChange={handleUserChange}
-                                required
-                            />
-                        </div>
-                        <div className="col-md-6">
-                            <label className="form-label">Birth Date</label>
-                            <input
-                                type="date"
-                                name="birthDate"
-                                className="form-control"
-                                value={userFormData.birthDate}
-                                onChange={handleUserChange}
-                            />
-                        </div>
-                        <div className="col-md-12">
-                            <label className="form-label">User Image</label>
-                            <input
-                                type="file"
-                                className="form-control"
-                                accept="image/*"
-                                onChange={handleImageUpload}
-                                disabled={uploading}
-                            />
-                            {uploading && <small className="text-muted d-block mt-1">Uploading image...</small>}
-                        </div>
-                        <div className="col-md-12">
-                            <label className="form-label">Address</label>
-                            <input
-                                type="text"
-                                name="address"
-                                className="form-control"
-                                value={userFormData.address}
-                                onChange={handleUserChange}
-                                required
-                            />
-                        </div>
-                        <div className="col-md-6">
-                            <label className="form-label">Postal Code (PC)</label>
-                            <input
-                                type="text"
-                                name="pc"
-                                className="form-control"
-                                value={userFormData.pc}
-                                onChange={handleUserChange}
-                            />
-                        </div>
-                        <div className="col-md-6">
-                            <label className="form-label">City</label>
-                            <input
-                                type="text"
-                                name="city"
-                                className="form-control"
-                                value={userFormData.city}
-                                onChange={handleUserChange}
-                                required
-                            />
-                        </div>
-                        <div className="col-md-6">
-                            <label className="form-label">Latitude</label>
-                            <input
-                                type="number"
-                                step="any"
-                                name="latitude"
-                                className="form-control"
-                                value={userFormData.latitude}
-                                onChange={handleUserChange}
-                                placeholder="e.g. 40.4168"
-                            />
-                        </div>
-                        <div className="col-md-6">
-                            <label className="form-label">Longitude</label>
-                            <input
-                                type="number"
-                                step="any"
-                                name="longitude"
-                                className="form-control"
-                                value={userFormData.longitude}
-                                onChange={handleUserChange}
-                                placeholder="e.g. -3.7038"
-                            />
+                        <div>
+                            <h3 className="mb-0 fw-bold" style={{ color: "#183139" }}>{userFormData.name || "User Profile"}</h3>
+                            <small style={{ color: "#183139" }}>
+                                Click to {isProfileOpen ? "hide" : "edit"} profile details
+                            </small>
                         </div>
                     </div>
-                    <button type="submit" className="btn btn-success mt-4" disabled={uploading}>Save Changes</button>
-                </form>
-            </div>
-
-            <div className="card p-4 mb-4 shadow-sm">
-                <h3 className="mb-3">My Location</h3>
-                <Geolocation latitude={userFormData.latitude} longitude={userFormData.longitude} />
-            </div>
-
-            <div className="card p-4 mb-4 shadow-sm">
-                <h3 className="mb-3">Match Pets</h3>
-                <UserCardMatchPets />
-            </div>
-
-            <div className="card p-4 mb-4 shadow-sm">
-                <div className="d-flex justify-content-between align-items-center mb-3">
-                    <h2>My Pets</h2>
-                    <button className="btn btn-primary" onClick={() => navigate("/create-pet-user")}>
-                        New Pet
+                    <button 
+                        type="button" 
+                        className="btn rounded-circle text-white border-0"
+                        style={{ backgroundColor: "#193139dc", width: "42px", height: "42px" }}
+                    >
+                        <i className={`fa-solid ${isProfileOpen ? "fa-chevron-up" : "fa-chevron-down"}`}></i>
                     </button>
                 </div>
 
-                {pets.length === 0 ? (
-                    <p className="text-muted mb-0">You have no pets registered yet.</p>
-                ) : (
-                    <div className="row g-3">
-                        {pets.map(pet => (
-                            <div className="col-12" key={pet.id}>
-                                <PetCardAsUser
-                                    pet={pet}
-                                    users={users}
-                                    shelters={shelters}
-                                    breeds={breeds}
-                                    onEdit={handleEdit}
-                                    onDelete={handleDelete}
-                                />
+                {isProfileOpen && (
+                    <div className="card-body p-4 p-md-5" style={{ backgroundColor: "#fdfbf7" }}>
+                        <form onSubmit={handleSaveUserChanges}>
+                            <div className="row g-3">
+                                <div className="col-md-6">
+                                    <label className="form-label fw-semibold">Name</label>
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        className="form-control border-1 p-2"
+                                        style={{ borderRadius: "10px", borderColor: "#183139" }}
+                                        value={userFormData.name}
+                                        onChange={handleUserChange}
+                                        required
+                                    />
+                                </div>
+                                <div className="col-md-6">
+                                    <label className="form-label fw-semibold">Email</label>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        className="form-control border-1 p-2"
+                                        style={{ borderRadius: "10px", borderColor: "#183139" }}
+                                        value={userFormData.email}
+                                        onChange={handleUserChange}
+                                        required
+                                    />
+                                </div>
+                                <div className="col-md-6">
+                                    <label className="form-label fw-semibold">Legal Document</label>
+                                    <input
+                                        type="text"
+                                        name="legalDocument"
+                                        className="form-control border-1 p-2"
+                                        style={{ borderRadius: "10px", borderColor: "#183139" }}
+                                        value={userFormData.legalDocument}
+                                        onChange={handleUserChange}
+                                        required
+                                    />
+                                </div>
+                                <div className="col-md-6">
+                                    <label className="form-label fw-semibold">Birth Date</label>
+                                    <input
+                                        type="date"
+                                        name="birthDate"
+                                        className="form-control border-1 p-2"
+                                        style={{ borderRadius: "10px", borderColor: "#183139" }}
+                                        value={userFormData.birthDate}
+                                        onChange={handleUserChange}
+                                    />
+                                </div>
+                                <div className="col-md-12">
+                                    <label className="form-label fw-semibold">User Image</label>
+                                    <input
+                                        type="file"
+                                        className="form-control border-1 p-2"
+                                        style={{ borderRadius: "10px", borderColor: "#183139" }}
+                                        accept="image/*"
+                                        onChange={handleImageUpload}
+                                        disabled={uploading}
+                                    />
+                                    {uploading && <small className="text-muted d-block mt-1">Uploading image...</small>}
+                                </div>
+                                <div className="col-md-12">
+                                    <label className="form-label fw-semibold">Address</label>
+                                    <input
+                                        type="text"
+                                        name="address"
+                                        className="form-control border-1 p-2"
+                                        style={{ borderRadius: "10px", borderColor: "#183139" }}
+                                        value={userFormData.address}
+                                        onChange={handleUserChange}
+                                        required
+                                    />
+                                </div>
+                                <div className="col-md-6">
+                                    <label className="form-label fw-semibold">Postal Code (PC)</label>
+                                    <input
+                                        type="text"
+                                        name="pc"
+                                        className="form-control border-1 p-2"
+                                        style={{ borderRadius: "10px", borderColor: "#183139" }}
+                                        value={userFormData.pc}
+                                        onChange={handleUserChange}
+                                    />
+                                </div>
+                                <div className="col-md-6">
+                                    <label className="form-label fw-semibold">City</label>
+                                    <input
+                                        type="text"
+                                        name="city"
+                                        className="form-control border-1 p-2"
+                                        style={{ borderRadius: "10px", borderColor: "#183139" }}
+                                        value={userFormData.city}
+                                        onChange={handleUserChange}
+                                        required
+                                    />
+                                </div>
+                                <div className="col-md-6">
+                                    <label className="form-label fw-semibold">Latitude</label>
+                                    <input
+                                        type="number"
+                                        step="any"
+                                        name="latitude"
+                                        className="form-control border-1 p-2"
+                                        style={{ borderRadius: "10px", borderColor: "#183139" }}
+                                        value={userFormData.latitude}
+                                        onChange={handleUserChange}
+                                        placeholder="e.g. 40.4168"
+                                    />
+                                </div>
+                                <div className="col-md-6">
+                                    <label className="form-label fw-semibold">Longitude</label>
+                                    <input
+                                        type="number"
+                                        step="any"
+                                        name="longitude"
+                                        className="form-control border-1 p-2"
+                                        style={{ borderRadius: "10px", borderColor: "#183139" }}
+                                        value={userFormData.longitude}
+                                        onChange={handleUserChange}
+                                        placeholder="e.g. -3.7038"
+                                    />
+                                </div>
                             </div>
-                        ))}
+                            <button
+                                type="submit"
+                                className="btn fw-semibold mt-4 px-4 py-2 text-white"
+                                style={{ backgroundColor: "#183139", borderRadius: "10px" }}
+                                disabled={uploading}
+                            >
+                                Save Changes
+                            </button>
+                        </form>
                     </div>
                 )}
             </div>
 
-            <div className="card p-4 mb-4 shadow-sm">
-                <div className="mb-3">
-                    <h2>Medical Appointments</h2>
+            {/* FILA 1: Match Pets | My Pets */}
+            <div className="row g-4 mb-4">
+                <div className="col-lg-4 d-flex align-items-stretch" >
+                    <div className="card p-4 border-0 shadow-sm w-100" style={{ borderRadius: "30px", backgroundColor: "#4c4d5516" }}> 
+                        <h3 className="fw-bold mb-1" style={{ color: "#183139" }}>Match Pets</h3>
+                        <UserCardMatchPets />
+                    </div>
                 </div>
 
-                {medicalAppointments.length === 0 ? (
-                    <p className="text-muted mb-0">You have no medical appointments scheduled yet.</p>
-                ) : (
-                    <div className="row g-3">
-                        {medicalAppointments.map(appointment => (
-                            <MedicalAppointmentCardAsUser
-                                key={appointment.id}
-                                appointment={appointment}
-                                users={users}
-                                pets={pets}
-                                veterinarians={veterinarians}
-                            />
-                        ))}
+                <div className="col-lg-8 d-flex align-items-stretch">
+                    <div className="card p-4 border-0 shadow-sm w-100" style={{ borderRadius: "30px", backgroundColor: "#4c4d5516" }}>
+                        <div className="d-flex justify-content-between align-items-center mb-4">
+                            <h3 className="fw-bold mb-0" style={{ color: "#183139" }}>My Pets</h3>
+                            <button
+                                className="btn text-white fw-semibold px-3 py-2"
+                                style={{ backgroundColor: "#183139", borderRadius: "15px" }}
+                                onClick={() => navigate("/create-pet-user")}
+                            >
+                                + New Pet
+                            </button>
+                        </div>
+
+                        {pets.length === 0 ? (
+                            <p className="text-muted mb-0">You have no pets registered yet.</p>
+                        ) : (
+                            <div className="row g-3">
+                                {pets.map(pet => (
+                                    <div className="col-12 col-md-6" key={pet.id}>
+                                        <PetCardAsUser
+                                            pet={pet}
+                                            users={users}
+                                            shelters={shelters}
+                                            breeds={breeds}
+                                            onEdit={handleEdit}
+                                            onDelete={handleDelete}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
-                )}
+                </div>
             </div>
 
-            <div className="card p-4 mb-4 shadow-sm">
-                <div className="mb-3">
-                    <h2>My Adoptions</h2>
+            {/* FILA 2: Medical Appointments | My Adoptions */}
+            <div className="row g-4 mb-4">
+                <div className="col-lg-6 d-flex align-items-stretch">
+                    <div className="card p-4 border-0 shadow-sm w-100" style={{ borderRadius: "16px", backgroundColor: "#4c4d5516" }}>
+                        <h3 className="fw-bold mb-4" style={{ color: "#183139" }}>Medical Appointments</h3>
+
+                        {medicalAppointments.length === 0 ? (
+                            <p className="text-muted mb-0">You have no medical appointments scheduled yet.</p>
+                        ) : (
+                            <div className="row g-3">
+                                {medicalAppointments.map(appointment => (
+                                    <MedicalAppointmentCardAsUser
+                                        key={appointment.id}
+                                        appointment={appointment}
+                                        users={users}
+                                        pets={pets}
+                                        veterinarians={veterinarians}
+                                    />
+                                ))}
+                            </div>
+                        )}
+                    </div>
                 </div>
 
-                {adoptions.length === 0 ? (
-                    <p className="text-muted mb-0">You have no adoptions registered yet.</p>
-                ) : (
-                    <div className="row g-3">
-                        {adoptions.map(adoption => (
-                            <AdoptionCardAsUser
-                                key={adoption.id}
-                                adoption={adoption}
-                                users={users}
-                                pets={pets}
-                                shelters={shelters}
-                            />
-                        ))}
+                <div className="col-lg-6 d-flex align-items-stretch">
+                    <div className="card p-4 border-0 shadow-sm w-100" style={{ borderRadius: "16px", backgroundColor: "#4c4d5516" }}>
+                        <h3 className="fw-bold mb-4" style={{ color: "#183139" }}>My Adoptions</h3>
+
+                        {adoptions.length === 0 ? (
+                            <p className="text-muted mb-0">You have no adoptions registered yet.</p>
+                        ) : (
+                            <div className="row g-3">
+                                {adoptions.map(adoption => (
+                                    <AdoptionCardAsUser
+                                        key={adoption.id}
+                                        adoption={adoption}
+                                        users={users}
+                                        pets={pets}
+                                        shelters={shelters}
+                                    />
+                                ))}
+                            </div>
+                        )}
                     </div>
-                )}
+                </div>
+            </div>
+
+            {/* FILA 3: My Location */}
+            <div className="row justify-content-center">
+                <div className="col-12 col-lg-10 d-flex justify-content-center">
+                    <div className="card p-4 border-0 shadow-sm w-100" style={{ borderRadius: "16px", backgroundColor: "#4c4d5516" }}>
+                        <h3 className="fw-bold mb-4 text-center" style={{ color: "#183139" }}>My Location</h3>
+
+                        <div
+                            className="w-100 overflow-hidden shadow-sm d-flex flex-column"
+                            style={{ height: "450px", borderRadius: "12px" }}
+                        >
+                            <Geolocation
+                                latitude={userFormData.latitude}
+                                longitude={userFormData.longitude}
+                            />
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );

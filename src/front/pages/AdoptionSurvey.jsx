@@ -369,13 +369,9 @@ const AdoptionSurvey = () => {
         const otherPets = surveyAnswers[9];
 
         const scoredBreeds = dogBreeds.map((breed) => {
-
             let score = 0;
             const reasons = [];
 
-            // ------------------------------------------------
-            // 1. MOTIVACIÓN - 5%
-            // ------------------------------------------------
             if (motivation === "Busco compañía 🏡") {
                 if (
                     breed.personality === "calm" ||
@@ -397,9 +393,6 @@ const AdoptionSurvey = () => {
                 reasons.push("Puede adaptarse a diferentes estilos de vida");
             }
 
-            // ------------------------------------------------
-            // 2. VIVIENDA - 15%
-            // ------------------------------------------------
             if (home === "Apartamento 🏢") {
                 if (breed.apartment) {
                     score += 15;
@@ -410,9 +403,6 @@ const AdoptionSurvey = () => {
                 reasons.push("Puede adaptarse bien a una vivienda amplia");
             }
 
-            // ------------------------------------------------
-            // 3. TIEMPO DISPONIBLE - 15%
-            // ------------------------------------------------
             if (time === "Menos de 2 horas ⏰") {
                 if (breed.energy === "low") {
                     score += 15;
@@ -435,9 +425,6 @@ const AdoptionSurvey = () => {
                 reasons.push("Puedes dedicarle bastante tiempo");
             }
 
-            // ------------------------------------------------
-            // 4. EJERCICIO - 20%
-            // ------------------------------------------------
             if (exercise === "Paseos tranquilos 🚶") {
                 if (breed.energy === "low") {
                     score += 20;
@@ -466,9 +453,6 @@ const AdoptionSurvey = () => {
                 }
             }
 
-            // ------------------------------------------------
-            // 5. TAMAÑO - 15%
-            // ------------------------------------------------
             if (size === "Me da igual ❤️") {
                 score += 15;
             } else if (
@@ -480,9 +464,6 @@ const AdoptionSurvey = () => {
                 reasons.push("Coincide con el tamaño que prefieres");
             }
 
-            // ------------------------------------------------
-            // 6. PERSONALIDAD - 15%
-            // ------------------------------------------------
             if (personality === "Me da igual ❤️") {
                 score += 15;
             } else if (
@@ -511,9 +492,6 @@ const AdoptionSurvey = () => {
                 reasons.push("Puede ofrecer un perfil activo y atento");
             }
 
-            // ------------------------------------------------
-            // 7. TIEMPO SOLO - 10%
-            // ------------------------------------------------
             if (aloneTime === "Menos de 2 horas 🏡") {
                 score += 10;
                 reasons.push("Pasaría poco tiempo solo");
@@ -532,9 +510,6 @@ const AdoptionSurvey = () => {
                 }
             }
 
-            // ------------------------------------------------
-            // 8. EXPERIENCIA - 3%
-            // ------------------------------------------------
             if (experience === "No, sería mi primera mascota 🐶") {
                 if (
                     breed.energy === "low" ||
@@ -547,9 +522,6 @@ const AdoptionSurvey = () => {
                 score += 3;
             }
 
-            // ------------------------------------------------
-            // 9. NIÑOS - 4%
-            // ------------------------------------------------
             if (children === "Sí 👶") {
                 if (breed.children) {
                     score += 4;
@@ -559,9 +531,6 @@ const AdoptionSurvey = () => {
                 score += 4;
             }
 
-            // ------------------------------------------------
-            // 10. OTRAS MASCOTAS - 3%
-            // ------------------------------------------------
             if (otherPets === "No ❤️") {
                 score += 3;
             } else if (breed.otherPets) {
@@ -614,7 +583,7 @@ const AdoptionSurvey = () => {
     const restartSurvey = () => {
         setCurrentQuestion(0);
         setAnswers({});
-        setResult("");
+        setResult([]);
         setShowResult(false);
     };
 
@@ -622,7 +591,6 @@ const AdoptionSurvey = () => {
         return (
             <div className="container mt-5">
                 <div className="text-center">
-
                     <h1>🐾 Tus mejores coincidencias</h1>
 
                     <p className="text-muted mt-3">
@@ -631,16 +599,13 @@ const AdoptionSurvey = () => {
                     </p>
 
                     <div className="row justify-content-center mt-4">
-
                         {result.map((breed, index) => (
                             <div
                                 className="col-md-4 mb-4"
                                 key={breed.apiName}
                             >
-                                <div className="card shadow h-100">
-
+                                <div className="card shadow h-100 border-0" style={{ borderRadius: "15px", overflow: "hidden" }}>
                                     <div className="card-body">
-
                                         <h2 className="mb-3">
                                             {index === 0 && "🥇"}
                                             {index === 1 && "🥈"}
@@ -680,107 +645,89 @@ const AdoptionSurvey = () => {
                                                 style={{
                                                     width: `${breed.percentage}%`
                                                 }}
-                                            >
-                                            </div>
+                                            ></div>
                                         </div>
 
-                                        <div className="text-start mt-3">
-                                            <p className="fw-bold mb-2">
-                                                ¿Por qué encaja contigo?
-                                            </p>
-
-                                            <ul className="list-unstyled mb-0">
-                                                {breed.reasons.map((reason, reasonIndex) => (
-                                                    <li key={reasonIndex} className="mb-1">
-                                                        ✅ {reason}
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-
+                                        <ul className="text-start small text-muted ps-3 mb-0">
+                                            {breed.reasons.map((reason, rIdx) => (
+                                                <li key={rIdx}>{reason}</li>
+                                            ))}
+                                        </ul>
                                     </div>
 
+                                    <button
+                                        className="btn btn-primary w-100 py-2 fw-bold"
+                                        style={{
+                                            borderRadius: "0 0 15px 15px",
+                                            borderTopLeftRadius: "0",
+                                            borderTopRightRadius: "0"
+                                        }}
+                                        onClick={() => alert(`¡Gracias por tu interés en adoptar un ${breed.name}! ❤️`)}
+                                    >
+                                        Adoptar 🐾
+                                    </button>
                                 </div>
                             </div>
                         ))}
-
                     </div>
 
-                    <p className="text-muted mt-3">
-                        ❤️ Estas recomendaciones son orientativas y están basadas
-                        en tus respuestas.
-                    </p>
-
                     <button
-                        className="btn btn-primary mt-3"
+                        className="btn btn-outline-secondary mt-3 mb-5"
                         onClick={restartSurvey}
                     >
-                        🔄 Realizar encuesta de nuevo
+                        Volver a realizar el test 🔄
                     </button>
-
                 </div>
             </div>
         );
     }
 
-    const question = questions[currentQuestion];
-
     return (
         <div className="container mt-5">
-            <div className="text-center">
+            <div className="row justify-content-center">
+                <div className="col-md-8">
+                    <div className="card shadow">
+                        <div className="card-body p-4">
+                            <h4 className="card-title text-center mb-4">
+                                Pregunta {currentQuestion + 1} de {questions.length}
+                            </h4>
+                            <h5 className="mb-3">{questions[currentQuestion].question}</h5>
 
-                <h1>🐾 Encuentra a tu compañero ideal</h1>
+                            <div className="d-grid gap-2">
+                                {questions[currentQuestion].options.map((option, index) => (
+                                    <button
+                                        key={index}
+                                        className={`btn ${
+                                            answers[currentQuestion] === option
+                                                ? "btn-primary"
+                                                : "btn-outline-primary"
+                                        } text-start p-3`}
+                                        onClick={() => handleAnswer(option)}
+                                    >
+                                        {option}
+                                    </button>
+                                ))}
+                            </div>
 
-                <p className="text-muted">
-                    Queremos conocerte un poquito mejor
-                </p>
-
-                <p>
-                    Pregunta {currentQuestion + 1} de {questions.length}
-                </p>
-
-                <div className="progress mb-4">
-                    <div
-                        className="progress-bar"
-                        role="progressbar"
-                        style={{
-                            width: `${((currentQuestion + 1) / questions.length) * 100}% `
-                        }}
-                    >
+                            <div className="d-flex justify-content-between mt-4">
+                                <button
+                                    className="btn btn-secondary"
+                                    onClick={previousQuestion}
+                                    disabled={currentQuestion === 0}
+                                >
+                                    Anterior
+                                </button>
+                                <button
+                                    className="btn btn-success"
+                                    onClick={nextQuestion}
+                                >
+                                    {currentQuestion === questions.length - 1
+                                        ? "Ver Resultados"
+                                        : "Siguiente"}
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <h2 className="mb-4">
-                    {question.question}
-                </h2>
-
-                <div className="d-flex flex-column gap-3">
-
-                    {question.options.map((option) => (
-                        <button
-                            key={option}
-                            className={`btn ${answers[currentQuestion] === option
-                                ? "btn-primary"
-                                : "btn-outline-primary"
-                                } `}
-                            onClick={() => handleAnswer(option)}
-                        >
-                            {option}
-                        </button>
-                    ))}
-
-                </div>
-
-                <div className="d-flex justify-content-start mt-5">
-
-                    <button
-                        className="btn btn-secondary"
-                        onClick={previousQuestion}
-                        disabled={currentQuestion === 0}
-                    >
-                        ← Anterior
-                    </button>
-
                 </div>
             </div>
         </div>

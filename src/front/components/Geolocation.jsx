@@ -8,7 +8,7 @@ export const Geolocation = ({ latitude, longitude }) => {
 
     return (
         <div className="card shadow-sm p-2 w-100">
-            <div style={{ width: "100%", height: "250px", borderRadius: "8px", overflow: "hidden" }}>
+            <div style={{ width: "100%", height: "430px", borderRadius: "8px", overflow: "hidden" }}>
                 {hasValidCoordinates ? (
                     <iframe
                         title="Google Map Location"
@@ -28,3 +28,4 @@ export const Geolocation = ({ latitude, longitude }) => {
         </div>
     );
 };
+

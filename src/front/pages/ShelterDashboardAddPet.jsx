@@ -6,6 +6,7 @@ const ShelterDashboardAddPet = () => {
     const navigate = useNavigate();
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
     const { store } = useGlobalReducer();
+    const [uploading, setUploading] = useState(false);
     const [formData, setFormData] = useState({
         shelter_id: store.currentShelter?.id,
         name: "",
@@ -46,7 +47,7 @@ const ShelterDashboardAddPet = () => {
             const response = await fetch(`${backendUrl}/api/pets`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData)  
+                body: JSON.stringify(formData)
             });
 
             if (response.ok) {
@@ -70,7 +71,39 @@ const ShelterDashboardAddPet = () => {
             </div>
         );
     }
+    const handleImageUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
 
+        const uploadData = new FormData();
+        uploadData.append("file", file);
+        uploadData.append("upload_preset", "petconnect");
+
+        setUploading(true);
+        try {
+            const response = await fetch(
+                "https://api.cloudinary.com/v1_1/ojckqgp2/image/upload",
+                {
+                    method: "POST",
+                    body: uploadData,
+                }
+            );
+
+            const data = await response.json();
+            if (data.secure_url) {
+                setFormData(prev => ({
+                    ...prev,
+                    photoUrl: data.secure_url
+                }));
+                alert("Image uploaded successfully!");
+            }
+        } catch (error) {
+            console.error("Error uploading image to Cloudinary:", error);
+            alert("Could not upload the image.");
+        } finally {
+            setUploading(false);
+        }
+    };
     return (
         <div className="container mt-4 d-flex flex-column gap-3 align-items-start">
             <div className="card p-4 mb-5 shadow-sm w-100">
@@ -108,9 +141,26 @@ const ShelterDashboardAddPet = () => {
                             <label className="form-label">Chip Number</label>
                             <input type="text" name="chipNumber" className="form-control" value={formData.chipNumber} onChange={handleChange} />
                         </div>
-                        <div className="col-md-12">
-                            <label className="form-label">Photo URL</label>
-                            <input type="text" name="photoUrl" className="form-control" value={formData.photoUrl} onChange={handleChange} placeholder="https://example.com/photo.jpg" />
+                           <div className="col-md-12">
+                            <label className="form-label">Pet Photo</label>
+                            {formData.photoUrl && (
+                                <div className="mb-2">
+                                    <img
+                                        src={formData.photoUrl}
+                                        alt="Pet Preview"
+                                        className="rounded shadow-sm"
+                                        style={{ width: "100px", height: "100px", objectFit: "cover" }}
+                                    />
+                                </div>
+                            )}
+                            <input
+                                type="file"
+                                className="form-control"
+                                accept="image/*"
+                                onChange={handleImageUpload}
+                                disabled={uploading}
+                            />
+                            {uploading && <small className="text-muted d-block mt-1">Uploading image...</small>}
                         </div>
                         <div className="col-md-12 form-check mt-3 ms-2">
                             <input type="checkbox" name="castrated" className="form-check-input" id="createCastrated" checked={formData.castrated} onChange={handleChange} />
