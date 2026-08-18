@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 import pet1 from "../assets/img/pet1.jpg";
 import pet2 from "../assets/img/pet2.jpg";
 import pet3 from "../assets/img/pet3.jpg";
-import shelterPatitas from "../assets/img/shelter-patitas-felices.jpg";
-import shelterEsperanza from "../assets/img/shelter-refugio-esperanza.jpg";
-import shelterAmigos from "../assets/img/shelter-amigos-4-patas.jpg";
+import shelterPatitas from "../assets/img/Patitas felices.jpg";
+import shelterEsperanza from "../assets/img/Refugio esperanza.jpg";
+import shelterAmigos from "../assets/img/amigos de 4 patas.jpg";
 import pawsCareImage from "../assets/img/Paws & care.jpg";
 import safePawsImage from "../assets/img/Safe paws.png";
 import vetPartnersImage from "../assets/img/Vet partners.jpg";
@@ -22,7 +22,11 @@ export const Home = () => {
 	const [shelters, setShelters] = useState([]);
 	const [pets, setPets] = useState([]);
 	const [breedImages, setBreedImages] = useState({});
-	const [shelterImages, setShelterImages] = useState([]);
+	const shelterImages = [
+		shelterPatitas,
+		shelterEsperanza,
+		shelterAmigos
+	];
 	const [featuredImages, setFeaturedImages] = useState([]);
 
 	const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -107,39 +111,6 @@ export const Home = () => {
 		};
 
 		loadBreedImages();
-	}, []);
-
-	// =========================================
-	// SHELTER IMAGES
-	// =========================================
-
-	useEffect(() => {
-		const shelterBreeds = [
-			"pug",
-			"boxer",
-			"dalmatian"
-		];
-
-		const loadShelterImages = async () => {
-			try {
-				const results = await Promise.all(
-					shelterBreeds.map(async (breed) => {
-						const response = await fetch(
-							`https://dog.ceo/api/breed/${breed}/images/random`
-						);
-
-						const data = await response.json();
-						return data.message;
-					})
-				);
-
-				setShelterImages(results);
-			} catch (error) {
-				console.error("Error loading shelter images:", error);
-			}
-		};
-
-		loadShelterImages();
 	}, []);
 
 	// =========================================

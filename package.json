@@ -54,6 +54,7 @@
 		]
 	},
 	"dependencies": {
+		"@emailjs/browser": "^4.4.1",
 		"bootstrap": "^5.3.8",
 		"framer-motion": "^12.43.0",
 		"prop-types": "^15.8.1",

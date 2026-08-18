@@ -2235,16 +2235,33 @@
   margin: 0 0 18px;
 }
 
-.pc-team-github {
+.pc-team-socials {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-top: 4px;
+}
+
+.pc-team-social {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   color: #292a3a;
   font-size: 14px;
   font-weight: 700;
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
-.pc-team-github:hover {
+.pc-team-social i {
+  font-size: 17px;
+}
+
+.pc-team-social:hover {
   color: #20a9e8;
+  transform: translateY(-1px);
 }
 
 @media (max-width: 768px) {
@@ -2977,4 +2994,241 @@
 /* Adoption Survey */
 .petconnect-adoption-button {
   margin-left: 4px;
+}
+
+/* =========================================
+   SHELTERS LIST
+========================================= */
+
+.pc-shelters-page {
+  min-height: 100vh;
+  background: #f7f9fb;
+  padding: 70px 40px 90px;
+}
+
+.pc-shelters-header {
+  max-width: 700px;
+  margin: 0 auto 50px;
+  text-align: center;
+}
+
+.pc-shelters-header span {
+  color: #20a9e8;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 5px;
+}
+
+.pc-shelters-header h1 {
+  color: #292a3a;
+  font-size: 42px;
+  font-weight: 800;
+  margin: 12px 0;
+}
+
+.pc-shelters-header p {
+  color: #687080;
+  font-size: 16px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.pc-shelters-grid {
+  max-width: 1250px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.pc-shelter-list-card {
+  background: #ffffff;
+  border: 1px solid #e5e6e8;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(41, 42, 58, 0.06);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.pc-shelter-list-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 30px rgba(41, 42, 58, 0.12);
+}
+
+.pc-shelter-list-image {
+  width: 100%;
+  height: 210px;
+  background: #eef1f4;
+  overflow: hidden;
+}
+
+.pc-shelter-list-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.pc-shelter-list-content {
+  padding: 22px 24px 18px;
+}
+
+.pc-shelter-list-content h2 {
+  margin: 0;
+  color: #292a3a;
+  font-size: 23px;
+  font-weight: 800;
+}
+
+.pc-shelter-location {
+  color: #20a9e8;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 5px 0 18px;
+}
+
+.pc-shelter-details {
+  display: grid;
+  gap: 10px;
+}
+
+.pc-shelter-details div {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  font-size: 13px;
+}
+
+.pc-shelter-details strong {
+  color: #292a3a;
+}
+
+.pc-shelter-details span {
+  color: #687080;
+  text-align: right;
+}
+
+.pc-shelter-pets {
+  border-top: 1px solid #e9eaed;
+  padding: 18px 24px 22px;
+}
+
+.pc-shelter-pets-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.pc-shelter-pets-header h3 {
+  margin: 0;
+  color: #292a3a;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.pc-shelter-pets-header span {
+  min-width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #eaf7fd;
+  color: #20a9e8;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.pc-no-pets {
+  margin: 0;
+  color: #9297a6;
+  font-size: 13px;
+}
+
+.pc-shelter-pets-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.pc-shelter-pet {
+  display: flex;
+  min-width: 0;
+  border: 1px solid #e7e8eb;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.pc-shelter-pet > img {
+  width: 90px;
+  height: 110px;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.pc-shelter-pet-info {
+  min-width: 0;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.pc-shelter-pet-info h4 {
+  margin: 0 0 3px;
+  color: #292a3a;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.pc-shelter-pet-info p {
+  margin: 0 0 8px;
+  color: #687080;
+  font-size: 12px;
+}
+
+.pc-shelter-adopt-btn {
+  display: inline-block;
+  width: fit-content;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: #20a9e8;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.pc-shelter-adopt-btn:hover {
+  color: #ffffff;
+  opacity: 0.9;
+}
+
+@media (max-width: 900px) {
+  .pc-shelters-grid {
+    grid-template-columns: 1fr;
+    max-width: 650px;
+  }
+}
+
+@media (max-width: 600px) {
+  .pc-shelters-page {
+    padding: 50px 20px 70px;
+  }
+
+  .pc-shelters-header h1 {
+    font-size: 34px;
+  }
+
+  .pc-shelter-pets-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pc-shelter-list-image {
+    height: 190px;
+  }
 }
