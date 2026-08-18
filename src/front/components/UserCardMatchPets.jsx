@@ -46,7 +46,7 @@ export const UserCardMatchPets = (pet) => {
   return (
     <div className="d-flex justify-content-center mt-4">
       <AnimatePresence>
-        <motion.div
+        <motion.div 
           key={currentPet.id}
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -57,7 +57,7 @@ export const UserCardMatchPets = (pet) => {
             transition: { duration: 1.5 }
           }}
           className="card"
-          style={{ width: "22rem" }}>
+          style={{ width: "20rem", borderRadius: "30px" }}>
           {currentPet.photoUrl ? (
             <img
               src={currentPet.photoUrl}
@@ -76,12 +76,16 @@ export const UserCardMatchPets = (pet) => {
             <div className="d-flex justify-content-around mt-3">
               <button
                 className="btn btn-danger"
-                onClick={() => handleSwipe(false)}
+                style={{ width: "120px", height:"80px" ,borderRadius: "32px" }}
+                onClick={() => handleSwipe(false)
+                
+                }
               >
                 👎
               </button>
               <button
                 className="btn btn-success"
+                style={{ width: "120px", height:"80px", borderRadius: "32px" }}
                 onClick={() => handleSwipe(true)}
               >
                 👍
