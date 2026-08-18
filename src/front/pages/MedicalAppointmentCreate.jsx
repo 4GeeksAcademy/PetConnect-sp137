@@ -185,7 +185,7 @@ export const MedicalAppointmentCreate = () => {
                         <button type="submit" className="btn btn-success">
                             Book Appointment
                         </button>
-                        <Link to="/dashboard-user" className="btn btn-secondary">
+                        <Link to="/veterinariansView" className="btn btn-secondary">
                             Cancel
                         </Link>
                     </div>

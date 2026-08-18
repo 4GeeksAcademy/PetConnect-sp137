@@ -181,7 +181,7 @@ class Veterinarian(db.Model):
     email: Mapped[str] = mapped_column(
         String(120), unique=True, nullable=False)
     pc: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
-    icon_url: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    photo_url: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     iban: Mapped[Optional[str]] = mapped_column(String(34), nullable=True)
     schedule: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
 
@@ -196,7 +196,7 @@ class Veterinarian(db.Model):
             "address": self.address,
             "email": self.email,
             "pc": self.pc,
-            "iconUrl": self.icon_url,
+            "photoUrl": self.photo_url,
             "iban": self.iban,
             "schedule": self.schedule
         }
