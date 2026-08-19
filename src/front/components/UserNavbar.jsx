@@ -36,7 +36,7 @@ export const UserNavbar = () => {
     };
   } else if (isVeterinarian) {
     displayName = store.currentVeterinarian?.name || "Veterinarian";
-    displayImage = store.currentVeterinarian?.iconUrl || "";
+    displayImage = store.currentVeterinarian?.photoUrl || "";
     handleLogout = () => {
       dispatch({ type: "set_veterinarian_auth", payload: null });
       dispatch({ type: "set_current_veterinarian", payload: null });

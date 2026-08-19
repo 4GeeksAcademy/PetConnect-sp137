@@ -31,10 +31,10 @@ export const VeterinarianDashboard = () => {
 
             setCurrentVet(vet);
 
-            if (actions.getMedicalAppointments) await actions.getMedicalAppointments();
-            if (actions.getUsers) await actions.getUsers();
-            if (actions.getPets) await actions.getPets();
-            if (actions.getVeterinarians) await actions.getVeterinarians();
+            /*if (actions.getMedicalAppointments) await actions.getMedicalAppointments();*/
+            /*if (actions.getUsers) await actions.getUsers();*/
+            /*if (actions.getPets) await actions.getPets();*/
+            /*if (actions.getVeterinarians) await actions.getVeterinarians();*/
 
             setLoading(false);
         };
@@ -93,7 +93,7 @@ export const VeterinarianDashboard = () => {
                         <h2 className="fw-bold mb-1">
                             Veterinarian Dashboard
                         </h2>
-                        <p className="text-muted mb-0">
+                        {/*<p className="text-muted mb-0">
                             Welcome back, {currentVet ? currentVet.name : "Doctor"}! Manage your appointments and patients.
                         </p>
                     </div>
@@ -109,7 +109,7 @@ export const VeterinarianDashboard = () => {
                             className="btn btn-primary rounded-pill fw-semibold"
                         >
                             Manage All Appointments
-                        </Link>
+                        </Link>*/}
                     </div>
                 </header>
 
@@ -180,7 +180,7 @@ export const VeterinarianDashboard = () => {
                     </div>
                 </section>
 
-                <section className="bg-white p-4 rounded-4 shadow-sm mb-4">
+                {/*<section className="bg-white p-4 rounded-4 shadow-sm mb-4">
                     <div className="d-flex justify-content-between align-items-center mb-3">
                         <h4 className="fw-bold mb-0">Appointment Requests & Management</h4>
                     </div>
@@ -265,7 +265,7 @@ export const VeterinarianDashboard = () => {
                             </tbody>
                         </table>
                     </div>
-                </section>
+                </section>*/}
             </div>
         </div>
     );

@@ -15,7 +15,7 @@ const VeterinarianRegister = () => {
         address: "",
         email: "",
         pc: "",
-        iconUrl: "",
+        photoUrl: "",
         iban: "",
         schedule: ""
     });
@@ -31,7 +31,6 @@ const VeterinarianRegister = () => {
         const file = e.target.files[0];
         if (!file) return;
 
-        // Corrección: Debe ser FormData, no Form
         const uploadData = new FormData();
         uploadData.append("file", file);
         uploadData.append("upload_preset", "petconnect");
@@ -51,7 +50,7 @@ const VeterinarianRegister = () => {
             if (data.secure_url) {
                 setForm((prev) => ({
                     ...prev,
-                    iconUrl: data.secure_url
+                    photoUrl: data.secure_url // Corrección aplicada aquí
                 }));
             } else {
                 throw new Error(data.error?.message || "Error uploading image");
@@ -101,7 +100,7 @@ const VeterinarianRegister = () => {
                 address: "",
                 email: "",
                 pc: "",
-                iconUrl: "",
+                photoUrl: "",
                 iban: "",
                 schedule: ""
             });
@@ -212,20 +211,20 @@ const VeterinarianRegister = () => {
                 </div>
 
                 <div className="mb-3">
-                    <label htmlFor="iconUrl" className="form-label text-muted fw-bold small mb-1 p-3">User Image</label>
+                    <label htmlFor="photoUrl" className="form-label text-muted fw-bold small mb-1 p-3">User Image</label>
                     <input
                         type="file"
                         className="form-control form-control-custom"
-                        id="iconUrl"
+                        id="photoUrl"
                         accept="image/*"
                         onChange={handleImageUpload}
                         disabled={loading || uploading}
                     />
                     {uploading && <small className="text-muted d-block mt-1">Uploading image...</small>}
-                    {form.iconUrl && !uploading && (
+                    {form.photoUrl && !uploading && (
                         <div className="mt-2">
                             <small className="text-success d-block">Image loaded.</small>
-                            <img src={form.iconUrl} alt="Preview" style={{ width: "90px", height: "90px", objectFit: "cover" }} className="mt-1 rounded border" />
+                            <img src={form.photoUrl} alt="Preview" style={{ width: "90px", height: "90px", objectFit: "cover" }} className="mt-1 rounded border" />
                         </div>
                     )}
                 </div>

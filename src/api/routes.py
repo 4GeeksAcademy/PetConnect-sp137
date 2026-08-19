@@ -471,7 +471,7 @@ def create_shelter():
             cif=body.get('cif'),
             address=body.get('address'),
             pc=body.get('pc'),
-            icon_Url=body.get('iconUrl'),
+            iconUrl=body.get('iconUrl'),
             iban=body.get('iban')
         )
 
@@ -852,7 +852,6 @@ def get_veterinarian(veterinarian_id):
 
     return jsonify(veterinarian.serialize()), 200
 
-
 @api.route('/veterinarians', methods=['POST'])
 def create_veterinarian():
     body = request.get_json()
@@ -866,22 +865,26 @@ def create_veterinarian():
         if not body.get(field):
             return jsonify({"message": f"{field} is required"}), 400
 
-    new_veterinarian = Veterinarian(
-        name=body["name"],
-        password=body["password"],
-        city=body["city"],
-        address=body["address"],
-        email=body["email"],
-        pc=body.get("pc"),
-        photo_url=body.get("photoUrl"),
-        iban=body.get("iban"),
-        schedule=body.get("schedule")
-    )
+    try:
+        new_veterinarian = Veterinarian(
+            name=body["name"],
+            password=body["password"],
+            city=body["city"],
+            address=body["address"],
+            email=body["email"],
+            pc=body.get("pc"),
+            photo_url=body.get("photoUrl"),  # Se corrige aquí para leer 'photoUrl' del JSON enviado por React
+            iban=body.get("iban"),
+            schedule=body.get("schedule")
+        )
 
-    db.session.add(new_veterinarian)
-    db.session.commit()
+        db.session.add(new_veterinarian)
+        db.session.commit()
 
-    return jsonify(new_veterinarian.serialize()), 201
+        return jsonify(new_veterinarian.serialize()), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"message": str(e)}), 500
 
 
 @api.route('/veterinarians/<int:veterinarian_id>', methods=['PUT'])
@@ -899,7 +902,7 @@ def update_veterinarian(veterinarian_id):
     veterinarian.address = body.get("address", veterinarian.address)
     veterinarian.email = body.get("email", veterinarian.email)
     veterinarian.pc = body.get("pc", veterinarian.pc)
-    veterinarian.photo_url = body.get("photoUrl", veterinarian.photo_url)
+    veterinarian.icon_url = body.get("iconUrl", veterinarian.icon_url)
     veterinarian.iban = body.get("iban", veterinarian.iban)
     veterinarian.schedule = body.get("schedule", veterinarian.schedule)
 
