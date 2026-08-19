@@ -471,7 +471,7 @@ def create_shelter():
             cif=body.get('cif'),
             address=body.get('address'),
             pc=body.get('pc'),
-            iconUrl=body.get('iconUrl'),
+            icon_Url=body.get('iconUrl'),
             iban=body.get('iban')
         )
 
@@ -873,7 +873,7 @@ def create_veterinarian():
         address=body["address"],
         email=body["email"],
         pc=body.get("pc"),
-        icon_url=body.get("iconUrl"),
+        photo_url=body.get("photoUrl"),
         iban=body.get("iban"),
         schedule=body.get("schedule")
     )
@@ -899,7 +899,7 @@ def update_veterinarian(veterinarian_id):
     veterinarian.address = body.get("address", veterinarian.address)
     veterinarian.email = body.get("email", veterinarian.email)
     veterinarian.pc = body.get("pc", veterinarian.pc)
-    veterinarian.icon_url = body.get("iconUrl", veterinarian.icon_url)
+    veterinarian.photo_url = body.get("photoUrl", veterinarian.photo_url)
     veterinarian.iban = body.get("iban", veterinarian.iban)
     veterinarian.schedule = body.get("schedule", veterinarian.schedule)
 
