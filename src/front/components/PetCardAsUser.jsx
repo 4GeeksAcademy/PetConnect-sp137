@@ -37,11 +37,11 @@ export const PetCardAsUser = ({ pet, users = [], shelters = [], breeds = [], onE
                     <p className="card-text mb-2 small"><strong>Castrated:</strong> {pet.castrated ? "Yes" : "No"}</p>
                 </div>
             </div>
-            <div className="d-flex justify-content-end gap-3 border-top" style={{ backgroundColor: "#18313912" }}>
-                <button className="btn btn-sm btn-outline-primary px-3" onClick={() => onEdit(pet.id)}>
+            <div className="d-flex justify-content-center gap-2 mb-2">
+                <button className="btn btn-sm btn-primary px-3" onClick={() => onEdit(pet.id)}>
                     Edit
                 </button>
-                <button className="btn btn-sm btn-outline-danger px-3" onClick={() => onDelete(pet.id)}>
+                <button className="btn btn-sm btn-danger px-3" onClick={() => onDelete(pet.id)}>
                     Delete
                 </button>
             </div>

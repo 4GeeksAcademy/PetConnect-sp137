@@ -258,7 +258,6 @@ export const ShelterDashboard = () => {
                     <div className="d-flex justify-content-between align-items-center mb-4">
                         <div>
                             <h2 className="fw-bold text-dark">DASHBOARD</h2>
-                            <p className="text-muted mb-0">Panel de control general de la protectora.</p>
                         </div>
                     </div>
 

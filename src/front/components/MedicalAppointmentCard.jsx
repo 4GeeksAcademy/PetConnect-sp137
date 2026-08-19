@@ -51,12 +51,12 @@ export const MedicalAppointmentCard = ({ appointment, users = [], pets = [], vet
                     </p>
                 </div>
                 <div className="card-footer d-flex justify-content-between bg-white border-top-0 pb-3">
-                    <Link to={`/medapps-view/${appointment.id}`} className="btn btn-primary btn-sm">
+                    {/*<Link to={`/medapps-view/${appointment.id}`} className="btn btn-primary btn-sm">
                         View
                     </Link>
                     <Link to={`/medapps/${appointment.id}`} className="btn btn-warning btn-sm">
                         Edit
-                    </Link>
+                    </Link>*/}
                     <button
                         className="btn btn-success btn-sm"
                         onClick={() => onApprove && onApprove(appointment.id)}

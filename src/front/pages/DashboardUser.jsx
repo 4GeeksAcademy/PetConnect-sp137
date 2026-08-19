@@ -233,7 +233,6 @@ export const DashboardUser = () => {
 
     return (
         <div className="container my-5" style={{ color: "#193139" }}>
-            {/* Tarjeta de Perfil Desplegable */}
             <div className="card border-0 shadow-lg mb-5 overflow-hidden" style={{ borderRadius: "16px" }}>
                 <div
                     className="p-4 d-flex justify-content-between align-items-center text-white"
@@ -410,7 +409,6 @@ export const DashboardUser = () => {
                 )}
             </div>
 
-            {/* FILA 1: Match Pets | My Pets */}
             <div className="row g-4 mb-4">
                 <div className="col-lg-4 d-flex align-items-stretch" >
                     <div className="card p-4 border-0 shadow-sm w-100" style={{ borderRadius: "30px", backgroundColor: "#4c4d5516" }}> 
@@ -454,7 +452,6 @@ export const DashboardUser = () => {
                 </div>
             </div>
 
-            {/* FILA 2: Medical Appointments | My Adoptions */}
             <div className="row g-4 mb-4">
                 <div className="col-lg-6 d-flex align-items-stretch">
                     <div className="card p-4 border-0 shadow-sm w-100" style={{ borderRadius: "16px", backgroundColor: "#4c4d5516" }}>
@@ -501,7 +498,6 @@ export const DashboardUser = () => {
                 </div>
             </div>
 
-            {/* FILA 3: My Location */}
             <div className="row justify-content-center">
                 <div className="col-12 col-lg-10 d-flex justify-content-center">
                     <div className="card p-4 border-0 shadow-sm w-100" style={{ borderRadius: "16px", backgroundColor: "#4c4d5516" }}>

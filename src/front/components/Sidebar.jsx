@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer";
-import imgPetConnect from "../assets/img/PetConnect.png";
+import petConnectLogo from "../assets/img/pet-connect-navbar.png";
 
 export const Sidebar = () => {
   const { store } = useGlobalReducer();
@@ -11,13 +11,10 @@ export const Sidebar = () => {
   const isShelterLoggedIn = store.shelterAuth !== null;
 
   return (
-    <div className="d-flex flex-column flex-shrink-0 p-3 text-white vh-100" style={{ width: "250px", backgroundColor: "#292b3a" }}>
-      <div className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none py-2">
-        <div className="bg-white rounded-circle d-flex align-items-center justify-content-center me-2 shadow-sm" style={{ width: "42px", height: "42px", flexShrink: 0 }}>
-          <img src={imgPetConnect} alt="Pet Connect Logo" style={{ width: "44px", height: "44px", objectFit: "contain" }} />
-        </div>
-        <span className="fs-5 fw-bold">Pet Connect</span>
-      </div>
+    <div className="d-flex flex-column flex-shrink-0 text-white vh-100" style={{ width: "250px", backgroundColor: "#292b3a" }}>
+      <Link to="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none py-2">
+        <img src={petConnectLogo} alt="Pet Connect Logo" style={{ width: "244px", height: "44px", objectFit: "contain", cursor: "pointer" }} />
+      </Link>
 
       <hr className="border-top border-light opacity-25" />
 

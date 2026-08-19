@@ -332,7 +332,7 @@ export const Home = () => {
 
 							<button
 								className="petconnect-card-button"
-								onClick={() => navigate("/userLogin")}
+								onClick={() => navigate("/loginPage")}
 							>
 								Join Pet Connect
 							</button>
@@ -373,11 +373,6 @@ export const Home = () => {
 							<div className="pc-breed-content">
 								<h3>{breed.name}</h3>
 								<p>{breed.description}</p>
-								<button
-									onClick={() => navigate("/breed")}
-								>
-									Explore breed
-								</button>
 							</div>
 						</div>
 					))}

@@ -303,10 +303,9 @@ const VeterinarianLoginForm = () => {
       }
 
       localStorage.setItem("veterinariantoken", data.access_token);
-      dispatch({
-        type: "set_veterinarian_auth",
-        payload: { token: data.access_token }
-      });
+      localStorage.setItem("veterinarian", JSON.stringify(data.veterinarian));
+      dispatch({ type: "set_veterinarian_auth", payload: data.access_token });
+      dispatch({ type: "set_current_veterinarian", payload: data.veterinarian });
 
       navigate("/veterinarianDashboard");
     } catch (err) {

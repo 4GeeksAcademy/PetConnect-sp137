@@ -501,14 +501,17 @@ def update_shelter(shelter_id):
         # Actualizar campos del refugio
         shelter.name = body.get('name', shelter.name)
         shelter.email = body.get('email', shelter.email)
-        shelter.password = body.get('password', shelter.password)
+        new_password = body.get('password')
+        if new_password and new_password.strip():
+            shelter.password = new_password
         shelter.city = body.get('city', shelter.city)
         shelter.cif = body.get('cif', shelter.cif)
         shelter.address = body.get('address', shelter.address)
         shelter.pc = body.get('pc', shelter.pc)
-        shelter.iconUrl = body.get('iconUrl', shelter.iconUrl)
+        shelter.icon_url = body.get('icon_url', shelter.icon_url)
         shelter.iban = body.get('iban', shelter.iban)
-
+        shelter.latitude = body.get('latitude', shelter.latitude)
+        shelter.longitude = body.get('longitude', shelter.longitude)
         db.session.commit()
 
         return jsonify(shelter.serialize()), 200

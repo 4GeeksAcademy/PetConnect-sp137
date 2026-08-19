@@ -655,7 +655,7 @@ const AdoptionSurvey = () => {
                                         </ul>
                                     </div>
 
-                                    <button
+                                    {/*<button
                                         className="btn btn-primary w-100 py-2 fw-bold"
                                         style={{
                                             borderRadius: "0 0 15px 15px",
@@ -665,7 +665,7 @@ const AdoptionSurvey = () => {
                                         onClick={() => alert(`¡Gracias por tu interés en adoptar un ${breed.name}! ❤️`)}
                                     >
                                         Adoptar 🐾
-                                    </button>
+                                    </button>*/}
                                 </div>
                             </div>
                         ))}

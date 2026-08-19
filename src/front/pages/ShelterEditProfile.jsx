@@ -33,6 +33,7 @@ const ShelterEditProfile = () => {
     });
 
     const [loading, setLoading] = useState(false);
+    const [uploading, setUploading] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
 
@@ -46,20 +47,76 @@ const ShelterEditProfile = () => {
         }));
     };
 
-    // Función memorizada para obtener los datos desde la API
+    const handleImageUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const uploadData = new FormData();
+        uploadData.append("file", file);
+        uploadData.append("upload_preset", "petconnect");
+
+        setUploading(true);
+        setError(null);
+        try {
+            const response = window.fetch(
+                "https://api.cloudinary.com/v1_1/ojckqgp2/image/upload",
+                {
+                    method: "POST",
+                    body: uploadData,
+                }
+            );
+
+            const data = await (await response).json();
+            if (data.secure_url) {
+                const newIconUrl = data.secure_url;
+
+                setFormData((prev) => ({
+                    ...prev,
+                    icon_url: newIconUrl
+                }));
+
+                const payload = {
+                    ...formData,
+                    icon_url: newIconUrl,
+                    latitude: formData.latitude !== "" ? parseFloat(formData.latitude) : null,
+                    longitude: formData.longitude !== "" ? parseFloat(formData.longitude) : null
+                };
+
+                const updateResponse = await fetch(`${API}/${shelterId}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!updateResponse.ok) {
+                    const errData = await updateResponse.json();
+                    console.error("Failed to update iconUrl in database:", errData);
+                    setError(errData.error || "Failed to update image in database.");
+                }
+            }
+        } catch (err) {
+            console.error("Error uploading image to Cloudinary:", err);
+            setError("Could not upload the image.");
+        } finally {
+            setUploading(false);
+        }
+    };
+
     const getShelter = useCallback(async () => {
         if (!shelterId) return;
         setLoading(true);
         try {
             const response = await fetch(`${API}/${shelterId}`);
             if (!response.ok) throw new Error("No se pudo cargar la información del refugio.");
-            
+
             const data = await response.json();
 
             setFormData({
                 name: data.name || "",
                 email: data.email || "",
-                password: "", // La contraseña no debe precargarse desde la API por seguridad
+                password: "",
                 city: data.city || "",
                 cif: data.cif || "",
                 address: data.address || "",
@@ -77,14 +134,12 @@ const ShelterEditProfile = () => {
         }
     }, [shelterId, API]);
 
-    // Carga de datos inicial
     useEffect(() => {
         if (!shelterId) {
             navigate("/shelterLogin");
             return;
         }
 
-        // Si ya existen datos en el store global para este ID, los usamos
         if (currentShelter && String(currentShelter.id) === String(shelterId)) {
             setFormData({
                 name: currentShelter.name || "",
@@ -100,12 +155,10 @@ const ShelterEditProfile = () => {
                 iban: currentShelter.iban || ""
             });
         } else {
-            // Si no existen en memoria, hacemos el fetch
             getShelter();
         }
     }, [shelterId, navigate, getShelter]);
 
-    // Petición para actualizar
     const updateShelter = async () => {
         if (!formData.name.trim() || !formData.email.trim()) {
             setError("Por favor completa los campos obligatorios (*)");
@@ -140,7 +193,7 @@ const ShelterEditProfile = () => {
 
             setSuccess(true);
             setTimeout(() => {
-                navigate(`/shelterview/${shelterId}`);
+                navigate(`/ShelterDashboard`);
             }, 1000);
 
         } catch (err) {
@@ -299,15 +352,25 @@ const ShelterEditProfile = () => {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="iconUrl" className="form-label">URL Shelter Icon</label>
+                            <label htmlFor="iconUrl" className="form-label">Shelter Icon</label>
+                            {formData.icon_url && (
+                                <div className="mb-2">
+                                    <img
+                                        src={formData.icon_url}
+                                        alt="Shelter Icon Preview"
+                                        style={{ width: "80px", height: "80px", objectFit: "cover", borderRadius: "8px" }}
+                                    />
+                                </div>
+                            )}
                             <input
-                                type="url"
+                                type="file"
                                 className="form-control"
-                                id="iconUrl"
-                                name="iconUrl"
-                                value={formData.iconUrl}
-                                onChange={handleChange}
+                                id="icon_url"
+                                accept="image/*"
+                                onChange={handleImageUpload}
+                                disabled={uploading}
                             />
+                            {uploading && <small className="text-muted d-block mt-1">Uploading image...</small>}
                         </div>
 
                         <div className="mb-3">
@@ -326,7 +389,7 @@ const ShelterEditProfile = () => {
                             <button
                                 type="submit"
                                 className="btn btn-warning me-2"
-                                disabled={loading}
+                                disabled={loading || uploading}
                             >
                                 {loading ? "Saving..." : "Save"}
                             </button>
@@ -334,7 +397,7 @@ const ShelterEditProfile = () => {
                                 type="button"
                                 className="btn btn-secondary"
                                 onClick={() => navigate("/shelterDashboard")}
-                                disabled={loading}
+                                disabled={loading || uploading}
                             >
                                 Cancel
                             </button>

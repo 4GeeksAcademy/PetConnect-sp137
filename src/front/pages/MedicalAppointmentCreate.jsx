@@ -77,7 +77,7 @@ export const MedicalAppointmentCreate = () => {
 
             if (response.ok) {
                 alert("Medical appointment created successfully!");
-                navigate("/medapps");
+                navigate("/dashboard-user");
             } else {
                 const errorData = await response.json();
                 console.error("Error del servidor:", errorData);
